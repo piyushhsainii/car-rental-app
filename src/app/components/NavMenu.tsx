@@ -16,12 +16,15 @@ import {
   } from "@/components/ui/dropdown-menu"
 import { AnimatedTooltip } from "./AnimatedToolTip";
 import { CircleUserIcon, LogOut, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes"  
+import { useTheme } from "next-themes"   
+import Loading from "../loading";
 
 
 const NavMenu =() => {    
     const session = useSession()
+    console.log(session)
     const  { setTheme , theme  } = useTheme()
+
     return (
         <div className="flex justify-between  h-[60px] px-4 " >
             <div className="" >
@@ -31,8 +34,9 @@ const NavMenu =() => {
                         <Image src={'/Logo.png'} className="" width={180} height={60} alt="logo"></Image>
                    }
             </div>
+            { session && session.status === 'loading' && <Loading/> }
             {
-                session.data === null ? 
+                 session && session.status === 'unauthenticated' &&
                 <div className="flex items-center gap-3 justify-center" >
                     <DropdownMenu >
                         <DropdownMenuTrigger asChild>
@@ -55,7 +59,9 @@ const NavMenu =() => {
                         <CircleUserIcon className=" text-primary" width={25} height={25} strokeWidth={1} />
                         </Link>
                 </div> 
-                 : 
+                    }
+            {
+                session && session.status === 'authenticated' &&
                  <div className="flex items-center gap-6 justify-center" >
                    <div> 
                    <DropdownMenu >
