@@ -1,11 +1,12 @@
+import { Fragment } from "react";
 import NavMenu from "./components/NavMenu"
 
 export default function Home() {
   return (
-    <main>
+    <Fragment>
       <NavMenu/>
-      TESTING AUTH
+       TESTING AUTH
       <button>  </button>
-   </main>
+   </Fragment>
   );
 }
