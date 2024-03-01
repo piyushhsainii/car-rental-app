@@ -15,7 +15,9 @@ export async function POST(req:Request){
         Year,
         type,
         Transmission,
-        Color
+        Color,
+        ownerShip,
+        KmsDone
     } = await req.json()
     try {
         const prisma = new PrismaClient()
@@ -34,7 +36,9 @@ export async function POST(req:Request){
                 Year,
                 type,
                 Transmission,
-                Color
+                Color,
+                ownerShip,
+                KmsDone
             }
         })
 

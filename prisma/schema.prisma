@@ -55,6 +55,12 @@ model Account {
   @@map("accounts")
 }
 
+enum Availability {
+    Available
+    Reserved
+    Sold
+}
+
 model CAR {
   id String @id @default(uuid())
   carName String 
@@ -64,13 +70,15 @@ model CAR {
   Fuel String
   Seat String 
   Mileage Int
-  Availability Boolean
+  Availability Availability
   model String
-  Plate Int
+  Plate String
   Year String
   type String
   Transmission String
   Color String 
+  ownerShip String
+  KmsDone String
 }
 
 model VerificationRequest {

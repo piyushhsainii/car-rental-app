@@ -2,6 +2,7 @@
 import React from 'react'
 import { Spotlight } from './SpotLight'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 const Section1 = () => {
     const {theme} = useTheme()
@@ -13,14 +14,11 @@ const Section1 = () => {
             />
             <div className=" text-primary p-4 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
                 <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-blue-800 to-blue-300 dark:bg-gradient-to-b dark:from-white dark:to-slate-600 bg-opacity-50">
-                    Spotlight <br /> is the new trend.
+                   Experience Luxury, <br></br> Your Way
                 </h1>
-                <p className="mt-4 font-normal text-base text-white max-w-lg text-center mx-auto">
-                    Spotlight effect is a great way to draw attention to a specific part
-                    of the page. Here, we are drawing the attention towards the text
-                    section of the page. I don&apos;t know why but I&apos;m running out of
-                    copy.
-                </p>
+                 <div className='m-auto border hover:border-slate-300 transition-all duration-400 border-opacity-45 w-[200px] text-center p-2 px-4 rounded-md my-5'>
+                     <Link href={'/cars'}> <button>Browse Collections</button> </Link>
+                 </div>
             </div>
         </div>
     )
