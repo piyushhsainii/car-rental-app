@@ -30,14 +30,14 @@ const Auth = () => {
                     <hr></hr>
                     <div className='p-2 m-2 flex gap-3'>
                         <label className='text-center pt-[6.75px] font-semibold'>Enter Name:</label>
-                        <input className='p-2 w-[70%] '  type="text" placeholder='Enter name' />
+                        <input className='p-2 w-[70%] bg-white border border-slate-400'  type="text" placeholder='Enter name' />
                     </div>
                     <div className='p-2 m-2 flex gap-3'>
                         <label className='text-center pt-[6.75px] font-semibold'>Enter Email:</label>
-                        <input  className='p-2 w-[70%] ' type="email" placeholder='Enter Email' /></div>
+                        <input  className='p-2 w-[70%] bg-white  border border-slate-400' type="email" placeholder='Enter Email' /></div>
                     <div className='p-2 m-2 flex gap-3'>
                         <label className='text-center pt-[6.75px] font-semibold'>Enter Password:</label>
-                        <input  className='p-2  w-[68%]' type="password" placeholder='Enter Password' /></div>
+                        <input  className='p-2  w-[68%] bg-white border border-slate-400' type="password" placeholder='Enter Password' /></div>
                 </div>
                 <div className='w-[400px] m-auto  text-slate-800  rounded-md border-slate-700 border text-sm  bg-white cursor-pointer' onClick={() => signIn("github")} >
                     <div className='flex justify-center'>
