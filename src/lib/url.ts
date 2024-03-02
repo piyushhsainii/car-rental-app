@@ -1,0 +1,1 @@
+export const url = process.env.URL ?? "http://localhost:3000"

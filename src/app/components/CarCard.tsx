@@ -1,50 +1,61 @@
 import React from 'react'
 import { DirectionAwareHover } from './DirectionAware'
 
-const CarCard = () => {
-  return (
-    <div className='bg-slate-500 min-h-[350px] w-[320px] overflow-hidden rounded-md ' >
-    <div>
-        <DirectionAwareHover className='h-[300px] w-[340px]  m-auto c ' imageUrl={'/Logo.png'}>
-        <div className='flex justify-evenly gap-1 '>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
-                </div>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
-                </div>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
-                </div>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
-                </div>            
-            </div>
-        </DirectionAwareHover>
-    </div>
+
+interface carData {
+    id: String,
+    carName: String,
+    Img: String[],
+    brand: String,
+    price: Number,
+    Fuel: String,
+    Seat: String,
+    Mileage: Number,
+    Availability: String,
+    model: String,
+    Plate: String,
+    Year: String,
+    type: String,
+    Transmission: String,
+    Color: String,
+    ownerShip: String,
+    KmsDone: String
+  }
+
+
+const CarCard = (props:carData) => {
+    const Image = props.Img[0]
+  return ( 
+      <div className='min-h-[350px] w-[340px] overflow-hidden rounded-md border border-slate-700 border-opacity-50 ' >
+        {
+            Image &&  
+            <div>
+              <DirectionAwareHover className='h-[300px] w-[340px] m-auto ' imageUrl={Image as string}>
+                  <div className='flex justify-evenly gap-1 text-md '>
+                      Click to View Details        
+                  </div>
+              </DirectionAwareHover>
+          </div>
+        }
         <div className='flex flex-col justify-evenly gap-2 p-2'>
-            <div className='text-md font-semibold pl-3 '>25,000</div>
-            <div className='pl-3 text-xl font-semibold'>JEEP</div>
-            <div className='flex justify-evenly gap-1 '>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
+            <div className='text-lg font-semibold pl-3 '>₹{props.price.toString()}</div>
+            <div className='pl-3 text-xl font-semibold'> {props.carName} </div>
+            <div className='flex justify-around gap-1 '>
+                <div className='flex flex-col items-center justify-center text-[12px]'>
+                    <div> Fuel Type </div>
+                    <div>{props.Fuel}</div>
                 </div>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
+                <div className='flex flex-col items-center justify-center text-[12px]'>
+                    <div>Kms</div>
+                    <div> {props.KmsDone} </div>
                 </div>
-                <div className='flex flex-col items-center justify-center'>
-                    <div>Fuel Type</div>
-                    <div>Petrol</div>
+                <div className='flex flex-col items-center justify-center text-[12px]'>
+                    <div>Reg.Year</div>
+                    <div> {props.Year} </div>
                 </div>
-                <div className='flex flex-col items-center justify-center'>
+                <div className='flex flex-col items-center justify-center text-[12px]'>
                     <div>Fuel Type</div>
-                    <div>Petrol</div>
+                    <div> {props.Plate} </div>
                 </div>            
             </div>
         </div>
