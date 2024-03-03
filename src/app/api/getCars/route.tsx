@@ -1,30 +1,24 @@
 import { PrismaClient   } from "@prisma/client";
 import { NextRequest } from "next/server";
 
-interface params {
-    filter:string
-}
 export enum SortOrder {
     asc = "asc",
     desc = "desc"
 }
 
-export async function GET(req:NextRequest){
+export async function POST(req:NextRequest){
 
-    const  filter  = req.nextUrl.searchParams
-    const query = filter.get('Fuel') 
-    const sortValue =  filter.get('sortBy')  as SortOrder 
-
-    // const list = quert?.split(',')
-    // console.log(list)
+    const data = await req.json() 
+    const params:SortOrder = data.params
+    const fuel = data.fuel 
     try { 
     const prisma =  new PrismaClient()
           
-    if(!sortValue) {
+    if(!params) {
         const Cars = await prisma.cAR.findMany({
             where:{
                 Fuel: {
-                    in:[ query || "Petrol", "Deisel" ]                
+                    in:[ fuel as string || "Petrol", "Deisel" ]                
                 }
             }
     
@@ -36,18 +30,18 @@ export async function GET(req:NextRequest){
             status:200
         })
         }
-        if(sortValue){
+        if(params){
             const Cars = await prisma.cAR.findMany({
                 orderBy:{
-                    price:sortValue  
+                    price:params 
                 },
                 where:{
                     Fuel: {
-                        in:[ query || "Petrol", "Deisel" ]                
+                        in:[ fuel as string || "Petrol", "Deisel" ]                
                     }
                 }
-        
             })
+            console.log(Cars,"data from api")
         return Response.json({
             data:Cars
         },
@@ -55,8 +49,6 @@ export async function GET(req:NextRequest){
             status:200
         })
         } 
-  
-
     } catch (error) {
         console.log(error)
         return Response.json({

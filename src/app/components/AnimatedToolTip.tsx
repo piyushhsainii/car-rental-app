@@ -29,7 +29,7 @@ export const AnimatedTooltip = ({
   );
   // translate the tooltip
   const translateX = useSpring(
-    useTransform(x, [-100, 100], [-100, 50]),
+    useTransform(x, [-100, 100], [-270, 50]),
     springConfig
   );
   const handleMouseMove = (event: any) => {
@@ -52,7 +52,7 @@ export const AnimatedTooltip = ({
                 initial={{ opacity: 0, y: 20, scale: 0.4 }}
                 animate={{
                   opacity: 1,
-                  y: 100,
+                  y: 70,
                   scale: 1,
                   transition: {
                     type: "spring",

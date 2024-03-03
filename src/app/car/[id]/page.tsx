@@ -63,22 +63,22 @@ const page = async({params}:{params:{id:string}}) => {
         </div>
         <div className='w-[75vw]  ml-16 m-4 flex flex-wrap justify-start gap-6' >
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-              <div> <Car strokeWidth={1} /> </div>  <div>Model :</div> <div>{data.car.model}</div>
+              <div> <Car strokeWidth={1} /> </div>  <div className='text-muted-foreground'>Model </div> <div>{data.car.model}</div>
             </div>
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-              <div><UserRound strokeWidth={0.75} /></div> <div> Ownership</div>  <div>{data.car.ownerShip}</div>
+              <div><UserRound strokeWidth={0.75} /></div> <div className='text-muted-foreground' > Ownership</div>  <div>{data.car.ownerShip}</div>
             </div>
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-            <div><Gauge strokeWidth={1} /></div> <div>Kms Done</div>  <div> {data.car.KmsDone}</div>              
+            <div><Gauge strokeWidth={1} /></div> <div className='text-muted-foreground' >Kms Done</div>  <div> {data.car.KmsDone}</div>              
             </div>
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-            <div><Armchair strokeWidth={1} /></div> <div>Seat Capacity</div>  <div> {data.car.Seat}</div>   
+            <div><Armchair strokeWidth={1} /></div> <div className='text-muted-foreground' >Seat Capacity</div>  <div> {data.car.Seat}</div>   
             </div>
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-             <div className='bg-white'><img width={28} src="/gear-shift.png" alt="" />  </div><div className='font-normal'>Transmission</div>  <div> {data.car.Transmission}</div> 
+             <div className='bg-white'><img width={28} src="/gear-shift.png" alt="" />  </div><div className='font-normal text-muted-foreground'>Transmission</div>  <div> {data.car.Transmission}</div> 
             </div>
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-             <div><Fuel strokeWidth={1} /></div>   <div>Fuel Type</div>  <div> {data.car.Fuel} </div> 
+             <div><Fuel strokeWidth={1} /></div>   <div className='text-muted-foreground' >Fuel Type</div>  <div> {data.car.Fuel} </div> 
             </div>
         </div>
 

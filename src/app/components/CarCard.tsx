@@ -30,7 +30,7 @@ const CarCard = (props:carData) => {
         {
             Image &&  
             <div>
-              <DirectionAwareHover className='h-[300px] w-[340px] m-auto ' imageUrl={Image as string}>
+              <DirectionAwareHover className='h-[270px] max-w-[400px] m-auto ' imageUrl={Image as string}>
                   <div className='flex justify-evenly gap-1 text-md '>
                       Click to View Details        
                   </div>
