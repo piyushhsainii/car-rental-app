@@ -25,9 +25,17 @@ import { url } from '@/lib/url'
 import Filter from '../components/FilterComponent'
 import { Badge } from "@/components/ui/badge"
 
-async function getData(params: string) {
+async function getData(
+  sortBy: string,
+  params: string,
+  Fuel: string,
+  type: string,
+  Gear: string,
+  brand: string,
+  seat: string
+  ) {
   const { data } = await axios.post(`${url}/api/getCars`, {
-    params
+    sortBy, params, Fuel, type, Gear, brand , seat
   })
   return data
 }
@@ -53,12 +61,20 @@ interface carData {
 }
 
 const page = async (props: any) => {
-  const { data } = await getData(props.searchParams.sortBy)
+  const { data } = await getData(
+    props.searchParams.sortBy,
+    props.searchParams.params,
+    props.searchParams.Fuel,
+    props.searchParams.type,
+    props.searchParams.Gear,
+    props.searchParams.brand,
+    props.searchParams.seat
+    )
 
   return (
     <div>
       <NavMenu />
-      <div className='flex  justify-between h-[85vh] ' >
+      <div className='flex  justify-between h-[88vh] ' >
         <Filter props={props.searchParams} />
         <div className='flex flex-col'>
           <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">

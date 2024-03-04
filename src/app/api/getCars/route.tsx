@@ -10,7 +10,11 @@ export async function POST(req:NextRequest){
 
     const data = await req.json() 
     const params:SortOrder = data.params
-    const fuel = data.fuel 
+    const fuel = data.Fuel 
+    const type = data.type
+    const gear = data.Gear
+    const brand = data.brand
+    const seat = data.seat
     try { 
     const prisma =  new PrismaClient()
           
@@ -19,6 +23,19 @@ export async function POST(req:NextRequest){
             where:{
                 Fuel: {
                     in:[ fuel as string || "Petrol", "Deisel" ]                
+                },
+                type:{
+                    in:[ type || "Sedan", "SUV", "hatchback" ]
+                }
+                ,
+                Transmission:{
+                    in:[ gear || "Automatic", "Manual" ]
+                },          
+                brand:{
+                    in:[ brand || "BMW", "Audi", "Bentley", "Mercedes","Porsche","Skoda"]
+                },
+                Seat:{
+                    in:[seat || "4","5","6"]
                 }
             }
     
@@ -38,6 +55,18 @@ export async function POST(req:NextRequest){
                 where:{
                     Fuel: {
                         in:[ fuel as string || "Petrol", "Deisel" ]                
+                    },
+                    type:{
+                        in:[ type || "Sedan", "SUV", "hatchback" ]
+                    },
+                    Transmission:{
+                        in:[ gear || "Automatic", "Manual" ]
+                    },          
+                    brand:{
+                        in:[ brand || "BMW", "Audi", "Bentley", "Mercedes","Porsche","Skoda"]
+                    },
+                    Seat:{
+                        in:[seat || "4","5","6"]
                     }
                 }
             })
