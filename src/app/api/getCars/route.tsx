@@ -9,12 +9,18 @@ export enum SortOrder {
 export async function POST(req:NextRequest){
 
     const data = await req.json() 
-    const params:SortOrder = data.params
+    const params:SortOrder = data.sortBy
     const fuel = data.Fuel 
     const type = data.type
     const gear = data.Gear
     const brand = data.brand
     const seat = data.seat
+    const page = data.page
+    let skip 
+    if(page){
+        skip = (page - 1)*2
+    }
+
     try { 
     const prisma =  new PrismaClient()
           
@@ -37,7 +43,10 @@ export async function POST(req:NextRequest){
                 Seat:{
                     in:[seat || "4","5","6"]
                 }
-            }
+            },
+            skip:1,
+            take:2
+
     
         })
         return Response.json({
@@ -58,7 +67,8 @@ export async function POST(req:NextRequest){
                     },
                     type:{
                         in:[ type || "Sedan", "SUV", "hatchback" ]
-                    },
+                    }
+                    ,
                     Transmission:{
                         in:[ gear || "Automatic", "Manual" ]
                     },          
@@ -70,7 +80,6 @@ export async function POST(req:NextRequest){
                     }
                 }
             })
-            console.log(Cars,"data from api")
         return Response.json({
             data:Cars
         },

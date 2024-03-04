@@ -27,15 +27,15 @@ import { Badge } from "@/components/ui/badge"
 
 async function getData(
   sortBy: string,
-  params: string,
   Fuel: string,
   type: string,
   Gear: string,
   brand: string,
-  seat: string
+  seat: string,
+  page: string
   ) {
   const { data } = await axios.post(`${url}/api/getCars`, {
-    sortBy, params, Fuel, type, Gear, brand , seat
+    sortBy, Fuel, type, Gear, brand , seat,page
   })
   return data
 }
@@ -63,12 +63,12 @@ interface carData {
 const page = async (props: any) => {
   const { data } = await getData(
     props.searchParams.sortBy,
-    props.searchParams.params,
     props.searchParams.Fuel,
     props.searchParams.type,
     props.searchParams.Gear,
     props.searchParams.brand,
-    props.searchParams.seat
+    props.searchParams.seat,
+    props.searchParams.page
     )
 
   return (
@@ -93,7 +93,7 @@ const page = async (props: any) => {
                 </DropdownMenu>
               </div>
             </div>
-            <div className='flex gap-6 flex-wrap justify-center'>
+            <div className='flex gap-3 flex-wrap justify-evenly'>
               {
                 data && data.map((car: carData) => (
                   <Link href={`/car/${car.id}`} key={car.id}>
@@ -105,7 +105,7 @@ const page = async (props: any) => {
           </ScrollArea>
             <div className='flex justify-center'>
             <div className='p-2 cursor-pointer'>&#x276E; </div> 
-            <Badge className='text-md' variant="outline"> 1 / 2</Badge>
+            <Badge className='text-md' variant="outline"> <Link href={'/'}>1</Link> / <Link href={''}>2</Link> </Badge>
             <div className='p-2 cursor-pointer'>&#x276F;</div>
             </div>
         </div>

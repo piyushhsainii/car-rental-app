@@ -34,7 +34,7 @@ const page = async({params}:{params:{id:string}}) => {
            <Link href={'/cars'}>  <div className='flex items-center border-r pl-3 pr-3 border-slate-300 border-opacity-60'><ArrowLeft width={15} /> <div>Back</div> </div></Link>
             <div className='flex flex-col'>
                 <div className='text-2xl p-3 font-semibold'> {data.car.carName} </div>
-                <div className='text-xl p-3 pt-0 font-semibold' >₹{data.car.price}</div>
+                <div className='text-xl p-3 pt-0 font-semibold' >₹{data.car.pricetoLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             </div>
              </div>
             <div className=' font-semibold text-lg flex justify-center items-center'>

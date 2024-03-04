@@ -26,11 +26,11 @@ interface carData {
 const CarCard = (props:carData) => {
     const Image = props.Img[0]
   return ( 
-      <div className='min-h-[350px] w-[340px] overflow-hidden rounded-md border border-slate-700 border-opacity-50 ' >
+      <div className='min-h-[360px] w-[340px] overflow-hidden rounded-md border border-slate-700 border-opacity-50 ' >
         {
             Image &&  
             <div>
-              <DirectionAwareHover className='h-[270px] max-w-[400px] m-auto ' imageUrl={Image as string}>
+              <DirectionAwareHover className='h-[270px]  max-w-[400px] m-auto ' imageUrl={Image as string}>
                   <div className='flex justify-evenly gap-1 text-md '>
                       Click to View Details        
                   </div>
@@ -38,7 +38,7 @@ const CarCard = (props:carData) => {
           </div>
         }
         <div className='flex flex-col justify-evenly gap-2 p-2'>
-            <div className='text-lg font-semibold pl-3 '>₹{props.price.toString()}</div>
+            <div className='text-lg font-semibold pl-3 '>₹{props.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             <div className='pl-3 text-xl font-semibold'> {props.carName} </div>
             <div className='flex justify-around gap-1 '>
                 <div className='flex flex-col items-center justify-center text-[12px]'>
