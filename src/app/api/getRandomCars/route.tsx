@@ -1,18 +1,14 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 export async function GET(){
+    
     try {
     const prisma = new PrismaClient()
     const count = await prisma.cAR.count()
-    const randomNo = Math.floor(Math.random()*count)
-    const randomCars = await prisma.cAR.findMany({
-        skip:randomNo,
+    const randomCars = await prisma.$queryRaw(Prisma.sql`SELECT * FROM "CAR" ORDER BY RANDOM()  LIMIT 2 `);
+    return Response.json({
+        randomCars
     })
-        return Response.json({
-            randomCars
-        },{
-            status:200
-        })
 } catch (error) {
     return Response.json({
         error:"Something went wrong fething data"

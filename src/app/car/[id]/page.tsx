@@ -12,6 +12,7 @@ import {
 import axios from 'axios'
 import { url } from '@/lib/url'
 import Link from 'next/link'
+import CarCard from '@/app/components/CarCard'
 
 async function getData(params:string) {
     const {data} = await axios.post(`${url}/api/getCarInfo`,{
@@ -25,7 +26,7 @@ async function getData(params:string) {
 
 const page = async({params}:{params:{id:string}}) => {
     const  {data , randomCars}  = await getData(params.id)
-    console.log(randomCars, "Data?")
+    console.log(randomCars.randomCars , "Data?")
   return (
     <div>
         <NavMenu />
@@ -34,7 +35,7 @@ const page = async({params}:{params:{id:string}}) => {
            <Link href={'/cars'}>  <div className='flex items-center border-r pl-3 pr-3 border-slate-300 border-opacity-60'><ArrowLeft width={15} /> <div>Back</div> </div></Link>
             <div className='flex flex-col'>
                 <div className='text-2xl p-3 font-semibold'> {data.car.carName} </div>
-                <div className='text-xl p-3 pt-0 font-semibold' >₹{data.car.pricetoLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
+                <div className='text-xl p-3 pt-0 font-semibold' >{data.car && data.car.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             </div>
              </div>
             <div className=' font-semibold text-lg flex justify-center items-center'>
@@ -90,12 +91,14 @@ const page = async({params}:{params:{id:string}}) => {
             <div className='w-full h-[300px]'>
             <Carousel className='w-[90vw] m-auto h-[300px] '>
                 <CarouselContent>
-                    {
-                    data && data.car.Img &&  data.car.Img.map((car:string)=>(
-                            <CarouselItem className='basis-1/3 pl-4 pt-4 m-auto'>
-                                <img src={car} alt="Car Image" />
-                            </CarouselItem>
-                        ))
+                {
+                    randomCars && randomCars.randomCars.map((car:any) => (
+                        <CarouselItem className='basis-1/3 pl-4 pt-4 m-auto' key={car.id}>
+                        <Link href={`/car/${car.id}`}>
+                            <CarCard {...car} />
+                        </Link>
+                        </CarouselItem>
+                    ))
                     }
                 </CarouselContent>
                 <CarouselPrevious />

@@ -38,7 +38,7 @@ const CarCard = (props:carData) => {
           </div>
         }
         <div className='flex flex-col justify-evenly gap-2 p-2'>
-            <div className='text-lg font-semibold pl-3 '>₹{props.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
+            <div className='text-lg font-semibold pl-3 '>{props.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             <div className='pl-3 text-xl font-semibold'> {props.carName} </div>
             <div className='flex justify-around gap-1 '>
                 <div className='flex flex-col items-center justify-center text-[12px]'>

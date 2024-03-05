@@ -18,20 +18,20 @@ export async function POST(req:NextRequest){
     const page = data.page
     let skip 
     if(page){
-        skip = (page - 1)*2
+        skip = ((page - 1)*2)
     }
-
+    console.log(skip, 'vlaue of nski')
     try { 
     const prisma =  new PrismaClient()
-          
+          console.log( type,"api se type")
     if(!params) {
         const Cars = await prisma.cAR.findMany({
             where:{
                 Fuel: {
-                    in:[ fuel as string || "Petrol", "Deisel" ]                
+                    in:[ fuel || "Petrol", "Deisel" ]                
                 },
                 type:{
-                    in:[ type || "Sedan", "SUV", "hatchback" ]
+                    in:[ type ??  "Sedan", "SUV", "hatchback" ]
                 }
                 ,
                 Transmission:{
@@ -41,10 +41,10 @@ export async function POST(req:NextRequest){
                     in:[ brand || "BMW", "Audi", "Bentley", "Mercedes","Porsche","Skoda"]
                 },
                 Seat:{
-                    in:[seat || "4","5","6"]
+                    in:[seat ?? "4","5","6"]
                 }
             },
-            skip:1,
+            skip:skip,
             take:2
 
     

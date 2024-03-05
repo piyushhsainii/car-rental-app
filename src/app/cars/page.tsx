@@ -24,6 +24,7 @@ import Link from 'next/link'
 import { url } from '@/lib/url'
 import Filter from '../components/FilterComponent'
 import { Badge } from "@/components/ui/badge"
+import PaginationComponent from '../components/PaginationComponent'
 
 async function getData(
   sortBy: string,
@@ -75,7 +76,7 @@ const page = async (props: any) => {
     <div>
       <NavMenu />
       <div className='flex  justify-between h-[88vh] ' >
-        <Filter props={props.searchParams} />
+        <Filter />
         <div className='flex flex-col'>
           <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">
             <div className='flex justify-between p-3 px-7' >
@@ -103,11 +104,7 @@ const page = async (props: any) => {
               }
             </div>
           </ScrollArea>
-            <div className='flex justify-center'>
-            <div className='p-2 cursor-pointer'>&#x276E; </div> 
-            <Badge className='text-md' variant="outline"> <Link href={'/'}>1</Link> / <Link href={''}>2</Link> </Badge>
-            <div className='p-2 cursor-pointer'>&#x276F;</div>
-            </div>
+          <PaginationComponent/>
         </div>
       </div>
 
