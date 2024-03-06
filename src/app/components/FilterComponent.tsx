@@ -26,7 +26,7 @@ const Filter = () => {
         <div className='ml-16 pt-[0.7px] text-sm items-center text-primary underline '> <Link href={'/cars'} >clear all</Link>  </div>
       </div>
       <div className='p-4 border-slate-300 border-b border-opacity-40'>
-        <div> <button onClick={ApplyFilterHandler} className='border-slate-700 border-opacity-35 border'>APPLY FILTER</button> </div>
+        <div> <button onClick={ApplyFilterHandler} className='border-slate-700 border-opacity-35 border text-white bg-blue-400 p-2 rounded-md px-3'>APPLY FILTER</button> </div>
         <div className='font-semibold  mb-4'>Type</div>
         <div className='font-semibold flex items-center gap-2' >
             <div><Checkbox checked={type.includes("Hatchback")}  onCheckedChange={(isChecked) => isChecked ? setcarType(c=>[...c , "Hatchback"])  : setcarType(c=> [...c.filter((item)=> item !== "Hatchback")])} /></div>Hatchback</div>

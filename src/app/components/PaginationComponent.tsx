@@ -11,11 +11,13 @@ const PaginationComponent = () => {
     const router = useRouter()
     const prevPageHandler = ()=>{
         setPage(c => c===1 ? c : c-1 )
-        router.push(window.location.href)
+        router.refresh()
+        router.refresh()
 
     }
     const NextPageHandler = ()=>{
         setPage(c =>  c+1 )
+        router.refresh()
         router.refresh()
     }
     return (

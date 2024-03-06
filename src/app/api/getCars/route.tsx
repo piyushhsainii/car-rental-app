@@ -10,7 +10,8 @@ export async function POST(req:NextRequest){
 
     const data = await req.json() 
     const params:SortOrder = data.sortBy
-    const fuel = data.Fuel 
+    const fuel = data.Fuel
+    console.log(fuel)
     const type = data.type
     const gear = data.Gear
     const brand = data.brand
@@ -23,7 +24,6 @@ export async function POST(req:NextRequest){
     console.log(skip, 'vlaue of nski')
     try { 
     const prisma =  new PrismaClient()
-          console.log( type,"api se type")
     if(!params) {
         const Cars = await prisma.cAR.findMany({
             where:{
@@ -63,7 +63,7 @@ export async function POST(req:NextRequest){
                 },
                 where:{
                     Fuel: {
-                        in:[ fuel as string || "Petrol", "Deisel" ]                
+                        in:[ fuel ?? "Petrol", "Diesel" ]                
                     },
                     type:{
                         in:[ type || "Sedan", "SUV", "hatchback" ]

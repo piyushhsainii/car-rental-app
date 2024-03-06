@@ -40,7 +40,7 @@ const page = async({params}:{params:{id:string}}) => {
              </div>
             <div className=' font-semibold text-lg flex justify-center items-center'>
                 <button className=' border border-slate-400   p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-                    Reserve this Car
+                  <Link href={'/Booking'}>  Reserve this Car</Link>
                 </button> </div>
             </div>
         <div className='w-full h-[300px]'>

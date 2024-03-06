@@ -5,7 +5,7 @@ import SignOut from "./SignOut";
 
 
 const NavMenu = async () => {
-    const session = await getServerSession()
+    // const session = await getServerSession()
     return (
         <div className="flex justify-between  h-[60px] px-4 " >
             <div className=" " >
