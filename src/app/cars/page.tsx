@@ -25,6 +25,7 @@ import { url } from '@/lib/url'
 import Filter from '../components/FilterComponent'
 import { Badge } from "@/components/ui/badge"
 import PaginationComponent from '../components/PaginationComponent'
+import Footer from '../components/Footer'
 
 async function getData(
   sortBy: string,
@@ -68,14 +69,14 @@ const page = async (props: any) => {
     props.searchParams.type,
     props.searchParams.Gear,
     props.searchParams.brand,
-    props.searchParams.seat,
+    props.searchParams.seats,
     props.searchParams.page
     )
 
   return (
     <div>
       <NavMenu />
-      <div className='flex  justify-between h-[88vh] ' >
+      <div className='flex  justify-between h-[95vh] ' >
         <Filter />
         <div className='flex flex-col'>
           <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">
@@ -107,7 +108,9 @@ const page = async (props: any) => {
           <PaginationComponent/>
         </div>
       </div>
-
+          <div className='mt-12'>
+             <Footer />
+          </div>
     </div>
   )
 }

@@ -40,7 +40,7 @@ const page = async({params}:{params:{id:string}}) => {
              </div>
             <div className=' font-semibold text-lg flex justify-center items-center'>
                 <button className=' border border-slate-400   p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-                  <Link href={'/Booking'}>  Reserve this Car</Link>
+                  <Link href={`/Booking/${data.car.id}`}>  Reserve this Car</Link>
                 </button> </div>
             </div>
         <div className='w-full h-[300px]'>
@@ -60,7 +60,7 @@ const page = async({params}:{params:{id:string}}) => {
         </div>
         {/* SPECIFICATION DIV */}
         <div className='p-4 ml-14 text-xl font-semibold' >
-            CAR SPECIFICATIONS
+            CAR SPECIFICATIONS 
         </div>
         <div className='w-[75vw]  ml-16 m-4 flex flex-wrap justify-start gap-6' >
             <div className='w-[200px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,21 +9,46 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { CircleUserIcon, Moon, Sun } from 'lucide-react'
+import { CircleUserIcon, LayoutDashboard, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { AnimatedTooltip } from './AnimatedToolTip'
+import axios from 'axios'
+import { url } from '@/lib/url'
+
+interface Userdata {
+      isAdmin :true | false
+}
 
 const DarkModeBtn = () => {
     const { data: session, status } = useSession()
     const  { setTheme , theme  } = useTheme()
-    console.log(status)
-    console.log(session)
+    const [UserData, setData] = useState<Userdata | null >(null)
+    const adminStatus = async()=>{
+      // @ts-ignore
+    const userID =  session?.user?.id ?? null
+    console.log(userID,"commenting")
+   const { data } = await axios.post(`/api/userInfo`,{
+        id:userID
+     })
+     setData(data.user)
+    }
+    useEffect(()=>{
+      // @ts-ignore
+      if(status === 'authenticated'){
+        adminStatus()
+      }
+    },[session])
+
+    console.log(UserData,"commenting from navmenyu")
   return (
     <div className="flex items-center gap-4 justify-center" >
-
-        <DropdownMenu >
+        {
+          UserData && UserData.isAdmin === true ?
+          <div> <LayoutDashboard /> </div>: null
+        }
+        <DropdownMenu > 
         <DropdownMenuTrigger asChild>
             <Button variant="outline"   size="icon">
             <Sun className="h-[1.2rem]   w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
