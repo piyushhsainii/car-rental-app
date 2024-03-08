@@ -28,7 +28,6 @@ const DarkModeBtn = () => {
     const adminStatus = async()=>{
       // @ts-ignore
     const userID =  session?.user?.id ?? null
-    console.log(userID,"commenting")
    const { data } = await axios.post(`/api/userInfo`,{
         id:userID
      })
@@ -41,12 +40,11 @@ const DarkModeBtn = () => {
       }
     },[session])
 
-    console.log(UserData,"commenting from navmenyu")
   return (
     <div className="flex items-center gap-4 justify-center" >
         {
           UserData && UserData.isAdmin === true ?
-          <div> <LayoutDashboard /> </div>: null
+          <div> <Link href={'/Dashboard'}><LayoutDashboard /></Link> </div>: null
         }
         <DropdownMenu > 
         <DropdownMenuTrigger asChild>

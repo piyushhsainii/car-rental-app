@@ -6,6 +6,14 @@ import React, { useEffect, useState } from 'react'
 import CheckoutForm from '../../components/CheckoutForm';
 import Loading from '@/app/loading';
 import { Armchair, Car, Fuel, Gauge, UserRound } from 'lucide-react';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -70,7 +78,26 @@ const page = ({params}:any) => {
         <NavMenu />
         <div className='w-[80vw] border border-slate-300 m-auto   ' >
         <div className='flex justify-evenly p-4 gap-2 '>
-          <div className=' w-[60%] m-auto'>
+          <div className=' w-[60%] m-auto pb-2 '>
+          <Breadcrumb>
+                 <BreadcrumbList>
+                    <BreadcrumbItem>
+                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                    <BreadcrumbLink href="/cars">Cars</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                    <BreadcrumbLink href={`/car/${params.id}`}>Car Info</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Reservation</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
             <div className='text-3xl font-semibold text-center' >{Data?.carName}</div>
             <div className='text-xl font-semibold py-2 text-center'> { Data.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' }) }  </div>
             <div className='w-[400px] m-auto'>

@@ -26,6 +26,15 @@ import Filter from '../components/FilterComponent'
 import { Badge } from "@/components/ui/badge"
 import PaginationComponent from '../components/PaginationComponent'
 import Footer from '../components/Footer'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+
 
 async function getData(
   sortBy: string,
@@ -74,12 +83,23 @@ const page = async (props: any) => {
     )
 
   return (
-    <div>
+    <div> 
       <NavMenu />
       <div className='flex  justify-between h-[95vh] ' >
         <Filter />
         <div className='flex flex-col'>
           <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+               <BreadcrumbPage>Cars</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
             <div className='flex justify-between p-3 px-7' >
               <div className='font-semibold'> Total {data.length} results found </div>
               <div>

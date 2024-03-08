@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useQueryState, parseAsArrayOf , parseAsString } from 'nuqs'
 
-const Filter = () => {
+const Filter = () => { 
   const [type, setcarType] = useQueryState('type', parseAsArrayOf(parseAsString).withDefault([]))
   const [fuel, setFuelType] = useQueryState('Fuel', parseAsArrayOf(parseAsString).withDefault([]))
   const [gear, setGearType] = useQueryState('Gear', parseAsArrayOf(parseAsString).withDefault([]))
@@ -50,7 +50,7 @@ const Filter = () => {
       <div className='p-4 border-slate-300 border-b border-opacity-40'>
         <div className='font-semibold  mb-4'>Brand</div>
         <div className='font-semibold flex items-center gap-2' ><div><Checkbox   checked={brand.includes("Audi")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Audi"]) : setBrand((c)=>[...c.filter(car=>car!=="Audi")]) } /></div>AUDI</div>
-        <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Bmw")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "BMW"]) : setBrand((c)=>[...c.filter(car=>car!=="BMW")]) } /></div> BMW</div>
+        <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("BMW")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "BMW"]) : setBrand((c)=>[...c.filter(car=>car!=="BMW")]) } /></div> BMW</div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Mercedes")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Mercedes"]) : setBrand((c)=>[...c.filter(car=>car!=="Mercedes")]) } /></div> Mercedes </div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Porsche")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Porsche"]) : setBrand((c)=>[...c.filter(car=>car!=="Porsche")]) } /></div> Porsche </div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Bently")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Bentley"]) : setBrand((c)=>[...c.filter(car=>car!=="Bentley")]) } /></div> Bentley </div>

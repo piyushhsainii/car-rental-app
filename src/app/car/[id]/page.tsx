@@ -13,7 +13,15 @@ import axios from 'axios'
 import { url } from '@/lib/url'
 import Link from 'next/link'
 import CarCard from '@/app/components/CarCard'
-
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+  
 async function getData(params:string) {
     const {data} = await axios.post(`${url}/api/getCarInfo`,{
         id:params
@@ -33,7 +41,24 @@ const page = async({params}:{params:{id:string}}) => {
         <div className='flex justify-between m-auto w-[93vw] '>
            <div className='flex flex-col   p-2  ' >
            <Link href={'/cars'}>  <div className='flex items-center border-r pl-3 pr-3 border-slate-300 border-opacity-60'><ArrowLeft width={15} /> <div>Back</div> </div></Link>
-            <div className='flex flex-col'>
+            <div className='flex flex-col '>
+                <div className='pl-5 mt-5'>
+                <Breadcrumb>
+                 <BreadcrumbList>
+                    <BreadcrumbItem>
+                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                    <BreadcrumbLink href="/cars">Cars</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                    <BreadcrumbPage>Car Info</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+                </div>
                 <div className='text-2xl p-3 font-semibold'> {data.car.carName} </div>
                 <div className='text-xl p-3 pt-0 font-semibold' >{data.car && data.car.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             </div>

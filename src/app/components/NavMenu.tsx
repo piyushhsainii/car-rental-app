@@ -11,7 +11,7 @@ const NavMenu = async () => {
     return (
         <div className="flex justify-between  h-[60px] px-4 " >
             <div className="font-thin text-2xl  p-3 " >
-                {/* <Logo /> */} <Link href={'/'}>HORSEPOWER CARTEL </Link>
+            <Link href={'/'}>HORSEPOWER CARTEL </Link>
             </div>
             <div className="flex items-center gap-6 justify-center" >
                 <div>
