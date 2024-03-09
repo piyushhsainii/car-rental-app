@@ -23,6 +23,7 @@ interface Userdata {
 
 const DarkModeBtn = () => {
     const { data: session, status } = useSession()
+    console.log(session, "Session")
     const  { setTheme , theme  } = useTheme()
     const [UserData, setData] = useState<Userdata | null >(null)
     const adminStatus = async()=>{
@@ -35,7 +36,7 @@ const DarkModeBtn = () => {
     }
     useEffect(()=>{
       // @ts-ignore
-      if(status === 'authenticated'){
+      if(status && status === 'authenticated'){
         adminStatus()
       }
     },[session])

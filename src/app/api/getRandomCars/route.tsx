@@ -1,9 +1,9 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma} from "@prisma/client";
+import { prisma } from '../../../lib/prismaClient'
 
 export async function GET(){
     
     try {
-    const prisma = new PrismaClient()
     const count = await prisma.cAR.count()
     const randomCars = await prisma.$queryRaw(Prisma.sql`SELECT * FROM "CAR" ORDER BY RANDOM()  LIMIT 3 `);
     return Response.json({

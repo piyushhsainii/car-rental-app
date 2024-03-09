@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client"
 import { SignJWT } from 'jose'
+import { prisma } from '../../../lib/prismaClient'
 import bcrypt  from 'bcrypt'
+
 export async function POST(req:Request){
     const  { name, email, password } = await req.json()
    try {
-    const prisma = new PrismaClient()
     const userExist = await prisma.user.findFirst({
         where:{
             email:email

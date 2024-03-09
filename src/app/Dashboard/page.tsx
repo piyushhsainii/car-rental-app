@@ -63,6 +63,7 @@ export async function getData(){
 
 const page = async() => {
   const  { data ,UserData} = await getData()
+
   return (
     <div>
         <NavMenu />

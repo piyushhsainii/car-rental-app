@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { prisma } from '../../../lib/prismaClient'
 
 export async function POST(req:Request){
     const {
@@ -20,7 +20,6 @@ export async function POST(req:Request){
         KmsDone
     } = await req.json()
     try {
-        const prisma = new PrismaClient()
         const car = await prisma.cAR.create({
             data:{
                 carName,

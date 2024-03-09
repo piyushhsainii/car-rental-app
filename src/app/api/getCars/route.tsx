@@ -1,4 +1,4 @@
-import { PrismaClient   } from "@prisma/client";
+import { prisma } from '../../../lib/prismaClient'
 import { NextRequest } from "next/server";
 
 export enum SortOrder {
@@ -28,7 +28,6 @@ export async function POST(req:NextRequest){
     }
     console.log(brand, 'vlaue of nski')
     try { 
-    const prisma =  new PrismaClient()
     if(!params) {
         const Cars = await prisma.cAR.findMany({
             where:{

@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '../../../lib/prismaClient'
 import { NextRequest } from "next/server";
 
 export async function POST(req:NextRequest){
     const { id } = await req.json()
     try {
-        const prisma = new PrismaClient()
+        
         const car = await prisma.cAR.findUnique({
             where:{
                 id:id
