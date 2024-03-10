@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { User } from 'lucide-react'
+import { ArrowUpRight, User } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -23,6 +23,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 import axios from 'axios'
 import { url } from '@/lib/url'
+import UserDashboard from '../components/UserDashboard'
 
 interface userData {
       id: string,
@@ -62,12 +63,15 @@ export async function getData(){
 }
 
 const page = async() => {
+
   const  { data ,UserData} = await getData()
+ 
+
 
   return (
     <div>
         <NavMenu />
-       <div className='flex  justify-between h-[95vh] border border-white w-[90vw] m-auto'>
+       <div className='flex  justify-between h-[95vh] w-[90vw] m-auto'>
        <Tabs defaultValue="Dashboard" className=" w-[100%]">
           <TabsList>
             <TabsTrigger className='m-3' value="Dashboard">Dashboard</TabsTrigger>
@@ -79,55 +83,7 @@ const page = async() => {
 
           {/* USERS CONTENT */}
           <TabsContent value="Users">
-            <div>
-              {/* table start */}
-              <Table>
-                <TableCaption>Total Users</TableCaption>
-                <TableHeader>
-                <TableRow>
-                    <TableCell colSpan={3}>Total Users</TableCell>
-                    <TableCell className="text-right"> <div className='flex justify-end items-center'><div> {UserData.userCount} </div> <User width={15}/></div> </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableHead className="w-[100px]">User ID</TableHead>
-                    <TableHead>Username</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead className="text-right">Manage Permissions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                
-                <TableBody>
-                  {
-                    UserData.users.map((user:userData)=>(
-                      <TableRow>
-                      <TableCell className="font-medium w-[200px]"> {user.id} </TableCell>
-                      <TableCell> {user.name} </TableCell>
-                      <TableCell> {user.email}  </TableCell>
-                      <TableCell className="text-right"> 
-                      <Dialog>
-                        <DialogTrigger>Admin</DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Manage User Permission</DialogTitle>
-                            <DialogDescription>
-                              <div className='flex justify-between items-center p-4 '>
-                                  <div> ALLOW ADMIN DASHBOARD ACCESS  </div> <Switch />
-                              </div>
-                              <button className='bg-green-600 hover:bg-green-800 px-4 py-2 text-white text-md rounded-lg '> Change Permission </button>
-  
-                            </DialogDescription>
-                          </DialogHeader>
-                        </DialogContent>
-                      </Dialog>
-  
-                       </TableCell>
-                    </TableRow>
-                    ))
-                  }
-                </TableBody>
-              </Table>
-              {/*  */}
-            </div>
+                <UserDashboard data={UserData}  />
           </TabsContent>
           {/* INventory content */}
           <TabsContent value="Inventory">
@@ -152,14 +108,14 @@ const page = async() => {
                 <TableBody>
                   {
                     data && data.cars.map((car:CarData)=>(
-                      <TableRow>
+                      <TableRow key={car.id}>
                       <TableCell className="font-medium w-[200px] text-muted-foreground"> {car.id } </TableCell>
                       <TableCell> { car.carName } </TableCell>
                       <TableCell>{car.price.toLocaleString('en-IN',{style:"currency",currency:"inr"})}</TableCell>
                       <TableCell> {car.Availability} </TableCell>
                       <TableCell className="text-right"> 
                       <Dialog>
-                        <DialogTrigger>Admin</DialogTrigger>
+                        <DialogTrigger> <ArrowUpRight />  </DialogTrigger>
                         <DialogContent>
                           <DialogHeader>
                             <DialogTitle>Update Car Info</DialogTitle>
@@ -184,8 +140,6 @@ const page = async() => {
             </div>
           </TabsContent>
         </Tabs>
-
-     
       </div>
     </div>
   )

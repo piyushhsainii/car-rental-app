@@ -28,9 +28,9 @@ const DarkModeBtn = () => {
     const [UserData, setData] = useState<Userdata | null >(null)
     const adminStatus = async()=>{
       // @ts-ignore
-    const userID =  session?.user?.id ?? null
+    const userEmail =  session?.user?.email ?? null
    const { data } = await axios.post(`/api/userInfo`,{
-        id:userID
+        id:userEmail
      })
      setData(data.user)
     }
@@ -90,29 +90,4 @@ const DarkModeBtn = () => {
 
 export default DarkModeBtn
 
-// export const UnauthenticatedDarkBtn = ()=>{
-//     "use client"
-//     const { data: session, status } = useSession()
-//     const  { setTheme , theme  } = useTheme()
-//        return  <div className="flex items-center gap-3 justify-center" >
-//            <DropdownMenu >
-//                <DropdownMenuTrigger asChild>
-//                    <Button variant="outline"   size="icon">
-//                    <Sun className="h-[1.2rem]   w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-//                    <Moon className="absolute  h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-//                    <span className="sr-only">Toggle theme</span>
-//                    </Button>
-//                </DropdownMenuTrigger>
-//                <DropdownMenuContent align="end"  >
-//                    <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("light")}>
-//                    Light
-//                    </DropdownMenuItem>
-//                    <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("dark")}>
-//                    Dark
-//                    </DropdownMenuItem>
-//                </DropdownMenuContent> 
-//                </DropdownMenu>
-          
-//        </div> 
-           
-// }
+

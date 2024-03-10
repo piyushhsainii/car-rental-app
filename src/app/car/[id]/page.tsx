@@ -21,6 +21,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import ReserveComponent from '@/app/components/ReserveComponent'
   
 async function getData(params:string) {
     const {data} = await axios.post(`${url}/api/getCarInfo`,{
@@ -63,10 +64,7 @@ const page = async({params}:{params:{id:string}}) => {
                 <div className='text-xl p-3 pt-0 font-semibold' >{data.car && data.car.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             </div>
              </div>
-            <div className=' font-semibold text-lg flex justify-center items-center'>
-                <button className=' border border-slate-400   p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-                  <Link href={`/Booking/${data.car.id}`}>  Reserve this Car</Link>
-                </button> </div>
+              <ReserveComponent data={data.car.id}/>
             </div>
         <div className='w-full h-[300px]'>
             <Carousel className='w-[90vw] m-auto h-[300px] '>

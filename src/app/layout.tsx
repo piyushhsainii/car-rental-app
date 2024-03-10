@@ -4,6 +4,9 @@ import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner"
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -29,6 +32,7 @@ export default async function RootLayout({
         >
           <SessionProvider session={session} >
             {children}
+            <Toaster />
           </SessionProvider>
         </ThemeProvider>
       </body>

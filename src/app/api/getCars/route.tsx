@@ -15,7 +15,6 @@ export async function POST(req:NextRequest){
     const type = data.type
     const typeSplit = type === undefined || type === "" ? null : type.split(',')
     const gear:string = data.Gear
-    console.log(gear, "this is gear")
     const gearSplit = gear === undefined || gear === "" ? null : gear.split(',')
     const brand = data.brand
     const brandSplit = brand === undefined || brand === "" ? null : brand.split(',')
