@@ -39,7 +39,7 @@ interface userData {
 
 
 
-export async function getData(){
+ async function getData(){
   const { data } = await axios.get(`${url}/api/getAllCars`)
   const { data:UserData } = await axios.get(`${url}/api/getAllUsers`)
   return {data,UserData}

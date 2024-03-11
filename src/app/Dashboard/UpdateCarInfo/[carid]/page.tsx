@@ -24,7 +24,7 @@ interface CarData {
   KmsDone: string
 }
 
-export async function getData(params:string){
+ async function getData(params:string){
   
     const cars = await prisma.cAR.findFirst({
         where:{
