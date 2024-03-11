@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -21,6 +21,9 @@ import {
 import { ArrowUpRight, User } from 'lucide-react'
 import axios from 'axios'
 import { url } from '@/lib/url'
+import { useSession } from 'next-auth/react'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 
 interface userData {
@@ -35,10 +38,39 @@ interface userData {
 }
 
 const UserDashboard = ({data}:{data:any}) => {
-  const updateUser = async()=>{
-    const  { data } = await axios.post(`${url}/api/`)
-  }
+  const session = useSession()
+  // const [role, setRole] = useState<Boolean | null>(null)
+  const router = useRouter()
 
+  const updateUser = (id:string)=> async()=>{
+    try {
+    const  { data } = await axios.post(`${url}/api/adminRole`,{
+      id:id, status:true
+    })
+      if(data && data.updateUser){
+        toast("User permission updated successfully. ")
+        router.refresh()
+      }
+    } catch (error) {
+      console.log(error)
+      toast("Something went wrong")
+    }
+  }
+  const updateToUser = (id:string) => async()=>{
+    try {
+      const  { data } = await axios.post(`${url}/api/adminRole`,{
+        id:id, status:false
+      })
+        if(data && data.updateUser){
+          toast("User permission updated successfully. ")
+          router.refresh()
+        }
+      } catch (error) {
+        console.log(error)
+        toast("Something went wrong")
+      }
+  }
+ 
   return (
     <div>
       {/* table start */}
@@ -71,8 +103,8 @@ const UserDashboard = ({data}:{data:any}) => {
                     <DialogTitle>Manage User Permission</DialogTitle>
                     <DialogDescription>
                     <div className='flex justify-center' >
-                      <button disabled={user.isAdmin === true ? true : false} onClick={updateUser} className={`${user.isAdmin === true ? 'cursor-not-allowed' : 'hover:bg-green-800'} bg-green-600 m-4  px-4 py-2 text-white text-md rounded-lg  `}> Allow Admin Access  </button>
-                      <button  disabled={user.isAdmin === true ? false : true} className={`${user.isAdmin === false ? 'cursor-not-allowed' : 'hover:bg-red-800'} bg-red-600 m-4  px-4 py-2 text-white text-md rounded-lg`}> Remove Admin Access </button>
+                      <button disabled={user.isAdmin === true ? true : false} onClick={updateUser(user.id)} className={`${user.isAdmin === true ? 'cursor-not-allowed' : 'hover:bg-green-800'} bg-green-600 m-4  px-4 py-2 text-white text-md rounded-lg  `}> Allow Admin Access  </button>
+                      <button  disabled={user.isAdmin === true ? false : true} onClick={updateToUser(user.id)} className={`${user.isAdmin === false ? 'cursor-not-allowed' : 'hover:bg-red-800'} bg-red-600 m-4  px-4 py-2 text-white text-md rounded-lg`}> Remove Admin Access </button>
                     </div>
                     </DialogDescription>
                   </DialogHeader>

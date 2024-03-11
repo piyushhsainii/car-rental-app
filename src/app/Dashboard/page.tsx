@@ -24,6 +24,7 @@ import { Switch } from "@/components/ui/switch"
 import axios from 'axios'
 import { url } from '@/lib/url'
 import UserDashboard from '../components/UserDashboard'
+import CarDashboard from '../components/CarDashboard'
 
 interface userData {
       id: string,
@@ -36,25 +37,7 @@ interface userData {
       createdAt: string
 }
 
-interface CarData {
-      id: string,
-      carName: string,
-      Img: [],
-      brand: string,
-      price: Number,
-      Fuel: string,
-      Seat: string,
-      Mileage:Number,
-      Availability: string,
-      model: string,
-      Plate: string,
-      Year: string,
-      type: string,
-      Transmission: string,
-      Color: string,
-      ownerShip: string,
-      KmsDone: string
-}
+
 
 export async function getData(){
   const { data } = await axios.get(`${url}/api/getAllCars`)
@@ -80,64 +63,11 @@ const page = async() => {
             </TabsTrigger>
             <TabsTrigger className='m-3' value="Inventory">Inventory</TabsTrigger>
           </TabsList>
-
-          {/* USERS CONTENT */}
           <TabsContent value="Users">
                 <UserDashboard data={UserData}  />
           </TabsContent>
-          {/* INventory content */}
           <TabsContent value="Inventory">
-            <div>
-              {/* table start */}
-              <Table>
-                <TableCaption>Total Cars</TableCaption>
-                <TableHeader>
-                <TableRow>
-                    <TableCell colSpan={4}>Total Cars</TableCell>
-                    <TableCell className="text-right"> <div className='flex justify-end items-center'><div> { data.carCount }</div> <User width={15}/></div> </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Car ID</TableHead>
-                    <TableHead>Car Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Reserved</TableHead>
-                    <TableHead className="text-right">Update Car Info</TableHead>
-                  </TableRow>
-                </TableHeader>
-                
-                <TableBody>
-                  {
-                    data && data.cars.map((car:CarData)=>(
-                      <TableRow key={car.id}>
-                      <TableCell className="font-medium w-[200px] text-muted-foreground"> {car.id } </TableCell>
-                      <TableCell> { car.carName } </TableCell>
-                      <TableCell>{car.price.toLocaleString('en-IN',{style:"currency",currency:"inr"})}</TableCell>
-                      <TableCell> {car.Availability} </TableCell>
-                      <TableCell className="text-right"> 
-                      <Dialog>
-                        <DialogTrigger> <ArrowUpRight />  </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Update Car Info</DialogTitle>
-                            <DialogDescription>
-                              <div className='flex justify-between items-center p-4 '>
-                                  <div> ALLOW ADMIN DASHBOARD ACCESS  </div> <Switch />
-                              </div>
-                              <button className='bg-green-600 hover:bg-green-800 px-4 py-2 text-white text-md rounded-lg '> Change Permission </button>
-                            </DialogDescription>
-                          </DialogHeader>
-                        </DialogContent>
-                      </Dialog>
-  
-                       </TableCell>
-                    </TableRow>
-                    ))
-                  }
-                 
-                </TableBody>
-              </Table>
-              {/*  */}
-            </div>
+              <CarDashboard data={data}  />
           </TabsContent>
         </Tabs>
       </div>

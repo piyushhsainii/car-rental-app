@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner"
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,12 +15,12 @@ export const metadata: Metadata = {
   description: "Rent a ride",
 };
 
-export default async function RootLayout({
+export default async function RootLayout({ 
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   console.log(session,"session")
   return (
     <html lang="en">

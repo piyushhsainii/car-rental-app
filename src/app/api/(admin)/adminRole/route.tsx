@@ -5,7 +5,7 @@ export async function POST(req:Request){
     type statusSchema = true | false
     const { id ,status  }:{id:any,status:statusSchema} = await req.json()
     try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
             where:{
                 id:id 
             }
@@ -31,8 +31,9 @@ export async function POST(req:Request){
             status:200
         })
     } catch (error) {
+        console.log(error)
         return Response.json({
-            error:"Error updating user"
+            error:error
         },{
             status:400
         })
