@@ -1,26 +1,28 @@
-"use client"
 import React, { useState } from 'react'
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { GithubIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 
-const auth = () => {
-    const session = useSession()
-    const navigate = useRouter()
-    // if(session && session.status === 'authenticated'){
-    //     navigate.push('/')
+const auth = async() => {
+    const  session = await getServerSession(authOptions)
+    console.log(session, "i am session forom auth")
+    // const navigate = useRouter()
+    // if(session  !== undefined || session !== null){
+    //     redirect('/')
     //     return 
     // }
-    // else
-     return (
+  return (
+        session  &&
         <div className='' >
             <div className="flex justify-between  h-[60px] px-4 " >
             <div className="font-thin text-2xl  p-3 " >
              <Link href={'/'}>HORSEPOWER CARTEL </Link>
             </div>
             </div>
-            <div className='w-[35vw] min-w-[400px] py-20 pb-16 rounded-lg  mt-8 m-auto bg-slate-700   p-4 flex flex-col items-center justify-center gap-4'>
+            {/* <div className='w-[35vw] min-w-[400px] py-20 pb-16 rounded-lg  mt-8 m-auto bg-slate-700   p-4 flex flex-col items-center justify-center gap-4'>
                
                 <div className='w-[100%] m-auto hover:scale-[1.14] transition-all duration-300  text-slate-800  rounded-md border-slate-700 border text-sm  bg-white cursor-pointer' onClick={() => signIn("github")} >
                     <div className='flex justify-center  '>
@@ -39,7 +41,7 @@ const auth = () => {
                         <div className=' w-[100%] py-3  bg-slate-800 text-white font-semibold text-center items-center flex justify-center text-md'>SIGN IN USING GOOGLE</div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
       
