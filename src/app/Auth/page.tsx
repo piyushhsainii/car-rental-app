@@ -15,7 +15,6 @@ const auth = async() => {
     //     return 
     // }
   return (
-        session  &&
         <div className='' >
             <div className="flex justify-between  h-[60px] px-4 " >
             <div className="font-thin text-2xl  p-3 " >
