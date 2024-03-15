@@ -2,29 +2,19 @@
 import React, { useState } from 'react'
 import { signIn, signOut, useSession } from "next-auth/react";
 import { GithubIcon } from 'lucide-react';
-import Image from 'next/image';
-import { useTheme } from "next-themes"
 import { useRouter } from 'next/navigation';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from 'next/link';
-import { url } from '@/lib/url';
 import Loading from '../loading';
 
 const auth = () => {
     const session = useSession()
     const navigate = useRouter()
-    const [email, setemail] = useState('')
-    const [Password, setPassword] = useState('')
-    const { setTheme, theme } = useTheme()
-    if( session === null){
-        return <Loading/>
-    }
     if(session && session.status === 'authenticated'){
         navigate.push('/')
         return 
     }
     else return (
-        session && session.status === 'unauthenticated' ?
+        session && session.status === 'unauthenticated' &&
         <div className='' >
             <div className="flex justify-between  h-[60px] px-4 " >
             <div className="font-thin text-2xl  p-3 " >
@@ -52,8 +42,6 @@ const auth = () => {
                 </div>
             </div>
         </div>
-        : 
-        null
     )
       
 }

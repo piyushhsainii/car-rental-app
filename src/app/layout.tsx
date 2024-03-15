@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   description: "Experience Luxury,Your Way",
   icons:[
     {
-      url:'/homepage.png'
+      url:'/homepage.png',
+      href:'/homepage.png'
     }
   ]
 };
