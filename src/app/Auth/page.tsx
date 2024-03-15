@@ -8,11 +8,12 @@ import Link from 'next/link';
 const auth = () => {
     const session = useSession()
     const navigate = useRouter()
-    if(session && session.status === 'authenticated'){
-        navigate.push('/')
-        return 
-    }
-    else return (
+    // if(session && session.status === 'authenticated'){
+    //     navigate.push('/')
+    //     return 
+    // }
+    // else
+     return (
         <div className='' >
             <div className="flex justify-between  h-[60px] px-4 " >
             <div className="font-thin text-2xl  p-3 " >
