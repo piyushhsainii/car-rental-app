@@ -1,7 +1,7 @@
 import { prisma } from '../../../lib/prismaClient'
 import { NextRequest } from "next/server";
 
-export enum SortOrder {
+enum SortOrder {
     asc = "asc",
     desc = "desc"
 }

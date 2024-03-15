@@ -35,7 +35,7 @@ const Auth = () => {
                
                 <div className='w-[100%] m-auto hover:scale-[1.14] transition-all duration-300  text-slate-800  rounded-md border-slate-700 border text-sm  bg-white cursor-pointer' onClick={() => signIn("github")} >
                     <div className='flex justify-center  '>
-                        <div className='border-slate-700 border-r m-5  '><GithubIcon /></div>
+                        <div className='border-slate-700 border-r p-5  '><GithubIcon /></div>
                         <div className=' w-[100%]  bg-slate-800  text-white font-semibold text-center items-center flex justify-center text-md'>SIGN IN USING GITHUB</div> </div>
                 </div>
                 <div className='w-[100%] m-auto hover:scale-[1.14] transition-all duration-300 text-slate-800 j text-sm  rounded-md border-slate-700 border bg-white cursor-pointer' onClick={() => signIn("discord")} >
