@@ -46,7 +46,7 @@ const Auth = () => {
                 </div>
                 <div className='w-[100%] m-auto hover:scale-[1.14] transition-all duration-300 text-slate-800 j text-sm  rounded-md border-slate-700 border bg-white cursor-pointer' onClick={() => signIn("google")} >
                     <div className='flex justify-center '>
-                        <div className='border-slate-700 border-r p-5 '><img src='/discord.png' width={20} ></img></div>
+                        <div className='border-slate-700 border-r p-5 '><img src='/google.png' width={20} ></img></div>
                         <div className=' w-[100%] py-3  bg-slate-800 text-white font-semibold text-center items-center flex justify-center text-md'>SIGN IN USING GOOGLE</div>
                     </div>
                 </div>
