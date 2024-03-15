@@ -4,7 +4,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { GithubIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Loading from '../loading';
 
 const auth = () => {
     const session = useSession()
@@ -14,7 +13,6 @@ const auth = () => {
         return 
     }
     else return (
-        session && session.status === 'unauthenticated' &&
         <div className='' >
             <div className="flex justify-between  h-[60px] px-4 " >
             <div className="font-thin text-2xl  p-3 " >
