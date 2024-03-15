@@ -66,10 +66,11 @@ const DarkModeBtn = () => {
         </DropdownMenu>
         {
            status === 'unauthenticated' &&  
-            <Link href={'/auth'} >
+            <Link href={'/login'} >
                <CircleUserIcon className=" text-primary" width={25} height={25} strokeWidth={1} />
             </Link>
             }
+
             { session && session.user?.image &&
              <AnimatedTooltip
                     items={ 
