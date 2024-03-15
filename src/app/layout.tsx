@@ -5,14 +5,14 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner"
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Rent-A-Ride",
-  description: "Rent a ride",
+  title: "Horsepower Cartel",
+  description: "Experience Luxury,Your Way",
 };
 
 export default async function RootLayout({ 
@@ -21,7 +21,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions)
-  console.log(session,"session")
   return (
     <html lang="en">
       <body >
