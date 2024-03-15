@@ -13,6 +13,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Horsepower Cartel",
   description: "Experience Luxury,Your Way",
+  icons:[
+    {
+      url:'/homepage.png'
+    }
+  ]
 };
 
 export default async function RootLayout({ 

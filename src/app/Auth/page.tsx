@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { url } from '@/lib/url';
 import Loading from '../loading';
 
-const Auth = () => {
+const auth = () => {
     const session = useSession()
     const navigate = useRouter()
     const [email, setemail] = useState('')
@@ -58,4 +58,4 @@ const Auth = () => {
       
 }
 
-export default Auth
+export default auth
