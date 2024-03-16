@@ -31,24 +31,24 @@ interface CarData {
 
 const UpdateCarInfo = async(params:any) => {
   const carid = params.params.carid
-  // const [carData, setcarData] = useState<CarData | null>(null)
+  const [carData, setcarData] = useState<CarData | null>(null)
 
-  // const [LOL, setLOL] = useState({
-  //   lmao:"lmao"
-  // })
+  const [LOL, setLOL] = useState({
+    lmao:"lmao"
+  })
 
-  // const getData = async()=>{
-  //   const  { data } = await axios.post(`${url}/api/getCarInfo`,{
-  //     id:carid
-  //   })
-  //   setcarData(data.car)
-  //   return data
-  // }
+  const getData = async()=>{
+    const  { data } = await axios.post(`${url}/api/getCarInfo`,{
+      id:carid
+    })
+    setcarData(data.car)
+    return data
+  }
 
-  // useEffect(()=>{
-  //   getData()
+  useEffect(()=>{
+    getData()
 
-  // },[])
+  },[])
 
   return (
     <div> 

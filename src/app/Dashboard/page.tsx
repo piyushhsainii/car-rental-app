@@ -6,6 +6,9 @@ import { url } from '@/lib/url'
 import UserDashboard from '../components/UserDashboard'
 import CarDashboard from '../components/CarDashboard'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/authOptions'
+
 
 
 interface userData {
@@ -27,10 +30,14 @@ interface userData {
   return {data,UserData}
 }
 
-const page = async() => {
+const page = async() => { 
 
   const  { data ,UserData} = await getData()
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
+  if(  session === null){
+    redirect('/')
+    return
+}
   console.log(session, "session from admin dashboard")
 
   return (
