@@ -32,17 +32,16 @@ interface CarData {
 const UpdateCarInfo = async(params:any) => {
   const carid = params.params.carid
   const [carData, setcarData] = useState<CarData | null>(null)
-
-  const [LOL, setLOL] = useState({
-    lmao:"lmao"
-  })
+  const [formData, setFormData] =   useState<CarData | null>(null)
+  const [carName, setCarName] = useState("")
 
   const getData = async()=>{
     const  { data } = await axios.post(`${url}/api/getCarInfo`,{
       id:carid
     })
     setcarData(data.car)
-    return data
+    setFormData(data.car)
+    setCarName(data.car.carName)
   }
 
   useEffect(()=>{
@@ -53,18 +52,22 @@ const UpdateCarInfo = async(params:any) => {
   return (
     <div> 
          <NavMenu />
+       
          {/* {
-          carData === null ?
+          carData === null || formData === null ?
           <Loading/>
-          :
+          : */}
          <div>
-              <div> <input type="text" value={} placeholder={carData.carName}  className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> {} </div>
-              <div> <input type="text" value={ carData.price.toLocaleString('en-In',{currency:"INR",style:"currency"}) } className='bg-transparent border-white border rounded-md m-2 px-2 py-1' />  </div>
-              <div> <input type="text" className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> </div>
-              <div> <input type="text" className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> </div>
-              <div> <input type="text" className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> </div>
+          <form action="">
+             {/* <div> <input type="text" value={formData?.carName} onChange={(e) => setFormData((prevData: CarData | null) => ({ ...prevData!, carName: e.target.value }))}  className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> {} </div>  */}
+              <div> <input type="text" value={carName} placeholder='Enter Car Name' onChange={(e)=>setCarName(e.target.value)}  className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> {} </div>
+              {/* <div> <input type="text" value={ formData.price.toLocaleString('en-In',{currency:"INR",style:"currency"}) } className='bg-transparent border-white border rounded-md m-2 px-2 py-1' />  </div> */}
+              {/* <div> <input type="text" className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> </div> */}
+              {/* <div> <input type="text" className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> </div> */}
+              {/* <div> <input type="text" className='bg-transparent border-white border rounded-md m-2 px-2 py-1' /> </div> */}
+          </form>
          </div>
-          } */}
+          {/*  } */}
     </div>
   )
 }
