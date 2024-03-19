@@ -1,4 +1,5 @@
-import { prisma } from '../../../lib/prismaClient'
+import prisma from '../../../lib/prismaClient'
+import cloudinary from 'cloudinary'
 
 export async function POST(req:Request){
     const {
@@ -19,11 +20,24 @@ export async function POST(req:Request){
         ownerShip,
         KmsDone
     } = await req.json()
+    // 
+    cloudinary.v2.config({ 
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+        api_key: process.env.CLOUDINARY_API_KEY, 
+        api_secret: process.env.CLOUDINARY_SECRET_KEY,
+        secure: true 
+      });
+
+
     try {
+        const UploadImage = Img.forEach(async(img:string)=>(
+            cloudinary.v2.uploader.upload(img)
+        ))
+        const ImagesArray = await Promise.all(UploadImage)
         const car = await prisma.cAR.create({
             data:{
                 carName,
-                Img,
+                Img:ImagesArray,
                 brand,
                 price,
                 Fuel,

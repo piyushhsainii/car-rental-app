@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prismaClient"
+import prisma from "@/lib/prismaClient"
 
 export async function POST(req:Request){
     const { id } = await req.json()

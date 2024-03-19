@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prismaClient"
+import prisma from "@/lib/prismaClient"
 
 export async function POST(req:Request){
     const { id,
@@ -14,8 +14,7 @@ export async function POST(req:Request){
             Plate,
             Year,
             type,
-            Transmission,
-            Color,
+            Transmission, 
             ownerShip,
             KmsDone } = await req.json()
 
@@ -38,7 +37,6 @@ export async function POST(req:Request){
                 Year,
                 type,
                 Transmission,
-                Color,
                 ownerShip,
                 KmsDone
             }

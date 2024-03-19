@@ -1,5 +1,5 @@
 import { Prisma} from "@prisma/client";
-import { prisma } from '../../../lib/prismaClient'
+import prisma from '../../../lib/prismaClient'
 
 export async function GET(){
     

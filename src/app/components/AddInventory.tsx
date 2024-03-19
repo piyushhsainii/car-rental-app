@@ -1,132 +1,142 @@
-"use client";
-import NavMenu from "@/app/components/NavMenu";
-import Loading from "@/app/loading";
-import { url } from "@/lib/url";
-import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
-import zod from 'zod'
+"use client"
+import Link from 'next/link';
+import React, { useRef, useState } from 'react'
 import { Country, State, City }  from 'country-state-city';
-import Link from "next/link";
+import zod from 'zod'
+import { toast } from 'sonner';
+import axios from 'axios';
+import { url } from '@/lib/url';
+import Loading from '../loading';
+
+
+
 interface CarData {
-  id: string;
-  carName: string;
-  Img: string[];
-  brand: string;
-  price: Number;
-  Fuel: string;
-  Seat: Number;
-  Mileage: Number;
-  Availability: string;
-  model: string;
-  Plate: string;
-  Year: Number;
-  type: string;
-  Transmission: string;
-  Color: string;
-  ownerShip: Number;
-  KmsDone: Number;
+    id?: string;
+    carName: string;
+    Img: string[];
+    brand: string;
+    price: Number;
+    Fuel: string;
+    Seat: Number;
+    Mileage: Number;
+    Availability: string;
+    model: string;
+    Plate: string;
+    Year: Number;
+    type: string;
+    Transmission: string;
+    Color: string;
+    ownerShip: Number;
+    KmsDone: Number;
 }
+const AddInventory = () => {
+
 const date = new Date().getFullYear()
 
 const carSchema = zod.object({
-  carName:zod.string(),
-  price:zod.number().min(1),
-  ownerShip:zod.number().max(4),
-  KmsDone:zod.number().min(1).max(300000),
-  Seat:zod.number().min(1).max(8),
-  Year:zod.number().max(date),
-
-})
-
-const UpdateCarInfo = (params: any) => {
-  const carid = params.params.carid;
-
-  const [carData, setcarData] = useState<CarData | null>(null);
-  const [formData, setFormData] = useState<CarData | null>(null);
-  const router = useRouter()
-
-  const getData = async () => {
-    const { data } = await axios.post(`${url}/api/getCarInfo`, {
-      id: carid,
-    });
-    setcarData(data.car);
-    setFormData(data.car);
-  };
-
-  const imageRemoveHandler = (id:string)=>{
-    const updatedArray =  carData?.Img.filter((img)=>img !== id) 
-     setcarData((data)=>({...data!,Img:updatedArray!}))
-  }
-  const discardChanges = ()=>{
-    router.refresh()
-  }
-  const id = params.params.carid
+    carName:zod.string(),
+    price:zod.number().min(1),
+    ownerShip:zod.number().max(4),
+    KmsDone:zod.number().min(1).max(300000),
+    Seat:zod.number().min(1).max(8),
+    Year:zod.number().min(1800).max(date),
   
-  // API TO UPDATE CAR INFO 
-  const updateChanges = async()=>{
-    try {
-      const isValid =  carSchema.safeParse({
-        carName:carData?.carName,
-        price:carData?.price,
-        ownerShip:carData?.ownerShip,
-        KmsDone:carData?.KmsDone,
-        Seat:carData?.Seat,
-        Year:carData?.Year
-      })
+  })
+const [LoadingState, setLoading] = useState(false)
+const [carData, setcarData] = useState<CarData >({
+    carName: '',
+    Img: [],
+    brand: '',
+    price:0,
+    Fuel: '',
+    Seat: 0,
+    Mileage:0,
+    Availability: '',
+    model: '',
+    Plate: '',
+    Year: 2000,
+    type: '',
+    Transmission: '',
+    Color: '',
+    ownerShip:0,
+    KmsDone: 0
+});
 
-      if(isValid.success === false){
-        const errorMessage = JSON.parse(isValid.error.message)
-        errorMessage.map((error:any)=>(
-          toast(error.message)
-        ))
-        return
-      }
-      console.log(isValid)
-      const { data } = await axios.post(`${url}/api/updateCarInfo`,{
-        id:id,
-        carName:carData?.carName,
-        Img:carData?.Img,
-        brand:carData?.brand,
-        price:carData?.price,
-        Fuel:carData?.Fuel,
-        Seat:carData?.Seat,
-        Mileage:carData?.Mileage,
-        Availability:carData?.Availability,
-        model:carData?.model,
-        Plate:carData?.Plate,
-        Year:carData?.Year,
-        type:carData?.type,
-        Transmission:carData?.Transmission, 
-        ownerShip:carData?.ownerShip,
-        KmsDone:carData?.KmsDone
-      })
-      data && toast("Updated Successfully")
-      data && router.refresh()
+const [formData, setFormData] = useState<CarData | null>(null);
+  const ImageTag = useRef(null)
 
-    } catch (error) {
-      console.log(error)
-      toast('Error occured while updating')
-    }
+const clearImgHandler = ()=>{
+  setcarData((data)=>({...data,Img:[]}))
+  // @ts-ignore
+    ImageTag.current.value = ''; 
+
+}
+
+const FileReaderHandler = (e:any)=> {
+  const files = [...e.target.files];
+if (files === null || files === undefined || files.length === 0) {
+  setcarData((data) => ({ ...data, Img: [] }));
+  return;
+}
+files.forEach((file: File) => {
+  const transform = new FileReader();
+    transform.readAsDataURL(file);
+    transform.onloadend = () => {
+      setcarData((data) => ({ ...data, Img: [...data.Img, transform.result as string ]}));
+    };
+});
+}
+
+const createCar = async()=>{
+  setLoading(true)
+const isValid = carSchema.safeParse(carData)
+  if(isValid.success === false){
+    const errorMessage = JSON.parse(isValid.error.message)
+    console.log(errorMessage)
+    errorMessage.map((error:any)=>(
+      toast(error.path + " " + error.message.slice(6))
+    ))
   }
+    try {
+     const { data } = await axios.post(`${url}/api/createCar`,{
+      carName:carData.carName,
+      Img:carData.Img,
+      brand:carData.brand,
+      price:carData.price,
+      Fuel:carData.Fuel,
+      Seat:carData.Seat,
+      Mileage:carData.Mileage,
+      Availability:carData.Availability,
+      model:carData.model,
+      Plate:carData.Plate,
+      Year:carData.Year,
+      type:carData.type,
+      Transmission:carData.Transmission,
+      Color:carData.Color,
+      ownerShip:carData.ownerShip,
+      KmsDone:carData.KmsDone
+     })   
+     setLoading(false)
+     if(data){
+      toast("Added successfully")
+    }
+    } catch (error) {
+      setLoading(false)
+      toast("Error occured while adding car to inventory")
+    }
+}
 
-  useEffect(() => {
-    getData();
-  }, []);
-
+console.log(carData)
   return (
-    <div>
-      <NavMenu />
-      {carData === null || formData === null ? (
-        <Loading />
-      ) : (
-        <div className=" flex justify-evenly m-2">
-          <div className="underline"> <Link href={'/Dashboard'}>back</Link> </div>
+    <div className=" flex justify-evenly m-2">
           {/* CAR DETAIL CONTAINER */}
+          {
+            LoadingState ? 
+            <Loading /> :
+
         <div className="w-[350px] m-5 ">
-            <div className="text-2xl m-5 " >
-              UPDATE YOUR CAR INFO
+            <div className="text-2xl m-5 text-center " >
+              ADD YOUR CAR 
             </div>
           <form action="">
             <div className="flex justify-between gap-2 items-center  " >
@@ -136,7 +146,7 @@ const UpdateCarInfo = (params: any) => {
                 onChange={(e) =>
                   setcarData((prev) => ({ ...prev!, carName: e.target.value }))
                 }
-                value={carData.carName}
+                value={carData?.carName}
                 type="text"
                 placeholder={"Enter Car name"}
                 className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1"
@@ -147,7 +157,7 @@ const UpdateCarInfo = (params: any) => {
               <input
               placeholder="Car Price"
                 type="number"
-                value={`${carData.price.toString()}`}
+                value={`${carData?.price.toString()}`}
                 min={1}
                 onChange={(e) =>
                   setcarData((prev) => ({
@@ -188,6 +198,39 @@ const UpdateCarInfo = (params: any) => {
                 className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
               />
             </div>
+
+            <div className="flex justify-between gap-2 items-center  " >
+            <div><label htmlFor="" className="font-semibold">Mileage</label></div>
+              <input
+                required={true}
+                onChange={(e) =>
+                  setcarData((prev) => ({ ...prev!, Mileage: parseFloat(e.target.value) }))
+                }
+                min={1}
+                max={40}
+                value={carData.Mileage.toString()}
+                type="number"
+                placeholder={"Mileage of car"}
+                className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
+              />
+            </div>
+
+            <div className="flex justify-between gap-2 items-center  " >
+            <div><label htmlFor="" className="font-semibold">Type</label></div>
+              <select name="" id=""
+                required={true}
+                 onChange={(e) =>
+                setcarData((prev) => ({ ...prev!, type: e.target.value }))
+              }
+                value={carData.type}
+                className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
+                >
+                <option className= "text-black" value="Sedan">Sedan</option>
+                <option className= "text-black"  value="Hatchback">Hatchback</option>
+                <option className= "text-black"  value="SUV">SUV</option>
+              </select>
+            </div>
+
             <div className="flex justify-between gap-2 items-center  " >
             <div><label htmlFor="" className="font-semibold">Seating Capacity</label></div>
               <input
@@ -254,7 +297,7 @@ const UpdateCarInfo = (params: any) => {
               <input
                 required={true}
                 onChange={(e) =>
-                  setcarData((prev) => ({ ...prev!, Year: parseFloat(e.target.value) }))
+                  setcarData((prev) => ({ ...prev!, Year: parseFloat(e.target.value )}))
                 }
                 max={date}
                 value={carData.Year.toString()}
@@ -271,7 +314,6 @@ const UpdateCarInfo = (params: any) => {
                   setcarData((prev) => ({ ...prev!, Plate: e.target.value }))
                     }
                   id="">
-                  <option className="bg-primary text-black" value="">{carData.Plate}</option>
                 { 
                 State.getStatesOfCountry("IN").map((states)=>(
                   <option className="bg-primary text-black" value=""> {states.isoCode} </option>
@@ -279,33 +321,36 @@ const UpdateCarInfo = (params: any) => {
               }
               </select>
               </div>
+
+              <div>
+                <div className='flex'>
+                  <input type="file" multiple accept='image/' onChange={FileReaderHandler} className='cursor-pointer  '  ref={ImageTag}  />
+                  <span className='text-[10px] border border-slate-300 text-center border-opacity-30 cursor-pointer ' onClick={clearImgHandler}> CLEAR IMAGES </span>
+                </div>
+                <div className='w-[330px] overflow-x-auto' >
+                    {
+                     carData.Img.length > 0 ? 
+                      <div className='flex gap-2 m-4'>
+                         {  carData.Img.map((img)=>(
+                            <img width={40} height={40} src={img} alt="" />
+                          ))}
+                      </div>
+                      :
+                     null
+                    }
+                </div>
+              </div>
+
             </form>
-            <div className="flex gap-4 my-4" >
-              <button className="bg-red-600 px-3 py-2 rounded-md font-semibold  hover:bg-red-800" onClick={()=>discardChanges} >DISCARD CHANGES</button>
-              <button className="bg-green-600 px-3 py-2 rounded-md font-semibold hover:bg-green-800" onClick={updateChanges}  >UPDATE CHANGES</button>
-            </div>
+              <div className='flex gap-2  justify-evenly my-5' >
+                <button className='px-4 py-2 bg-red-600 text-sm font-semibold '> BACK TO DASHBOARD  </button>
+                <button className='px-12  py-2 bg-green-600 font-semibold' onClick={createCar}> ADD CAR  </button>
+              </div>
         </div>
-        {/* Image Component */}
-
-        <div className="flex flex-col w-[350px] " >
-        <div className="  px-4 py-2 font-semibold"> 
-            Add Image
-         </div>
-            <input type="file"  className="text-sm cursor-pointer bg-opacity-20  border-green-600 bg-green-600 hover:bg-opacity-100 hover:bg-green-600 duration-300 transition-all" />
-            <label htmlFor=""></label>
-          <div className="h-[600px]  overflow-y-auto" >
-            <hr className="my-4" />
-          {
-            carData.Img.map((img)=>(
-              <div className="" > <button onClick={()=>imageRemoveHandler(img)} className="bg-red-600 px-4 py-2 font-semibold">REMOVE</button> <img src={img} alt="" />  </div>
-            ))
           }
-          </div>
-        </div>
-        </div>
-      )}
-    </div>
-  );
-};
 
-export default UpdateCarInfo;
+        </div>
+  )
+}
+
+export default AddInventory

@@ -8,6 +8,8 @@ import CarDashboard from '../components/CarDashboard'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/authOptions'
+import { Plus } from 'lucide-react'
+import AddInventory from '../components/AddInventory'
 
 
 
@@ -51,12 +53,16 @@ const page = async() => {
               Users
             </TabsTrigger>
             <TabsTrigger className='m-3' value="Inventory">Inventory</TabsTrigger>
+            <TabsTrigger className='m-3' value="Add">  <Plus width={16} /> </TabsTrigger>
           </TabsList>
           <TabsContent value="Users">
                 <UserDashboard data={UserData}  />
           </TabsContent>
           <TabsContent value="Inventory">
               <CarDashboard data={data}  />
+          </TabsContent>
+          <TabsContent value='Add' >
+            <AddInventory />
           </TabsContent>
         </Tabs>
       </div>
