@@ -9,6 +9,7 @@ enum SortOrder {
 export async function POST(req:NextRequest){
 
     const data = await req.json() 
+    console.log(data)
     const params:SortOrder = data.sortBy
     const fuel = data.Fuel
     const fuelSplit = fuel === undefined || fuel === "" ? null : fuel.split(',')
@@ -25,16 +26,17 @@ export async function POST(req:NextRequest){
     if(page){
         skip = ((page - 1)*2)
     }
-    console.log(brand, 'vlaue of nski')
     try { 
     if(!params) {
-        const Cars = await prisma.cAR.findMany({
+        console.log("checkpoint 1")
+        const Cars = await prisma.cAR.findMany(
+            {
             where:{
                 Fuel: {
-                    in: fuelSplit || ["Petrol", "Deisel" ]                
+                    in: fuelSplit || ["Petrol", "Diesel" ]                
                 },
                 type:{
-                    in:typeSplit ||  ["Sedan", "SUV", "hatchback" ]
+                    in:typeSplit ||  ["Sedan", "SUV", "Hatchback" ]
                 }
                 ,
                 Transmission:{
@@ -44,14 +46,12 @@ export async function POST(req:NextRequest){
                     in:brandSplit || [ "Mercedes" , "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
                 },
                 Seat:{
-                    in:seatSplit || ["4","5","6"]
+                    in:seatSplit || [1,2,3,4,5,6]
                 }
             },
-            skip:skip,
-            take:2
-
-    
-        })
+        }
+    )
+       console.log(Cars,"daat check")
         return Response.json({
             data:Cars
         },
@@ -60,16 +60,17 @@ export async function POST(req:NextRequest){
         })
         }
         if(params){
-            const Cars = await prisma.cAR.findMany({
+            const Cars = await prisma.cAR.findMany(
+                {
                 orderBy:{
                     price:params 
                 },
                 where:{
                     Fuel: {
-                        in: fuelSplit || ["Petrol", "Deisel" ]                
+                        in: fuelSplit || ["Petrol", "Diesel" ]                
                     },
                     type:{
-                        in:typeSplit ||  ["Sedan", "SUV", "hatchback" ]
+                        in:typeSplit ||  ["Sedan", "SUV", "Hatchback" ]
                     }
                     ,
                     Transmission:{
@@ -78,11 +79,13 @@ export async function POST(req:NextRequest){
                     brand:{
                         in:brandSplit || [ "Mercedes" , "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
                     },
-                    Seat:{
-                        in:seatSplit || ["4","5","6"]
-                    }
+                    // Seat:{
+                    //     in:seatSplit || [1,2,3,4,5,6]
+                    // }
                 }
-            })
+            }
+        )
+       
         return Response.json({
             data:Cars
         },
@@ -91,7 +94,7 @@ export async function POST(req:NextRequest){
         })
         } 
     } catch (error) {
-        console.log(error)
+        console.log(error )
         return Response.json({
             error:"Error occured while fetching data"
         },{

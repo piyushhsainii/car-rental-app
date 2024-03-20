@@ -28,12 +28,13 @@ export async function POST(req:Request){
         secure: true 
       });
 
-
+    //   console.log(Img, "i am image")
     try {
-        const UploadImage = Img.forEach(async(img:string)=>(
-            cloudinary.v2.uploader.upload(img)
+        const UploadImage = Img.map(async(img:string)=>(
+            (await cloudinary.v2.uploader.upload(img)).url
         ))
         const ImagesArray = await Promise.all(UploadImage)
+        console.log(ImagesArray)
         const car = await prisma.cAR.create({
             data:{
                 carName,
@@ -43,7 +44,7 @@ export async function POST(req:Request){
                 Fuel,
                 Seat,
                 Mileage,
-                Availability,
+                Availability:'Available',
                 model,
                 Plate,
                 Year,
@@ -54,14 +55,7 @@ export async function POST(req:Request){
                 KmsDone
             }
         })
-
-    if(!car){
-        return Response.json({
-            messasge:"Could not create Car"
-        },{
-            status:400
-        })
-    }
+        console.log(car)
     return Response.json({
         car
     },{
@@ -71,6 +65,8 @@ export async function POST(req:Request){
         console.log(error)
         return Response.json({
             message:"Something went wrong"
+        },{
+            status:400
         })
     }
 }

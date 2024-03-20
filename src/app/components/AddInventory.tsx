@@ -110,9 +110,9 @@ const isValid = carSchema.safeParse(carData)
       model:carData.model,
       Plate:carData.Plate,
       Year:carData.Year,
+      Color:carData.Color,
       type:carData.type,
       Transmission:carData.Transmission,
-      Color:carData.Color,
       ownerShip:carData.ownerShip,
       KmsDone:carData.KmsDone
      })   
@@ -163,6 +163,38 @@ console.log(carData)
                   setcarData((prev) => ({
                     ...prev!,
                     price: parseFloat(e.target.value),
+                  }))
+                }
+                className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1"
+              />
+            </div>
+            <div className="flex justify-between gap-2 items-center  " >
+              <div><label htmlFor="" className="font-semibold">Car Model</label></div>
+              <input
+              placeholder="Car Model"
+                type="text"
+                value={`${carData?.model}`}
+                min={1}
+                onChange={(e) =>
+                  setcarData((prev) => ({
+                    ...prev!,
+                    model: e.target.value,
+                  }))
+                }
+                className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1"
+              />
+            </div>
+            <div className="flex justify-between gap-2 items-center  " >
+              <div><label htmlFor="" className="font-semibold">Colour</label></div>
+              <input
+              placeholder="Car Colour"
+                type="text"
+                value={`${carData?.Color}`}
+                min={1}
+                onChange={(e) =>
+                  setcarData((prev) => ({
+                    ...prev!,
+                    Color: e.target.value,
                   }))
                 }
                 className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1"
@@ -313,15 +345,30 @@ console.log(carData)
                 onChange={(e) =>
                   setcarData((prev) => ({ ...prev!, Plate: e.target.value }))
                     }
-                  id="">
+                 >
                 { 
                 State.getStatesOfCountry("IN").map((states)=>(
-                  <option className="bg-primary text-black" value=""> {states.isoCode} </option>
+                  <option className="bg-primary text-black" value={states.isoCode}> {states.isoCode} </option>
                 ))
               }
               </select>
               </div>
-
+            <div className="flex justify-between gap-2 items-center  " >
+            <div><label htmlFor="" className="font-semibold">Car Reg. Plate</label></div>
+                <select name=""
+                className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
+                onChange={(e) =>
+                  setcarData((prev) => ({ ...prev!, brand: e.target.value }))
+                    }
+                 >
+                  <option className="bg-primary text-black"> BMW </option>
+                  <option className="bg-primary text-black"> Mercedes </option>
+                  <option className="bg-primary text-black"> Audi </option>
+                  <option className="bg-primary text-black"> Bentley</option>
+                  <option className="bg-primary text-black"> Skoda</option>
+                  <option className="bg-primary text-black"> Porsche</option>
+              </select>
+              </div>
               <div>
                 <div className='flex'>
                   <input type="file" multiple accept='image/' onChange={FileReaderHandler} className='cursor-pointer  '  ref={ImageTag}  />
