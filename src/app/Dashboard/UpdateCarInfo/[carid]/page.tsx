@@ -60,7 +60,7 @@ const UpdateCarInfo = (params: any) => {
      setcarData((data)=>({...data!,Img:updatedArray!}))
   }
   const discardChanges = ()=>{
-    router.refresh()
+   return redirect('/Dashboard')
   }
   const id = params.params.carid
   
@@ -281,7 +281,7 @@ const UpdateCarInfo = (params: any) => {
               </div>
             </form>
             <div className="flex gap-4 my-4" >
-              <button className="bg-red-600 px-3 py-2 rounded-md font-semibold  hover:bg-red-800" onClick={()=>discardChanges} >DISCARD CHANGES</button>
+              <button className="bg-red-600 px-3 py-2 rounded-md font-semibold  hover:bg-red-800" onClick={discardChanges} > <Link href={'/Dashboard'}>DISCARD CHANGES</Link> </button>
               <button className="bg-green-600 px-3 py-2 rounded-md font-semibold hover:bg-green-800" onClick={updateChanges}  >UPDATE CHANGES</button>
             </div>
         </div>
@@ -297,7 +297,7 @@ const UpdateCarInfo = (params: any) => {
             <hr className="my-4" />
           {
             carData.Img.map((img)=>(
-              <div className="" > <button onClick={()=>imageRemoveHandler(img)} className="bg-red-600 px-4 py-2 font-semibold">REMOVE</button> <img src={img} alt="" />  </div>
+              <div className="" > <button onClick={()=>imageRemoveHandler(img)} className="bg-red-600 px-4  py-2 font-semibold">REMOVE</button> <img className="max-h-[400px] max-w-[300px] " src={img} alt="" />  </div>
             ))
           }
           </div>

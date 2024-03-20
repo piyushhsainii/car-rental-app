@@ -10,8 +10,9 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/authOptions'
 import { Plus } from 'lucide-react'
 import AddInventory from '../components/AddInventory'
-
-
+import { DonutChart } from '@tremor/react';
+import DonutChartUsageExample from '../components/UserDonutChart'
+import CarDonutChartUsageExample from '../components/CarDonutChart'
 
 interface userData {
       id: string,
@@ -45,7 +46,7 @@ const page = async() => {
   return (
     <div>
         <NavMenu />
-       <div className='flex  justify-between h-[95vh] w-[90vw] m-auto'>
+       <div className='flex   justify-between h-[95vh] w-[90vw] m-auto'>
        <Tabs defaultValue="Dashboard" className=" w-[100%]">
           <TabsList>
             <TabsTrigger className='m-3' value="Dashboard">Dashboard</TabsTrigger>
@@ -55,6 +56,17 @@ const page = async() => {
             <TabsTrigger className='m-3' value="Inventory">Inventory</TabsTrigger>
             <TabsTrigger className='m-3' value="Add">  <Plus width={16} /> </TabsTrigger>
           </TabsList>
+          <TabsContent value="Dashboard">
+            <div className='flex flex-wrap'>
+              <div className='w-[400px] h-[500px] ' > 
+                <DonutChartUsageExample userCount={UserData}  />
+              </div>
+              <div className='w-[400px] h-[500px] ' > 
+                <CarDonutChartUsageExample carCount={data}  />
+              </div>
+
+            </div>
+          </TabsContent>
           <TabsContent value="Users">
                 <UserDashboard data={UserData}  />
           </TabsContent>
@@ -66,6 +78,7 @@ const page = async() => {
           </TabsContent>
         </Tabs>
       </div>
+
     </div>
   )
 }

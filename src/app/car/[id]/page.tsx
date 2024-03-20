@@ -35,7 +35,6 @@ async function getData(params:string) {
 
 const page = async({params}:{params:{id:string}}) => {
     const  {data , randomCars}  = await getData(params.id)
-    console.log(randomCars.randomCars , "Data?")
   return (
     <div>
         <NavMenu />
@@ -71,8 +70,8 @@ const page = async({params}:{params:{id:string}}) => {
                 <CarouselContent>
                     {
                     data && data.car.Img &&  data.car.Img.map((car:string)=>(
-                            <CarouselItem className='basis-1/3 pl-4 pt-4 m-auto'>
-                                <img src={car} alt="Car Image" />
+                            <CarouselItem key={car} className='basis-1/3 pl-4 pt-4 m-auto  border border-white'>
+                                <img src={car} className='h-[270px] w-[auto] border border-white' alt="Car Image" />
                             </CarouselItem>
                         ))
                     }
