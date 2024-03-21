@@ -87,7 +87,7 @@ files.forEach((file: File) => {
 });
 }
 
-const createCar = async()=>{
+const createCar = async()=>{ 
   setLoading(true)
 const isValid = carSchema.safeParse(carData)
   if(isValid.success === false){
@@ -96,6 +96,14 @@ const isValid = carSchema.safeParse(carData)
     errorMessage.map((error:any)=>(
       toast(error.path + " " + error.message.slice(6))
     ))
+  }
+  if(carData.brand === "null" || carData.Plate === "null" || carData.brand === "" || carData.Plate === ""){
+    setLoading(false)
+    return toast("Please Fill all details")
+  } 
+  if(carData.Img.length === 0){
+    setLoading(false)
+    return toast("Please Add Image")
   }
     try {
      const { data } = await axios.post(`${url}/api/createCar`,{
@@ -119,7 +127,7 @@ const isValid = carSchema.safeParse(carData)
      setLoading(false)
      if(data){
       toast("Added successfully")
-    }
+       }
     } catch (error) {
       setLoading(false)
       toast("Error occured while adding car to inventory")
@@ -348,19 +356,20 @@ console.log(carData)
                  >
                 { 
                 State.getStatesOfCountry("IN").map((states)=>(
-                  <option className="bg-primary text-black" value={states.isoCode}> {states.isoCode} </option>
+                  <option className="bg-primary text-black" value={"null"}> Select State </option>
                 ))
               }
               </select>
               </div>
             <div className="flex justify-between gap-2 items-center  " >
-            <div><label htmlFor="" className="font-semibold">Car Reg. Plate</label></div>
+            <div><label htmlFor="" className="font-semibold">Car Brand</label></div>
                 <select name=""
                 className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
                 onChange={(e) =>
                   setcarData((prev) => ({ ...prev!, brand: e.target.value }))
                     }
                  >
+                  <option className="bg-primary text-black" value={"null"} >Select Brand</option>
                   <option className="bg-primary text-black"> BMW </option>
                   <option className="bg-primary text-black"> Mercedes </option>
                   <option className="bg-primary text-black"> Audi </option>
@@ -386,7 +395,7 @@ console.log(carData)
                      null
                     }
                 </div>
-              </div>
+              </div> 
 
             </form>
               <div className='flex gap-2  justify-evenly my-5' >

@@ -127,7 +127,7 @@ const page = async (props: any) => {
           </ScrollArea>
           <PaginationComponent/>
         </div>
-      </div>
+      </div> 
           <div className='mt-12'>
              <Footer />
           </div>

@@ -1,7 +1,7 @@
 "use client"
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { parseAsInteger, parseAsString, useQueryState } from 'nuqs'
 import React from 'react'
 
@@ -11,14 +11,13 @@ const PaginationComponent = () => {
     const router = useRouter()
     const prevPageHandler = ()=>{
         setPage(c => c===1 ? c : c-1 )
-        router.refresh()
-        router.refresh()
+        redirect(page.toString())
 
     }
     const NextPageHandler = ()=>{
         setPage(c =>  c+1 )
-        router.refresh()
-        router.refresh()
+        redirect(page.toString())
+
     }
     return (
         <div className='flex justify-center'>

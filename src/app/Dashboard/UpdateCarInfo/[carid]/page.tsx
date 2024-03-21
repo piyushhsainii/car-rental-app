@@ -41,12 +41,12 @@ const carSchema = zod.object({
 })
 
 const UpdateCarInfo = (params: any) => {
-  const carid = params.params.carid;
 
+  const carid = params.params.carid;
   const [carData, setcarData] = useState<CarData | null>(null);
   const [formData, setFormData] = useState<CarData | null>(null);
   const router = useRouter()
-
+  const [loading, setloading] = useState(false)
   const getData = async () => {
     const { data } = await axios.post(`${url}/api/getCarInfo`, {
       id: carid,
@@ -59,13 +59,40 @@ const UpdateCarInfo = (params: any) => {
     const updatedArray =  carData?.Img.filter((img)=>img !== id) 
      setcarData((data)=>({...data!,Img:updatedArray!}))
   }
+
   const discardChanges = ()=>{
    return redirect('/Dashboard')
   }
   const id = params.params.carid
   
+  const imageRemoveHandler2 = (e:any) => {
+    const imageArray = [...e.target.files]
+
+    if (imageArray === null || imageArray === undefined || imageArray.length === 0) {
+      return;
+    }
+
+    imageArray.forEach((img:File)=>{
+
+      const transform = new FileReader()
+      transform.readAsDataURL(img)
+      transform.onloadend = () => {
+        setcarData((prevData: CarData | null) => {
+          if (prevData === null) {
+            return null; // Handle null case if needed
+          }
+          return {
+            ...prevData,
+            Img: [...prevData.Img, transform.result as string],
+          };
+        });
+      };
+    })
+  }
+
   // API TO UPDATE CAR INFO 
   const updateChanges = async()=>{
+    setloading(true)
     try {
       const isValid =  carSchema.safeParse({
         carName:carData?.carName,
@@ -81,9 +108,13 @@ const UpdateCarInfo = (params: any) => {
         errorMessage.map((error:any)=>(
           toast(error.message)
         ))
+        setloading(false)
         return
       }
-      console.log(isValid)
+      if(carData === formData){
+        setloading(false)
+        return toast("Make some changes to update info")
+      }
       const { data } = await axios.post(`${url}/api/updateCarInfo`,{
         id:id,
         carName:carData?.carName,
@@ -103,9 +134,11 @@ const UpdateCarInfo = (params: any) => {
         KmsDone:carData?.KmsDone
       })
       data && toast("Updated Successfully")
+      setloading(false)
       data && router.refresh()
 
     } catch (error) {
+      setloading(false)
       console.log(error)
       toast('Error occured while updating')
     }
@@ -121,6 +154,10 @@ const UpdateCarInfo = (params: any) => {
       {carData === null || formData === null ? (
         <Loading />
       ) : (
+
+          loading ? 
+          <Loading />
+          : 
         <div className=" flex justify-evenly m-2">
           <div className="underline"> <Link href={'/Dashboard'}>back</Link> </div>
           {/* CAR DETAIL CONTAINER */}
@@ -291,9 +328,9 @@ const UpdateCarInfo = (params: any) => {
         <div className="  px-4 py-2 font-semibold"> 
             Add Image
          </div>
-            <input type="file"  className="text-sm cursor-pointer bg-opacity-20  border-green-600 bg-green-600 hover:bg-opacity-100 hover:bg-green-600 duration-300 transition-all" />
+            <input type="file" multiple onChange={imageRemoveHandler2}  className="text-sm cursor-pointer bg-opacity-20  border-green-600 bg-green-600 hover:bg-opacity-100 hover:bg-green-600 duration-300 transition-all" />
             <label htmlFor=""></label>
-          <div className="h-[600px]  overflow-y-auto" >
+          <div className="h-[600px]  overflow-y-auto" > 
             <hr className="my-4" />
           {
             carData.Img.map((img)=>(

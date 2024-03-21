@@ -67,11 +67,11 @@ const page = async({params}:{params:{id:string}}) => {
             </div>
         <div className='w-full h-[300px]'>
             <Carousel className='w-[90vw] m-auto h-[300px] '>
-                <CarouselContent>
+                <CarouselContent>                  
                     {
                     data && data.car.Img &&  data.car.Img.map((car:string)=>(
-                            <CarouselItem key={car} className='basis-1/3 pl-4 pt-4 m-auto  border border-white'>
-                                <img src={car} className='h-[270px] w-[auto] border border-white' alt="Car Image" />
+                            <CarouselItem key={car} className='basis-1/3 pl-4 pt-4 m-auto '>
+                                <img src={car} className='h-[270px] w-[auto] ' alt="Car Image" />
                             </CarouselItem>
                         ))
                     }

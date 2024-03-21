@@ -1,4 +1,5 @@
 import { Github, Linkedin, Twitter } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
@@ -10,9 +11,9 @@ const Footer = () => {
             <div className='font-mono text-sm pl-4 pt-14' >2024 all Right Reserved Term of use Horsepower Cartel</div>
         </div>
         <div className='flex flex-col gap-6 p-8'>
-            <div> <Github /> </div>
-            <div> <Twitter /> </div>
-            <div> <Linkedin /> </div>
+            <div> <Link href={'/https://github.com/piyushhsainii'} > <Github /></Link>  </div>
+            <div> <Link href={'/https://twitter.com/piyushsainii'} > <Twitter  /></Link> </div>
+            <div> <Link href={'/https://www.linkedin.com/in/piyush-saini-b860ab1bb/'}><Linkedin /> </Link></div>
         </div>
     </div>
   )

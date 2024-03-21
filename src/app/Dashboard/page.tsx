@@ -37,11 +37,11 @@ const page = async() => {
 
   const  { data ,UserData} = await getData()
   const session = await getServerSession(authOptions)
-  if(  session === null){
+
+  if(session === null){
     redirect('/')
     return
-}
-  console.log(session, "session from admin dashboard")
+    }
 
   return (
     <div>
@@ -63,7 +63,7 @@ const page = async() => {
               </div>
               <div className='w-[400px] h-[500px] ' > 
                 <CarDonutChartUsageExample carCount={data}  />
-              </div>
+              </div> 
 
             </div>
           </TabsContent>

@@ -9,7 +9,6 @@ enum SortOrder {
 export async function POST(req:NextRequest){
 
     const data = await req.json() 
-    console.log(data)
     const params:SortOrder = data.sortBy
     const fuel = data.Fuel
     const fuelSplit = fuel === undefined || fuel === "" ? null : fuel.split(',')
@@ -48,10 +47,11 @@ export async function POST(req:NextRequest){
                 Seat:{
                     in:seatSplit || [1,2,3,4,5,6]
                 }
+                
             },
+            skip:skip
         }
     )
-       console.log(Cars,"daat check")
         return Response.json({
             data:Cars
         },
@@ -79,10 +79,12 @@ export async function POST(req:NextRequest){
                     brand:{
                         in:brandSplit || [ "Mercedes" , "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
                     },
-                    // Seat:{
-                    //     in:seatSplit || [1,2,3,4,5,6]
-                    // }
-                }
+                    Seat:{
+                        in:seatSplit || [1,2,3,4,5,6]
+                    }
+                },
+              skip:skip
+
             }
         )
        
