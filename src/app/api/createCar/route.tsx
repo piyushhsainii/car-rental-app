@@ -1,4 +1,4 @@
-import prisma from '../../../../lib/prismaClient'
+import prisma from '../../../lib/prismaClient'
 import cloudinary from 'cloudinary'
 
 export async function POST(req:Request){
