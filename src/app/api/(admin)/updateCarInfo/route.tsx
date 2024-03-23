@@ -26,7 +26,7 @@ export async function POST(req:Request){
             secure: true 
           });
 
-        const FilteredArray = Img.filter((img:string[])=>!img.includes("http://"))
+        const FilteredArray = Img.filter((img:string[])=>!img.includes("http://")) 
 
         const transfrom  = FilteredArray.map(async(img:string)=>(
            (await cloudinary.v2.uploader.upload(img)).url
@@ -42,6 +42,7 @@ export async function POST(req:Request){
             },
             data:{
                 carName,
+                Img:Img,
                 brand,
                 price, 
                 Fuel,

@@ -87,6 +87,27 @@ files.forEach((file: File) => {
 });
 }
 
+const resetFormHandler = ()=>{
+  setcarData({
+    carName: '',
+    Img: [],
+    brand: '',
+    price:0,
+    Fuel: '',
+    Seat: 0,
+    Mileage:0,
+    Availability: '',
+    model: '',
+    Plate: '',
+    Year: 2000,
+    type: '',
+    Transmission: '',
+    Color: '',
+    ownerShip:0,
+    KmsDone: 0
+})
+}
+
 const createCar = async()=>{ 
   setLoading(true)
 const isValid = carSchema.safeParse(carData)
@@ -97,7 +118,7 @@ const isValid = carSchema.safeParse(carData)
       toast(error.path + " " + error.message.slice(6))
     ))
   }
-  if(carData.brand === "null" || carData.Plate === "null" || carData.brand === "" || carData.Plate === ""){
+  if(carData.type === "null" || carData.Transmission === "null" || carData.brand === "" || carData.brand === "null" || carData.Plate === "null" || carData.brand === "" || carData.Plate === "" || carData.Fuel === "null" || carData.Fuel === ""  ){
     setLoading(false)
     return toast("Please Fill all details")
   } 
@@ -105,6 +126,7 @@ const isValid = carSchema.safeParse(carData)
     setLoading(false)
     return toast("Please Add Image")
   }
+
     try {
      const { data } = await axios.post(`${url}/api/createCar`,{
       carName:carData.carName,
@@ -141,7 +163,6 @@ console.log(carData)
           {
             LoadingState ? 
             <Loading /> :
-
         <div className="w-[350px] m-5 ">
             <div className="text-2xl m-5 text-center " >
               ADD YOUR CAR 
@@ -265,6 +286,7 @@ console.log(carData)
                 value={carData.type}
                 className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
                 >
+                <option className= "text-black" value="null">Select Type</option>
                 <option className= "text-black" value="Sedan">Sedan</option>
                 <option className= "text-black"  value="Hatchback">Hatchback</option>
                 <option className= "text-black"  value="SUV">SUV</option>
@@ -294,19 +316,10 @@ console.log(carData)
               onChange={(e) =>
                 setcarData((prev) => ({ ...prev!, Transmission: e.target.value }))
               }>
-                {
-                  carData.Transmission === "Automatic" ? 
-                 <>
+              
+                  <option className="text-black" value="null">Select Transmission </option>
                   <option className="text-black" value="Automatic">Automatic</option>
-                   <option className="text-black" value="Manual">Manual</option>
-                  </>
-               : 
-                <>
-                <option className="text-black" value="Manual">Manual</option>
-                <option className="text-black" value="Automatic">Automatic</option>
-               </>
-                }
-                
+                  <option className="text-black" value="Manual">Manual</option>
               </select>
 
             </div>
@@ -318,18 +331,9 @@ console.log(carData)
               onChange={(e) =>
                 setcarData((prev) => ({ ...prev!, Fuel: e.target.value }))
               }>
-               {
-                  carData.Fuel === "Petrol" ? 
-                 <>
+                  <option className="text-black" value="null">Select Fuel Type</option>
                   <option className="text-black" value="Petrol">Petrol</option>
-                   <option className="text-black" value="Diesel">Diesel</option>
-                  </>
-               : 
-                <>
-                <option className="text-black" value="Diesel">Diesel</option>
-                <option className="text-black" value="Petrol">Petrol</option>
-               </>
-                }
+                  <option className="text-black" value="Diesel">Diesel</option>
               </select>
             </div>
             <div className="flex justify-between gap-2 items-center  " >
@@ -354,9 +358,10 @@ console.log(carData)
                   setcarData((prev) => ({ ...prev!, Plate: e.target.value }))
                     }
                  >
+                <option className="bg-primary text-black" value={"null"}> Select State </option>
                 { 
                 State.getStatesOfCountry("IN").map((states)=>(
-                  <option className="bg-primary text-black" value={"null"}> Select State </option>
+                  <option className="bg-primary text-black" value={states.isoCode}> {states.isoCode} </option>
                 ))
               }
               </select>
@@ -402,6 +407,9 @@ console.log(carData)
                 <button className='px-4 py-2 bg-red-600 text-sm font-semibold '> BACK TO DASHBOARD  </button>
                 <button className='px-12  py-2 bg-green-600 font-semibold' onClick={createCar}> ADD CAR  </button>
               </div>
+                <div> 
+                   <button className='px-4 py-2 w-[100%] bg-gray-600 text-sm font-semibold' onClick={resetFormHandler} > RESET  </button>
+                </div>
         </div>
           }
 

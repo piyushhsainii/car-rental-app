@@ -76,7 +76,7 @@ const DarkModeBtn = () => {
                     items={ 
                         [{
                             id:1,
-                            name:"Piyush Saini",
+                            name:session?.user.name ?? "",
                             designation:"",
                             image:session?.user?.image ?? ""
                         }]

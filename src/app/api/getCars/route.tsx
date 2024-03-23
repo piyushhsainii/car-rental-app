@@ -9,6 +9,7 @@ enum SortOrder {
 export async function POST(req:NextRequest){
 
     const data = await req.json() 
+    console.log(data)
     const params:SortOrder = data.sortBy
     const fuel = data.Fuel
     const fuelSplit = fuel === undefined || fuel === "" ? null : fuel.split(',')
@@ -21,13 +22,13 @@ export async function POST(req:NextRequest){
     const seat = data.seat
     const seatSplit = seat === undefined || seat === "" ? null : seat.split(',')
     const page = data.page
+
     let skip 
-    if(page){
+    if(page){ 
         skip = ((page - 1)*2)
     }
     try { 
     if(!params) {
-        console.log("checkpoint 1")
         const Cars = await prisma.cAR.findMany(
             {
             where:{

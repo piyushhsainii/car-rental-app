@@ -1,4 +1,5 @@
 import React from 'react'
+import { unstable_noStore as noStore } from "next/cache";
 import NavMenu from '../components/NavMenu'
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { FilterIcon } from 'lucide-react'
@@ -36,15 +37,7 @@ import {
 } from "@/components/ui/breadcrumb"
 
 
-async function getData(
-  sortBy: string,
-  Fuel: string,
-  type: string,
-  Gear: string,
-  brand: string,
-  seat: string,
-  page: string
-  ) {
+async function getData(sortBy: string, Fuel: string, type: string, Gear: string, brand: string, seat: string, page: string ) {
   const { data } = await axios.post(`${url}/api/getCars`, {
     sortBy, Fuel, type, Gear, brand , seat,page
   })
@@ -70,18 +63,21 @@ interface carData {
   ownerShip: string,
   KmsDone: string
 }
+export const dynamic = 'force-dynamic'
 
-const page = async (props: any) => {
+ const page = async (props: any) => {
+  noStore();
+
   const { data } = await getData(
-    props.searchParams.sortBy,
-    props.searchParams.Fuel,
-    props.searchParams.type,
-    props.searchParams.Gear,
-    props.searchParams.brand,
-    props.searchParams.seats,
-    props.searchParams.page
+      props.searchParams.sortBy,
+      props.searchParams.Fuel,
+      props.searchParams.type,
+      props.searchParams.Gear,
+      props.searchParams.brand,
+      props.searchParams.seats,
+      props.searchParams.page
     )
-
+    console.log(data,"FRONTEND DATA")
   return (
     <div> 
       <NavMenu />
@@ -118,7 +114,7 @@ const page = async (props: any) => {
             <div className='flex gap-3 flex-wrap justify-evenly'>
               {
                 data && data.map((car: carData) => (
-                  <Link href={`/car/${car.id}`} key={car.id}>
+                  <Link target='_blank' href={`/car/${car.id}`} key={car.id}>
                     <CarCard {...car} />
                   </Link>
                 ))

@@ -38,7 +38,13 @@ const CarCard = (props:carData) => {
           </div>
         }
         <div className='flex flex-col justify-evenly gap-2 p-2'>
-            <div className='text-lg font-semibold pl-3 '>{props.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
+           <div className='flex justify-between'>
+            <div className='text-lg font-semibold pl-3 '>{props.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div> 
+            {
+                props.Availability === 'Reserved' ?
+                <div className='text-sm px-3 py-1 rounded-md font-semibold text-center bg-red-600 '>Reserved</div> : null
+            }
+           </div>
             <div className='pl-3 text-xl font-semibold'> {props.carName} </div>
             <div className='flex justify-around gap-1 '>
                 <div className='flex flex-col items-center justify-center text-[12px]'>
