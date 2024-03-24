@@ -59,7 +59,7 @@ interface Data {
   totalPages?: number;
   error?:string
 }
-async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, seat: number, page: string):Promise<Data | undefined> {
+async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, seat: number[], page: string):Promise<Data | undefined> {
 
   const params: SortOrder = sortBy
   const fuel = Fuel
@@ -71,14 +71,13 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
   const branded = brand
   const brandSplit = branded === undefined || branded === "" ? null : branded.split(',')
   const seated = seat
-  const seatSplit = seated === undefined || seated === null ? null :  seat
   const paged:number = parseFloat(page)
+  console.log(seat, "adaad")
 
   let skip
   if(paged){ 
     skip = ((paged - 1)* 3 )
   }
-  console.log(skip, 'value of sklp')
   try {
     if (!params) {
       const Cars = await prisma.cAR.findMany(
@@ -98,10 +97,10 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
             },
             Seat: {
-              in: seatSplit || [1, 2, 3, 4, 5, 6]
+              in:seat || [1, 2, 3, 4, 5, 6]
             }
           },
-
+          take:3,
           skip: skip
         }
       )
@@ -132,11 +131,11 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
             },
             Seat: {
-              in: seatSplit || [1, 2, 3, 4, 5, 6]
+              in: seat || [1, 2, 3, 4, 5, 6]
             }
           },
+          take:3,
           skip: skip
-
         }
       )
       const totalCount = await prisma.cAR.count()
@@ -162,7 +161,7 @@ const page = async (props: any) => {
     props.searchParams.type,
     props.searchParams.Gear,
     props.searchParams.brand,
-    parseInt(props.searchParams.seats),
+    props.searchParams.seats,
     props.searchParams.page
   ))!
   console.log(page,"checking page")

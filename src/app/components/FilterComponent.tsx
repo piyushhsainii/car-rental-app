@@ -56,12 +56,12 @@ const Filter = () => {
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Bently")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Bentley"]) : setBrand((c)=>[...c.filter(car=>car!=="Bentley")]) } /></div> Bentley </div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Skoda")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Skoda"]) : setBrand((c)=>[...c.filter(car=>car!=="Skoda")]) } /></div> Skoda</div>
       </div>
-      <div className='p-4 border-slate-300 border-b border-opacity-40'>
+      {/* <div className='p-4 border-slate-300 border-b border-opacity-40'>
         <div className='font-semibold  mb-4'>Seating Capacity</div>
         <div className='font-semibold flex items-center gap-2' ><div><Checkbox  checked={seats.includes(4)} onCheckedChange={(isChecked)=> isChecked ? setseats((c)=> [...c , 4]) : setseats((c)=>[...c.filter(car=>car!==4)])} /></div>4</div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={seats.includes(5)} onCheckedChange={(isChecked)=> isChecked ? setseats((c)=> [...c , 5]) : setseats((c)=>[...c.filter(car=>car!==5)])} /></div> 5</div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox checked={seats.includes(6)} onCheckedChange={(isChecked)=> isChecked ? setseats((c)=> [...c , 6]) : setseats((c)=>[...c.filter(car=>car!==6)])}  /></div> 6+</div>
-      </div>
+      </div> */}
     </ScrollArea>
   )
 }
