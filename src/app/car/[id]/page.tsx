@@ -63,7 +63,7 @@ const page = async({params}:{params:{id:string}}) => {
                 <div className='text-xl p-3 pt-0 font-semibold' >{data.car && data.car.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div>
             </div>
              </div>
-              <ReserveComponent data={data.car.id}/>
+              <ReserveComponent data={data.car}/>
             </div>
         <div className='w-full h-[300px]'>
             <Carousel className='w-[90vw] m-auto h-[300px] '>

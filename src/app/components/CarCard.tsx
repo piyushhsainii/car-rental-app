@@ -9,17 +9,17 @@ interface carData {
     brand: String,
     price: Number,
     Fuel: String,
-    Seat: String,
+    Seat: Number,
     Mileage: Number,
     Availability: String,
     model: String,
     Plate: String,
-    Year: String,
+    Year: Number,
     type: String,
     Transmission: String,
     Color: String,
-    ownerShip: String,
-    KmsDone: String
+    ownerShip: Number,
+    KmsDone: Number
   }
 
 
@@ -53,11 +53,11 @@ const CarCard = (props:carData) => {
                 </div>
                 <div className='flex flex-col items-center justify-center text-[12px]'>
                     <div>Kms</div>
-                    <div> {props.KmsDone} </div>
+                    <div> {props.KmsDone.toString()} </div>
                 </div>
                 <div className='flex flex-col items-center justify-center text-[12px]'>
                     <div>Reg.Year</div>
-                    <div> {props.Year} </div>
+                    <div> {props.Year.toString()} </div>
                 </div>
                 <div className='flex flex-col items-center justify-center text-[12px]'>
                     <div>Fuel Type</div>

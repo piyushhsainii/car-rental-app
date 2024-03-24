@@ -4,9 +4,30 @@ import Link from 'next/link'
 import React from 'react'
 import { toast } from 'sonner'
 
-const ReserveComponent = ({data}:{data:string}) => {
+interface carData {
+    id: string,
+    carName: string,
+    Img: string[],
+    brand: String,
+    price: Number,
+    Fuel: string,
+    Seat: string,
+    Mileage: number,
+    Availability: string,
+    model: string,
+    Plate: string,
+    Year: string,
+    type: string,
+    Transmission: string,
+    Color: string,
+    ownerShip: string,
+    KmsDone: string
+  }
+
+const ReserveComponent = ({data}:{data: carData}) => {
 
     const session = useSession()
+    
     const sendToast = ()=>{
         toast("Log In to Reserve your car")
     }
@@ -17,7 +38,13 @@ const ReserveComponent = ({data}:{data:string}) => {
                 session && session.status === 'unauthenticated' ? 
                 <div onClick={sendToast} >  Reserve this Car  </div>
                  :
-                <Link href={`/Booking/${data}`}>  Reserve this Car</Link>
+                data.Availability === 'Reserved' ? 
+                toast("This car is already reserved")
+                :
+                data.Availability === 'Sold' ? 
+                toast("This Car is sold out")
+                :
+                <Link href={`/Booking/${data.id }`}>  Reserve this Car</Link>
             }
         </button>
     </div>

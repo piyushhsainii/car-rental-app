@@ -9,7 +9,6 @@ enum SortOrder {
 export async function POST(req:NextRequest){
 
     const data = await req.json() 
-    console.log(data)
     const params:SortOrder = data.sortBy
     const fuel = data.Fuel
     const fuelSplit = fuel === undefined || fuel === "" ? null : fuel.split(',')
@@ -25,7 +24,7 @@ export async function POST(req:NextRequest){
 
     let skip 
     if(page){ 
-        skip = ((page - 1)*2)
+        skip = ((page - 1)* 2 )
     }
     try { 
     if(!params) {
@@ -53,6 +52,8 @@ export async function POST(req:NextRequest){
             skip:skip
         }
     )
+    console.log(Cars,"BACKEND DATA")
+
         return Response.json({
             data:Cars
         },

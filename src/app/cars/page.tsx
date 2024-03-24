@@ -2,21 +2,12 @@ import React from 'react'
 import { unstable_noStore as noStore } from "next/cache";
 import NavMenu from '../components/NavMenu'
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { FilterIcon } from 'lucide-react'
-import { Checkbox } from "@/components/ui/checkbox"
 import CarCard from '../components/CarCard'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button'
@@ -24,7 +15,6 @@ import axios from 'axios'
 import Link from 'next/link'
 import { url } from '@/lib/url'
 import Filter from '../components/FilterComponent'
-import { Badge } from "@/components/ui/badge"
 import PaginationComponent from '../components/PaginationComponent'
 import Footer from '../components/Footer'
 import {
@@ -35,13 +25,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import prisma from '@/lib/prismaClient';
+import { Badge } from '@/components/ui/badge'
 
 
-async function getData(sortBy: string, Fuel: string, type: string, Gear: string, brand: string, seat: string, page: string ) {
-  const { data } = await axios.post(`${url}/api/getCars`, {
-    sortBy, Fuel, type, Gear, brand , seat,page
-  })
-  return data
+enum SortOrder {
+  asc = "asc",
+  desc = "desc"
 }
 
 interface carData {
@@ -51,53 +41,151 @@ interface carData {
   brand: String,
   price: Number,
   Fuel: string,
-  Seat: string,
+  Seat: number,
   Mileage: number,
   Availability: string,
   model: string,
   Plate: string,
-  Year: string,
+  Year: number,
   type: string,
   Transmission: string,
   Color: string,
-  ownerShip: string,
-  KmsDone: string
+  ownerShip: number,
+  KmsDone: number
 }
+interface Data {
+  Cars?: carData[];
+  page?: string;
+  totalPages?: number;
+  error?:string
+}
+async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, seat: number, page: string):Promise<Data | undefined> {
+
+  const params: SortOrder = sortBy
+  const fuel = Fuel
+  const fuelSplit = fuel === undefined || fuel === "" ? null : fuel.split(',')
+  const typed = type
+  const typeSplit = typed === undefined || typed === "" ? null : typed.split(',')
+  const gear: string = Gear
+  const gearSplit = gear === undefined || gear === "" ? null : gear.split(',')
+  const branded = brand
+  const brandSplit = branded === undefined || branded === "" ? null : branded.split(',')
+  const seated = seat
+  const seatSplit = seated === undefined || seated === null ? null :  seat
+  const paged:number = parseFloat(page)
+
+  let skip
+  if(paged){ 
+    skip = ((paged - 1)* 3 )
+  }
+  console.log(skip, 'value of sklp')
+  try {
+    if (!params) {
+      const Cars = await prisma.cAR.findMany(
+        {
+          where: {
+            Fuel: {
+              in: fuelSplit || ["Petrol", "Diesel"]
+            },
+            type: {
+              in: typeSplit || ["Sedan", "SUV", "Hatchback"]
+            }
+            ,
+            Transmission: {
+              in: gearSplit || ["Automatic", "Manual"]
+            },
+            brand: {
+              in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
+            },
+            Seat: {
+              in: seatSplit || [1, 2, 3, 4, 5, 6]
+            }
+          },
+
+          skip: skip
+        }
+      )
+      const totalCount = await prisma.cAR.count()
+      const totalPages = Math.ceil(totalCount / 3)
+      return { Cars, page, totalPages, error:"Could not fetch data" }
+
+    }
+
+    if (params) {
+      const Cars = await prisma.cAR.findMany(
+        {
+          orderBy: {
+            price: params
+          },
+          where: {
+            Fuel: {
+              in: fuelSplit || ["Petrol", "Diesel"]
+            },
+            type: {
+              in: typeSplit || ["Sedan", "SUV", "Hatchback"]
+            }
+            ,
+            Transmission: {
+              in: gearSplit || ["Automatic", "Manual"]
+            },
+            brand: {
+              in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
+            },
+            Seat: {
+              in: seatSplit || [1, 2, 3, 4, 5, 6]
+            }
+          },
+          skip: skip
+
+        }
+      )
+      const totalCount = await prisma.cAR.count()
+      const totalPages = Math.ceil(totalCount / 6)
+
+      return { Cars, page, totalPages , error:"Could not fetch data" }
+    }
+
+  } catch {
+    return { error:"Could not fetch data"}
+  }
+
+}
+
+
 export const dynamic = 'force-dynamic'
 
- const page = async (props: any) => {
+const page = async (props: any) => {
   noStore();
-
-  const { data } = await getData(
-      props.searchParams.sortBy,
-      props.searchParams.Fuel,
-      props.searchParams.type,
-      props.searchParams.Gear,
-      props.searchParams.brand,
-      props.searchParams.seats,
-      props.searchParams.page
-    )
-    console.log(data,"FRONTEND DATA")
+  const { Cars, page, totalPages , error } = (await getData(
+    props.searchParams.sortBy,
+    props.searchParams.Fuel,
+    props.searchParams.type,
+    props.searchParams.Gear,
+    props.searchParams.brand,
+    parseInt(props.searchParams.seats),
+    props.searchParams.page
+  ))!
+  console.log(page,"checking page")
   return (
-    <div> 
+    <div>
       <NavMenu />
       <div className='flex  justify-between h-[95vh] ' >
         <Filter />
         <div className='flex flex-col'>
           <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-               <BreadcrumbPage>Cars</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Cars</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
             <div className='flex justify-between p-3 px-7' >
-              <div className='font-semibold'> Total {data.length} results found </div>
+              <div className='font-semibold'> Total {Cars?.length} results found </div>
               <div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -111,22 +199,43 @@ export const dynamic = 'force-dynamic'
                 </DropdownMenu>
               </div>
             </div>
+            {
+             error && !Cars ? 
+              <div>Could Not Fetch Data</div>
+              :
             <div className='flex gap-3 flex-wrap justify-evenly'>
               {
-                data && data.map((car: carData) => (
+                Cars && Cars.map((car: carData) => (
                   <Link target='_blank' href={`/car/${car.id}`} key={car.id}>
                     <CarCard {...car} />
                   </Link>
                 ))
               }
             </div>
+                }
           </ScrollArea>
-          <PaginationComponent/>
-        </div>
-      </div> 
-          <div className='mt-12'>
-             <Footer />
+
+          <div className='flex justify-center'>
+            <Link href={`/cars?page=${1}`} >
+              <div className='p-2 cursor-pointer'>
+                &#x276E;
+              </div>
+            </Link>
+            <Badge className='text-md' variant="outline">
+              <span className='px-4'>{page ?? "1"} </span>  / <span className='px-4'> {totalPages} </span>
+            </Badge>
+            <Link href={`/cars?page=${2}`} >
+              <div className='p-2 cursor-pointer'>
+                &#x276F;
+              </div>
+            </Link>
           </div>
+
+        </div>
+      </div>
+      <div className='mt-12'>
+        <Footer />
+      </div>
     </div>
   )
 }

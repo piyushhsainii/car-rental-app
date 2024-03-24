@@ -14,6 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { redirect } from 'next/navigation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -69,7 +70,9 @@ const page = ({params}:any) => {
       clientSecret,
       appearance,
     };
-
+  if(Data?.Availability==='Reserved' ||  Data?.Availability === "Sold"){
+    return redirect(`/car/${params.id}`)
+  }
   return (
       Data === null ?
         <Loading/>
