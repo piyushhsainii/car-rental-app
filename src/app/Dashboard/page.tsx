@@ -13,6 +13,7 @@ import AddInventory from '../components/AddInventory'
 import { DonutChart } from '@tremor/react';
 import DonutChartUsageExample from '../components/UserDonutChart'
 import CarDonutChartUsageExample from '../components/CarDonutChart'
+import prisma from '@/lib/prismaClient'
 
 interface userData {
       id: string,
@@ -28,8 +29,11 @@ interface userData {
 
 
  async function getData(){
+
   const { data } = await axios.get(`${url}/api/getAllCars`)
-  const { data:UserData } = await axios.get(`${url}/api/getAllUsers`)
+  // const { data:UserData } = await axios.get(`${url}/api/getAllUsers`)
+  const UserData =  await prisma.user.findMany()
+
   return {data,UserData}
 }
 

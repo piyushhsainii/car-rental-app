@@ -361,7 +361,7 @@ console.log(carData)
                 <option className="bg-primary text-black" value={"null"}> Select State </option>
                 { 
                 State.getStatesOfCountry("IN").map((states)=>(
-                  <option className="bg-primary text-black" value={states.isoCode}> {states.isoCode} </option>
+                  <option className="dark:bg-primary text-black" value={states.isoCode}> {states.isoCode} </option>
                 ))
               }
               </select>
@@ -369,18 +369,18 @@ console.log(carData)
             <div className="flex justify-between gap-2 items-center  " >
             <div><label htmlFor="" className="font-semibold">Car Brand</label></div>
                 <select name=""
-                className="bg-transparent border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
+                className="bg-transparent  border-slate-300 border rounded-md m-2 px-2 py-1 w-[57%]"
                 onChange={(e) =>
-                  setcarData((prev) => ({ ...prev!, brand: e.target.value }))
+                  setcarData((prev) => ({ ...prev!, brand: e.target.value })) 
                     }
                  >
-                  <option className="bg-primary text-black" value={"null"} >Select Brand</option>
-                  <option className="bg-primary text-black"> BMW </option>
-                  <option className="bg-primary text-black"> Mercedes </option>
-                  <option className="bg-primary text-black"> Audi </option>
-                  <option className="bg-primary text-black"> Bentley</option>
-                  <option className="bg-primary text-black"> Skoda</option>
-                  <option className="bg-primary text-black"> Porsche</option>
+                  <option className="dark:bg-primary text-black" value={"null"} >Select Brand</option>
+                  <option className="dark:bg-primary text-black"> BMW </option>
+                  <option className="dark:bg-primary text-black"> Mercedes </option>
+                  <option className="dark:bg-primary text-black"> Audi </option>
+                  <option className="dark:bg-primary text-black"> Bentley</option>
+                  <option className="dark:bg-primary text-black"> Skoda</option>
+                  <option className="dark:bg-primary text-black"> Porsche</option>
               </select>
               </div>
               <div>
