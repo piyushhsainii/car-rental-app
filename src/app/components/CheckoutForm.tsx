@@ -6,11 +6,10 @@ import {
 } from "@stripe/react-stripe-js";
 import { Layout } from "@stripe/stripe-js";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({email}:{email:string}) {
   const stripe = useStripe();
   const elements = useElements();
-
-
+  const [emailValue, setemail] = useState(email)
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
@@ -30,7 +29,7 @@ export default function CheckoutForm() {
         payment_method:'card',
         payment_method_data: {
           billing_details: {
-            email: "email@email.com",
+            email: email,
           },
         },
       },
@@ -66,7 +65,9 @@ export default function CheckoutForm() {
       <input
             type="email"
             required
-            placeholder="example@emmail.com"
+            value={emailValue}
+            onChange={(e)=>setemail(e.target.value)}
+            placeholder={email}
             className="my-2 p-2 w-full border rounded bg-white text-black"
           /> 
       <PaymentElement className=" text-white" id="payment-element" options={paymentElementOptions} />
@@ -75,8 +76,8 @@ export default function CheckoutForm() {
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
       </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      message && <div id="payment-message">{message}</div>
+      
     </form>
   );
 }

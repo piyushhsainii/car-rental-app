@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { redirect } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -39,9 +40,11 @@ interface carData {
 }
 
 const page = ({params}:any) => {
-  const [clientSecret, setClientSecret] = useState("");
+
+  const [clientSecret, setClientSecret] = useState(""); 
   const [Data, setData] = useState<carData | null>(null);
-  console.log(Data)
+  const  { data } = useSession()
+
   useEffect(() => {
       // Create PaymentIntent as soon as the page loads
       fetch('/api/getCarInfo',{
@@ -54,7 +57,8 @@ const page = ({params}:any) => {
       fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+        // body: JSON.stringify({ items: [{ id: params.id}] , amount:200 } ),
+        body: JSON.stringify({ items: [{ id: params.id }] }),
       })
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
@@ -64,7 +68,7 @@ const page = ({params}:any) => {
       theme:'stripe' | "night" | "flat"
     }
     const appearance:appearance = {
-      theme: 'stripe',
+      theme: 'night',
     };
     const options:StripeElementsOptions = {
       clientSecret,
@@ -79,7 +83,7 @@ const page = ({params}:any) => {
         :
     <div>
         <NavMenu />
-        <div className='w-[80vw] border border-slate-300 m-auto   ' >
+        <div className='w-[80vw] m-auto   ' >
         <div className='flex justify-evenly p-4 gap-2 '>
           <div className=' w-[60%] m-auto pb-2 '>
           <Breadcrumb>
@@ -101,7 +105,7 @@ const page = ({params}:any) => {
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>
-            <div className='text-3xl font-semibold text-center' >{Data?.carName}</div>
+            <div className='text-3xl font-semibold text-center my-3' >{Data?.carName}</div>
             <div className='text-xl font-semibold py-2 text-center'> { Data.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' }) }  </div>
             <div className='w-[400px] m-auto'>
                 <img src= { Data?.Img[0] as string }  className='w-[400px] h-[auto] max-h-[300px] rounded-md ' alt="" />
@@ -136,7 +140,7 @@ const page = ({params}:any) => {
       <div className=" w-[50%] m-auto text-center ">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm email={data?.user?.email!} />
             </Elements>
           )}
     </div>
@@ -146,3 +150,6 @@ const page = ({params}:any) => {
 }
 
 export default page
+
+
+

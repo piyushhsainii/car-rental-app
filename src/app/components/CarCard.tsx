@@ -7,7 +7,7 @@ interface carData {
     carName: String,
     Img: String[],
     brand: String,
-    price: Number,
+    price: Number, 
     Fuel: String,
     Seat: Number,
     Mileage: Number,
@@ -26,7 +26,7 @@ interface carData {
 const CarCard = (props:carData) => {
     const Image = props.Img[0]
   return ( 
-      <div className='min-h-[360px] w-[340px] overflow-hidden rounded-md border border-slate-700 border-opacity-50 ' >
+      <div className='min-h-[360px] h-[434px] w-[340px] overflow-hidden rounded-md border border-slate-700 border-opacity-50 ' >
         {
             Image &&  
             <div>

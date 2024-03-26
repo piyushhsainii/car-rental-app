@@ -80,7 +80,7 @@ export const DirectionAwareHover = ({
           <motion.div className="group-hover/card:block hidden absolute inset-0 w-full h-full bg-black/40 z-10 transition duration-500" />
           <motion.div
             variants={variants}
-            className="h-full w-full relative bg-gray-50 dark:bg-black"
+            className="h-full w-full relative bg-black "
             transition={{
               duration: 0.2,
               ease: "easeOut",
@@ -89,7 +89,7 @@ export const DirectionAwareHover = ({
             <img
               alt="image"
               className={cn(
-                "h-full w-[400px] object-fill scale-[1.15]",
+                "h-full w-[400px] object-fill bg-white scale-[1.05]",
                 imageClassName
               )}
               width="1000"

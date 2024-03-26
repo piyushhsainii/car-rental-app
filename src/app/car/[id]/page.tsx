@@ -40,7 +40,7 @@ const page = async({params}:{params:{id:string}}) => {
         <NavMenu />
         <div className='flex justify-between m-auto w-[93vw] '>
            <div className='flex flex-col   p-2  ' >
-           <Link href={'/cars'}>  <div className='flex items-center border-r pl-3 pr-3 border-slate-300 border-opacity-60'><ArrowLeft width={15} /> <div>Back</div> </div></Link>
+           <Link href={'/cars'}>  <div className='flex items-center  pl-3 pr-3 border-slate-300 '><ArrowLeft width={15} /> <div>Back</div> </div></Link>
             <div className='flex flex-col '>
                 <div className='pl-5 mt-5'>
                 <Breadcrumb>

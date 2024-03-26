@@ -72,7 +72,6 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
   const brandSplit = branded === undefined || branded === "" ? null : branded.split(',')
   const seated = seat
   const paged:number = parseFloat(page)
-  console.log(seat, "adaad")
 
   let skip
   if(paged){ 
@@ -100,12 +99,12 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in:seat || [1, 2, 3, 4, 5, 6]
             }
           },
-          take:3,
+          take:6,
           skip: skip
         }
       )
       const totalCount = await prisma.cAR.count()
-      const totalPages = Math.ceil(totalCount / 3)
+      const totalPages = Math.ceil(totalCount / 6)
       return { Cars, page, totalPages, error:"Could not fetch data" }
 
     }
@@ -134,7 +133,7 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in: seat || [1, 2, 3, 4, 5, 6]
             }
           },
-          take:3,
+          take:6,
           skip: skip
         }
       )
@@ -164,11 +163,10 @@ const page = async (props: any) => {
     props.searchParams.seats,
     props.searchParams.page
   ))!
-  console.log(page,"checking page")
   return (
     <div>
       <NavMenu />
-      <div className='flex  justify-between h-[95vh] ' >
+      <div className='flex  justify-between h-[100vh] ' >
         <Filter />
         <div className='flex flex-col'>
           <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">
@@ -214,18 +212,18 @@ const page = async (props: any) => {
                 }
           </ScrollArea>
 
-          <div className='flex justify-center'>
+          <div className='flex justify-center p-4'>
             <Link href={`/cars?page=${1}`} >
-              <div className='p-2 cursor-pointer'>
-                &#x276E;
+              <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
+                &#x276E; 
               </div>
             </Link>
             <Badge className='text-md' variant="outline">
               <span className='px-4'>{page ?? "1"} </span>  / <span className='px-4'> {totalPages} </span>
             </Badge>
             <Link href={`/cars?page=${2}`} >
-              <div className='p-2 cursor-pointer'>
-                &#x276F;
+              <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
+                  &#x276F; 
               </div>
             </Link>
           </div>
