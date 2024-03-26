@@ -54,15 +54,18 @@ const page = ({params}:any) => {
       }).then((res)=>res.json())
       .then((data)=>setData(data.car))
 
+        
+    }, []);
+
+    useEffect(()=>{
       fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // body: JSON.stringify({ items: [{ id: params.id}] , amount:200 } ),
-        body: JSON.stringify({ items: [{ id: params.id }] }),
-      })
-        .then((res) => res.json())
-        .then((data) => setClientSecret(data.clientSecret));
-    }, []);
+        body: JSON.stringify({ items: [{ id: params.id }] ,amount:Data?.price, carid:params.id } ),
+      }).then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
+    },[Data])
 
     interface appearance {
       theme:'stripe' | "night" | "flat"
@@ -133,14 +136,14 @@ const page = ({params}:any) => {
             </div>
         </div>
         </div>
-        {/* Payment */}
+        {/*  Payment  */}
     <div className='text-4xl font-semibold p-3 text-center'>
          Your dream car awaits. Reserve it today
     </div>
       <div className=" w-[50%] m-auto text-center ">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm email={data?.user?.email!} />
+              <CheckoutForm carid={params.id}  email={data?.user?.email!} />
             </Elements>
           )}
     </div>

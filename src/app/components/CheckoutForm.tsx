@@ -5,8 +5,10 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import { Layout } from "@stripe/stripe-js";
+import axios from "axios";
+import { url } from "@/lib/url";
 
-export default function CheckoutForm({email}:{email:string}) {
+export default function CheckoutForm({email,carid}:{email:string,carid:string}) {
   const stripe = useStripe();
   const elements = useElements();
   const [emailValue, setemail] = useState(email)
@@ -36,7 +38,11 @@ export default function CheckoutForm({email}:{email:string}) {
       redirect: "if_required",
     });
     if (result?.paymentIntent?.status === "succeeded"){
-      window.location.href = '/successPage'
+      const { data } = await axios.post(`${url}/api/reserveCar`,{
+        id:carid
+      })
+      data && data.success ?
+      window.location.href = `/reserveCar/${carid}` : setMessage("Error occured while reserving your car")
     }
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -62,13 +68,13 @@ export default function CheckoutForm({email}:{email:string}) {
   return (
     <form id="payment-form" className="" onSubmit={handleSubmit}>
       <label>EMAIL</label>
-      <input
+      <input 
             type="email"
             required
             value={emailValue}
             onChange={(e)=>setemail(e.target.value)}
             placeholder={email}
-            className="my-2 p-2 w-full border rounded bg-white text-black"
+            className="my-2 p-2 w-full border rounded bg-[#424353] text-slate-200"
           /> 
       <PaymentElement className=" text-white" id="payment-element" options={paymentElementOptions} />
       <button className="border-slate-700 border-opacity-35 border text-white bg-blue-400 p-2 rounded-md m-4 px-3" disabled={!!(isLoading || !stripe || !elements) } type="submit" id="submit">
@@ -76,7 +82,7 @@ export default function CheckoutForm({email}:{email:string}) {
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
       </button>
-      message && <div id="payment-message">{message}</div>
+     { message && <div id="payment-message">{message}</div>}
       
     </form>
   );
