@@ -39,9 +39,10 @@ interface userData {
   createdAt: string
 }
 
-const UserDashboard = ({ data }: { data: any }) => {
+const UserDashboard = ({ data,userCount }: { data: any, userCount:number }) => {
   const router = useRouter()
   const [loading, setloading] = useState(false)
+
   const removeUserHandler = async (id: string) => {
     setloading(true)
     try {
@@ -104,19 +105,19 @@ const UserDashboard = ({ data }: { data: any }) => {
             <TableHeader>
               <TableRow>
                 <TableCell colSpan={3}>Total Users</TableCell>
-                <TableCell className="text-right"> <div className='flex justify-end items-center'><div> {data.userCount.toString()} </div> <User width={15} /></div> </TableCell>
+                <TableCell className="text-right"> <div className='flex justify-end items-center'><div> {userCount.toString()} </div> <User width={15} /></div> </TableCell>
               </TableRow>
-              <TableRow>
-                <TableHead className="w-[100px]">User ID</TableHead>
-                <TableHead>Username</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead className="text-right">Manage Permissions</TableHead>
-                <TableHead className="text-right"><Trash size={20} color='red' /></TableHead>
+              <TableRow className='bg-primary dark:bg-primary-foreground hover:bg-primary text-white'>
+                <TableHead className="w-[100px] text-white">User ID</TableHead>
+                <TableHead className='text-white'>Username</TableHead>
+                <TableHead className='text-white'>Email</TableHead>
+                <TableHead className="text-right text-white">Manage Permissions</TableHead>
+                <TableHead className="text-right text-white"><Trash size={20} color='red' /></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {
-                data.users.map((user: userData) => (
+                data.map((user: userData) => (
                   <TableRow key={user.id}>
                     <TableCell className="font-medium w-[200px] text-muted-foreground"> {user.id} </TableCell>
                     <TableCell> {user.name} </TableCell>

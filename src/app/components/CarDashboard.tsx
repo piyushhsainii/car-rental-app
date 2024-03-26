@@ -51,7 +51,7 @@ interface CarData {
 }
 
 
-const CarDashboard = ({ data }: { data: { carCount: Number, cars: [] } }) => {
+const CarDashboard = ({ cars , carCount }: { cars: any , carCount:number }) => {
   const [loading, setloading] = useState(false)
   const router = useRouter()
 
@@ -73,7 +73,6 @@ const CarDashboard = ({ data }: { data: { carCount: Number, cars: [] } }) => {
   return (
     <div>
       {/* table start */}
-
       {
         loading ?
           <Loading />
@@ -83,20 +82,20 @@ const CarDashboard = ({ data }: { data: { carCount: Number, cars: [] } }) => {
             <TableHeader>
               <TableRow>
                 <TableCell colSpan={4}>Total Cars</TableCell>
-                <TableCell className="text-right"> <div className='flex justify-end items-center'><div> {data.carCount.toString()}</div> <User width={15} /></div> </TableCell>
+                <TableCell className="text-right"> <div className='flex justify-end items-center'><div> {carCount.toString()}</div> <User width={15} /></div> </TableCell>
               </TableRow>
-              <TableRow>
-                <TableHead className="w-[100px]">Car ID</TableHead>
-                <TableHead>Car Name</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Reserved</TableHead>
-                <TableHead className="text-right">Update Car Info</TableHead>
+              <TableRow className='bg-primary dark:bg-primary-foreground hover:bg-primary '>
+                <TableHead className="w-[100px] text-white">Car ID</TableHead>
+                <TableHead className='text-white'>Car Name</TableHead>
+                <TableHead className='text-white'>Price</TableHead>
+                <TableHead className='text-white'>Reserved</TableHead>
+                <TableHead className="text-right text-white ">Update Car Info</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
               {
-                data && data.cars.map((car: CarData) => (
+                cars && cars.map((car: CarData) => (
                   <TableRow key={car.id}>
                     <TableCell className="font-medium w-[200px] text-muted-foreground"> {car.id} </TableCell>
                     <TableCell> {car.carName} </TableCell>

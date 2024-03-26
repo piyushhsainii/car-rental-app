@@ -10,7 +10,6 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/authOptions'
 import { Plus } from 'lucide-react'
 import AddInventory from '../components/AddInventory'
-import { DonutChart } from '@tremor/react';
 import DonutChartUsageExample from '../components/UserDonutChart'
 import CarDonutChartUsageExample from '../components/CarDonutChart'
 import prisma from '@/lib/prismaClient'
@@ -26,20 +25,44 @@ interface userData {
       createdAt: string
 }
 
-
-
  async function getData(){
-
-  const { data } = await axios.get(`${url}/api/getAllCars`)
-  // const { data:UserData } = await axios.get(`${url}/api/getAllUsers`)
+  
+  const cars = await  prisma.cAR.findMany()
+  const carCount = await prisma.cAR.count() 
+  const availableCaras = await prisma.cAR.count({
+      where:{
+          Availability:"Available"
+      }
+  })
+  const ReservedCaras = await prisma.cAR.count({
+      where:{
+          Availability:"Reserved"
+      } 
+  })
+  const soldCars = await prisma.cAR.count({
+      where:{
+          Availability:"Sold"
+      }
+  })
   const UserData =  await prisma.user.findMany()
-
-  return {data,UserData}
+  const userCount = await prisma.user.count()
+  const generalUsers = await prisma.user.count({
+    where:{
+      isAdmin:false
+    }
+  })
+  const AdminUsers = await prisma.user.count({
+    where:{
+      isAdmin:false
+    }
+  })
+  console.log(UserData)
+  return {UserData,userCount,generalUsers,AdminUsers, cars, carCount , availableCaras , ReservedCaras ,soldCars}
 }
 
 const page = async() => { 
 
-  const  { data ,UserData} = await getData()
+  const  { UserData,userCount,generalUsers,AdminUsers, cars, carCount , availableCaras , ReservedCaras ,soldCars} = await getData()
   const session = await getServerSession(authOptions)
 
   if(session === null){
@@ -63,19 +86,19 @@ const page = async() => {
           <TabsContent value="Dashboard">
             <div className='flex flex-wrap'>
               <div className='w-[400px] h-[500px] ' > 
-                <DonutChartUsageExample userCount={UserData}  />
+                <DonutChartUsageExample userCount={userCount} generalUsers={generalUsers} AdminUsers={AdminUsers}/>
               </div>
               <div className='w-[400px] h-[500px] ' > 
-                <CarDonutChartUsageExample carCount={data}  />
+                <CarDonutChartUsageExample carCount={carCount} availableCaras={availableCaras} ReservedCaras={ReservedCaras} soldCars={soldCars} />
               </div> 
 
             </div>
           </TabsContent>
           <TabsContent value="Users">
-                <UserDashboard data={UserData}  />
+                <UserDashboard data={UserData} userCount={userCount}  />
           </TabsContent>
           <TabsContent value="Inventory">
-              <CarDashboard data={data}  />
+              <CarDashboard cars={cars} carCount={carCount} />
           </TabsContent>
           <TabsContent value='Add' >
             <AddInventory />

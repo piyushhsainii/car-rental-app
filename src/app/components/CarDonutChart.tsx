@@ -4,20 +4,20 @@ import { DonutChart, Legend } from '@tremor/react';
 
 
 
-export default function CarDonutChartUsageExample({carCount}:{carCount:any}) {
+export default function CarDonutChartUsageExample({carCount,availableCaras,ReservedCaras,soldCars}:{carCount:number,availableCaras:number,ReservedCaras:number,soldCars:number}) {
   
     const datahero = [
         {
-          name: 'Available',
-          value: carCount.availableCaras,
+          name: 'Available', 
+          value: availableCaras,
         },
         {
           name: 'Reserved',
-          value: carCount.ReservedCaras,
+          value: ReservedCaras,
         },
         {
           name: 'Sold',
-          value: carCount.soldCars,
+          value: soldCars,
         }
       ];
 
@@ -25,7 +25,7 @@ export default function CarDonutChartUsageExample({carCount}:{carCount:any}) {
     <div className=" space-y-12 w-[300px]">
     <div className="space-y-3 my-5">
       <span className="text-center block font-mono text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-        TOTAL CARS ({carCount.carCount}) 
+        TOTAL CARS ({carCount}) 
       </span>
       <div className="flex flex-col justify-center items-center gap-4 my-5 ">
         <DonutChart

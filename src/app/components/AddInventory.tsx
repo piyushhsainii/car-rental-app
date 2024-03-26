@@ -404,11 +404,11 @@ console.log(carData)
 
             </form>
               <div className='flex gap-2  justify-evenly my-5' >
-                <button className='px-4 py-2 bg-red-600 text-sm font-semibold '> BACK TO DASHBOARD  </button>
-                <button className='px-12  py-2 bg-green-600 font-semibold' onClick={createCar}> ADD CAR  </button>
+                <button className='px-4 py-2 bg-red-600 text-white text-sm font-semibold '> BACK TO DASHBOARD  </button>
+                <button className='px-12  py-2 bg-green-600 text-white font-semibold' onClick={createCar}> ADD CAR  </button>
               </div>
                 <div> 
-                   <button className='px-4 py-2 w-[100%] bg-gray-600 text-sm font-semibold' onClick={resetFormHandler} > RESET  </button>
+                   <button className='px-4 py-2 w-[100%] text-white bg-gray-600 text-sm font-semibold' onClick={resetFormHandler} > RESET  </button>
                 </div>
         </div>
           }

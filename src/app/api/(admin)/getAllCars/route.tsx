@@ -3,7 +3,7 @@ import prisma from "@/lib/prismaClient";
 export async function GET(){
     try {
         const cars = await  prisma.cAR.findMany()
-        const carCount = await prisma.cAR.count()
+        const carCount = await prisma.cAR.count() 
         const availableCaras = await prisma.cAR.count({
             where:{
                 Availability:"Available"
@@ -12,7 +12,7 @@ export async function GET(){
         const ReservedCaras = await prisma.cAR.count({
             where:{
                 Availability:"Reserved"
-            }
+            } 
         })
         const soldCars = await prisma.cAR.count({
             where:{
