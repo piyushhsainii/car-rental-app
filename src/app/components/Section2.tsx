@@ -6,9 +6,9 @@ const Section2 = () => {
     <div className='flex flex-col start w-[100%] min-h-[50vh] gap-10 ' >
         <div className='text-center'>
             <div className='p-3 font-sans text-3xl font-semibold'>How Horsepower Cartel Works </div>
-            <div  className='p-1 font-thin text-lg' > Experience Luxury, Your Way</div>
+            <div  className='p-1 font-normal text-xl' > Experience Luxury, Your Way</div>
         </div>
-        <div className='flex justify-evenly my-5  text-center items-center  '>
+        <div className='flex flex-col sm:flex-row justify-evenly flex-wrap gap-5  text-center items-center  '>
             <div className='flex flex-col w-[300px] items-center gap-2 h-[300px] justify-center p-8 border border-slate-300 hover:border-opacity-80 transition-all duration-300 border-opacity-30 rounded-md' >
                 <div className='mx-auto h-[50px] p-0'><Search /></div>
                 <div className='text-lg font-semibold max-w-[200px]  '>Explore & Choose</div>

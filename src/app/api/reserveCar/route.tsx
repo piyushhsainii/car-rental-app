@@ -13,6 +13,14 @@ export async function POST(req:Request){
             Availability:"Reserved"
         }
     })
+    // await prisma.cAR.update({
+    //     where:{
+    //         id:id
+    //     },
+    //     data:{
+    //         ReservedBy:""
+    //     }
+    // })
     return Response.json({
         success:true
     })

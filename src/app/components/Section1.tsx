@@ -9,7 +9,7 @@ const Section1 = () => {
     const {theme ,resolvedTheme } = useTheme()
     console.log(theme)
     return (
-        <div className='h-[40rem] w-full rounded-md flex md:items-center md:justify-center  antialiased bg-grid-primary/[0.02] relative overflow-hidden' >
+        <div className='h-[70vh] md:min-h-[100vh] w-full rounded-md flex md:items-center md:justify-center  antialiased bg-grid-primary/[0.02] relative overflow-hidden' >
                 <Spotlight
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill={`blue`}

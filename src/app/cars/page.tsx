@@ -169,7 +169,7 @@ const page = async (props: any) => {
       <div className='flex  justify-between h-[100vh] ' >
         <Filter />
         <div className='flex flex-col'>
-          <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700  border p-4">
+          <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700 border-l  border-t p-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>

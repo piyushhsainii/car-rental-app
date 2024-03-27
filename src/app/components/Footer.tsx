@@ -6,9 +6,9 @@ const Footer = () => {
   return (
     <div className='h-[35vh] flex justify-between mt-12 bg-gray-950 text-white' >
         <div className='p-4'>
-            <div className=' text-2xl font-thin  pl-4'>HORSEPOWER CARTEL </div>
-            <div className='font-thin p-4 pt-3 text-'>Experience Luxury, Your Way</div>
-            <div className='font-mono text-sm pl-4 pt-14' >2024 all Right Reserved Term of use Horsepower Cartel</div>
+            <div className='text-xl  sm:text-2xl font-thin  pl-4'>HORSEPOWER CARTEL </div>
+            <div className='font-thin p-4 pt-3 text-sm sm:text-md'>Experience Luxury, Your Way</div>
+            <div className='font-mono text-sm text-muted-foreground pl-4 pt-14 max-w-[350px]' >2024 all Right Reserved Term of use Horsepower Cartel</div>
         </div>
         <div className='flex flex-col gap-6 p-8'>
             <div> <Link href={'/https://github.com/piyushhsainii'} > <Github /></Link>  </div>

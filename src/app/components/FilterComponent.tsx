@@ -20,7 +20,7 @@ const Filter = () => {
     router.refresh()
   }
   return (
-    <ScrollArea className="h-[100%] w-[240px] rounded-md border-slate-700 border-opacity-35 border-r p-4">
+    <ScrollArea className="h-[100%] w-[240px] rounded-md border-slate-700 border-opacity-15 border-r p-4">
 
       <div className='flex gap-3 justify-center'>
         <FilterIcon width={18} />

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -78,7 +79,7 @@ const page = ({params}:any) => {
       appearance,
     };
   if(Data?.Availability==='Reserved' ||  Data?.Availability === "Sold"){
-    return redirect(`/car/${params.id}`)
+    // toast("")
   }
   return (
       Data === null ?
@@ -124,7 +125,7 @@ const page = ({params}:any) => {
             </div>
             <div className='w-[150px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
             <div><Gauge strokeWidth={1} /></div> <div className='text-muted-foreground' >Kms Done</div>  <div> {Data.KmsDone}</div>              
-            </div>
+            </div> 
             <div className='w-[150px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
             <div><Armchair strokeWidth={1} /></div> <div className='text-muted-foreground' >Seat Capacity</div>  <div> {Data.Seat}</div>   
             </div>

@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from 'next/link'
 
 const SignOut = () => {
   const session = useSession()
@@ -19,8 +20,8 @@ const SignOut = () => {
         <DropdownMenuTrigger> <Menu />  </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Reservation</DropdownMenuItem>
-          <DropdownMenuItem>Purchases</DropdownMenuItem>
+          <DropdownMenuItem> <Link href={'/reservation'}>Reservation</Link> </DropdownMenuItem>
+          <DropdownMenuItem> <Link href={'/purchases'}>Purchases</Link> </DropdownMenuItem>
           <DropdownMenuItem>  
               <button onClick={() => signOut()} >
                  <div className="flex justify-between gap-2 "> <div> <LogOut width={17} /></div> <div> Sign Out</div></div>
