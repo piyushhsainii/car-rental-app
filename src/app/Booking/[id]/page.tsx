@@ -14,9 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { toast } from 'sonner';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -40,12 +38,18 @@ interface carData {
   KmsDone: String
 }
 
+interface localSession {
+  user:String,
+  id:String,
+  email:String,
+  image:String
+}
+
 const page = ({params}:any) => {
 
   const [clientSecret, setClientSecret] = useState(""); 
   const [Data, setData] = useState<carData | null>(null);
   const  { data } = useSession()
-
   useEffect(() => {
       // Create PaymentIntent as soon as the page loads
       fetch('/api/getCarInfo',{
@@ -84,7 +88,7 @@ const page = ({params}:any) => {
   return (
       Data === null ?
         <Loading/>
-        :
+        : 
     <div>
         <NavMenu />
         <div className='w-[80vw] m-auto   ' >
@@ -118,7 +122,7 @@ const page = ({params}:any) => {
 
           <div className=' w-[40%] flex flex-wrap gap-2 justify-center' >
             <div className='w-[150px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
-              <div> <Car strokeWidth={1} /> </div>  <div className='text-muted-foreground'>Model </div> <div>{Data.model}</div>
+              <div> <Car strokeWidth={1} /> </div>  <div className='text-muted-foreground text-center'>Model </div> <div className='text-center'>{Data.model}</div>
             </div>
             <div className='w-[150px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
               <div><UserRound strokeWidth={0.75} /></div> <div className='text-muted-foreground' > Ownership</div>  <div>{Data.ownerShip}</div>
@@ -144,7 +148,8 @@ const page = ({params}:any) => {
       <div className=" w-[50%] m-auto text-center ">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm carid={params.id}  email={data?.user?.email!} />
+              {/* @ts-ignore */}
+              <CheckoutForm carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.email!} />
             </Elements>
           )}
     </div>

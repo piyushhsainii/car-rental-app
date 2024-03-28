@@ -31,28 +31,38 @@ const ReserveComponent = ({ data }: { data: carData }) => {
 
   const sendToast = () => {
     session && session.status === 'unauthenticated' &&
-    toast("Log In to Reserve your car")
+      toast("Log In to Reserve your car")
     data.Availability === 'Reserved' &&
       toast("This car is already reserved")
     data.Availability === 'Sold' &&
       toast("This Car is sold out")
-      data.Availability === "Available" && 
-      redirect(`/Booking/${data.id}`)
+
   }
   return (
     <div className=' font-semibold text-lg flex justify-center items-center'>
       {
         session && session.status === 'unauthenticated' ?
-        <button onClick={sendToast} className=' border border-slate-400 bg-blue-500 text-white  p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-        Reserve this Car  </button>
-              :
-              <div onClick={sendToast}>
+          <button onClick={sendToast} className=' border border-slate-400 bg-blue-500 text-white  p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
+            Reserve this Car  </button>
+          :
+          
+            data.Availability === "Available" ?
+              <Link href={`/Booking/${data.id}`}>
+                <div onClick={sendToast}>
                   <button className=' border border-slate-400 bg-blue-500 text-white  p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
                     Reserve this Car
                   </button>
-              </div> 
-        }
-     </div>
+                </div>
+              </Link>
+              :
+              <div onClick={sendToast}>
+                <button className=' border border-slate-400 bg-blue-500 text-white  p-4 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
+                  Reserve this Car
+                </button>
+              </div>
+          
+      }
+    </div>
   )
 }
 

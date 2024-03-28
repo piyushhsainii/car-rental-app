@@ -26,6 +26,7 @@ model User {
   isAdmin       Boolean   @default(false)
   sessions      Session[]
   accounts      Account[]
+  reserve       ReserveTable[]
 }
 
 model Account {
@@ -66,7 +67,7 @@ model CAR {
   KmsDone      Int
   ownerShip    Int
   Year         Int
-  Dummy String?
+  reserve       ReserveTable[]
 }
 
 model VerificationRequest {
@@ -84,4 +85,16 @@ enum Availability {
   Available
   Reserved
   Sold
+}
+
+
+model ReserveTable {
+  id String @id @default(uuid())
+  userID String 
+  user User @relation(fields: [userID], references: [id])
+  userName String 
+  userEmail String
+  carID String 
+  car CAR @relation(fields: [carID], references: [id])
+  time DateTime @default(now())
 }

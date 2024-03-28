@@ -7,14 +7,18 @@ import {
 import { Layout } from "@stripe/stripe-js";
 import axios from "axios";
 import { url } from "@/lib/url";
+import { useSession } from "next-auth/react";
 
-export default function CheckoutForm({email,carid}:{email:string,carid:string}) {
+export default  function CheckoutForm({email,carid , userID}:{email:string,carid:string,userID:string}) {
+
   const stripe = useStripe();
   const elements = useElements();
+  const { data } = useSession()
   const [emailValue, setemail] = useState(email)
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-
+  const userID2 = data?.user?.name as string 
+  const userEmail =data?.user?.email as string
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -38,23 +42,31 @@ export default function CheckoutForm({email,carid}:{email:string,carid:string}) 
       redirect: "if_required",
     });
     if (result?.paymentIntent?.status === "succeeded"){
+      try {
+
       const { data } = await axios.post(`${url}/api/reserveCar`,{
-        id:carid
+        id:carid,
+        userID:userID ,
+        userName:userID2,
+        userEmail:userEmail,
+        carID:carid
       })
-      data && data.success ?
-      window.location.href = `/reserveCar/${carid}` : setMessage("Error occured while reserving your car")
+
+      if(data && data.success){
+        window.location.href = `/reserveCar/${carid}` 
+      }
+        }
+
+       catch (error) {
+        setMessage("Error occured while reserving your car")
+      }
     }
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
+
     if (result?.error?.type === "card_error" || result?.error?.type === "validation_error") {
       setMessage(result.error.message as string);
     } else {
       setMessage("An unexpected error occurred.");
     }
-
     setIsLoading(false);
   };
 
@@ -70,7 +82,7 @@ export default function CheckoutForm({email,carid}:{email:string,carid:string}) 
       <label>EMAIL</label>
       <input 
             type="email"
-            required
+            required 
             value={emailValue}
             onChange={(e)=>setemail(e.target.value)}
             placeholder={email}
