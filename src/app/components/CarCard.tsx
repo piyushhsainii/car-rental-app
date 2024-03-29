@@ -42,7 +42,11 @@ const CarCard = (props:carData) => {
             <div className='text-lg font-semibold pl-3 '>{props.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</div> 
             {
                 props.Availability === 'Reserved' ?
-                <div className='text-sm px-3 py-1 rounded-md font-semibold text-center bg-red-600 '>Reserved</div> : null
+                <div className='text-sm px-3 py-1 rounded-md font-semibold text-center bg-orange-400 '>Reserved</div> : null
+            }
+            {
+                props.Availability === 'Sold' ?
+                <div className='text-sm px-3 py-1 rounded-md font-semibold text-center bg-red-600 '>Sold Out</div> : null
             }
            </div>
             <div className='pl-3 text-xl font-semibold'> {props.carName} </div>

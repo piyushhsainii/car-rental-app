@@ -9,11 +9,11 @@ import axios from "axios";
 import { url } from "@/lib/url";
 import { useSession } from "next-auth/react"; 
 
-export default  function CheckoutForm({email,carid , userID}:{email:string,carid:string,userID:string}) {
+export default  function CheckoutForm2({email,carid , userID}:{email:string,carid:string,userID:string}) {
 
   const stripe = useStripe();
   const elements = useElements();
-  const { data } = useSession()
+  const { data } = useSession() 
   const [emailValue, setemail] = useState(email)
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -55,7 +55,6 @@ export default  function CheckoutForm({email,carid , userID}:{email:string,carid
         window.location.href = `/reserveCar/${carid}` 
       }
         }
-
        catch (error) {
         console.log(error)
         setMessage("Error occured while reserving your car")
@@ -70,7 +69,6 @@ export default  function CheckoutForm({email,carid , userID}:{email:string,carid
     setIsLoading(false);
   };
 
-
   const paymentElementOptions = {
     layout: "tabs" as Layout ,
   };
@@ -79,13 +77,12 @@ export default  function CheckoutForm({email,carid , userID}:{email:string,carid
   }
   return (
     <form id="payment-form" className="" onSubmit={handleSubmit}>
-      <label>EMAIL</label>
       <input 
             type="email"
             required 
             value={emailValue}
             onChange={(e)=>setemail(e.target.value)}
-            placeholder={email}
+            placeholder={"Card Name"}
             className="my-2 p-2 w-full border rounded bg-[#424353] text-slate-200"
           /> 
       <PaymentElement className=" text-white" id="payment-element" options={paymentElementOptions} />

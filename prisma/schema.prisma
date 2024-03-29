@@ -27,6 +27,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   reserve       ReserveTable[]
+  sold       SoldTable[]
 }
 
 model Account {
@@ -68,6 +69,7 @@ model CAR {
   ownerShip    Int
   Year         Int
   reserve       ReserveTable[]
+  sold       SoldTable[]
 }
 
 model VerificationRequest {
@@ -89,6 +91,17 @@ enum Availability {
 
 
 model ReserveTable {
+  id String @id @default(uuid())
+  userID String 
+  user User @relation(fields: [userID], references: [id])
+  userName String 
+  userEmail String
+  carID String 
+  car CAR @relation(fields: [carID], references: [id])
+  time DateTime @default(now())
+}
+
+model SoldTable {
   id String @id @default(uuid())
   userID String 
   user User @relation(fields: [userID], references: [id])

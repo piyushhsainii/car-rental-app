@@ -158,10 +158,10 @@ const UpdateCarInfo = (params: any) => {
           loading ? 
           <Loading />
           : 
-        <div className=" flex justify-evenly m-2">
-          <div className="underline"> <Link href={'/Dashboard'}>back</Link> </div>
+        <div className=" flex flex-col md:flex-row justify-evenly my-2 max-w-[1200px] m-auto">
+          <div className="underline  m-auto md:my-5"> <Link href={'/Dashboard'}>back</Link> </div>
           {/* CAR DETAIL CONTAINER */}
-        <div className="w-[350px] m-5 ">
+        <div className="w-[350px] my-5 m-auto">
             <div className="text-2xl m-5 " >
               UPDATE YOUR CAR INFO
             </div>
@@ -324,7 +324,7 @@ const UpdateCarInfo = (params: any) => {
         </div>
         {/* Image Component */}
 
-        <div className="flex flex-col w-[350px] " >
+        <div className="flex flex-col w-[350px]  m-auto " >
         <div className="  px-4 py-2 font-semibold"> 
             Add Image
          </div>

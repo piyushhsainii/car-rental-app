@@ -27,6 +27,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import prisma from '@/lib/prismaClient';
 import { Badge } from '@/components/ui/badge'
+import MobileFilterComponent from '../components/MobileFilterComponent';
+
 
 
 enum SortOrder {
@@ -166,10 +168,10 @@ const page = async (props: any) => {
   return (
     <div>
       <NavMenu />
-      <div className='flex  justify-between h-[100vh] ' >
+      <div className='flex  justify-between  max-h-[1400px] ' >
         <Filter />
         <div className='flex flex-col'>
-          <ScrollArea className="h-[100%] w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700 border-l  border-t p-4">
+          <ScrollArea className="h-[100%] w-[100vw] lg:w-[80vw] m-auto rounded-md border-opacity-45 border-slate-700 border-l  border-t p-4">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -183,7 +185,11 @@ const page = async (props: any) => {
             </Breadcrumb>
             <div className='flex justify-between p-3 px-7' >
               <div className='font-semibold'> Total {Cars?.length} results found </div>
-              <div>
+              <div className='flex items-center'>
+
+               {/*  */}
+               <MobileFilterComponent />
+
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline">Sort By -</Button>
@@ -194,6 +200,7 @@ const page = async (props: any) => {
                     <DropdownMenuLabel className='cursor-pointer '><Link href={'/cars?sortBy=desc'}> Price- High to Low</Link></DropdownMenuLabel>
                   </DropdownMenuContent>
                 </DropdownMenu>
+
               </div>
             </div>
             {
@@ -213,7 +220,7 @@ const page = async (props: any) => {
           </ScrollArea>
 
           <div className='flex justify-center p-4'>
-            <Link href={`/cars?page=${1}`} >
+            <Link href={`/cars?page=${1}`}>
               <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
                 &#x276E; 
               </div>

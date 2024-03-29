@@ -12,9 +12,9 @@ export async function POST(req:Request){
         },
     })
 
-    if(isReserved?.Availability === "Reserved" || isReserved?.Availability === "Sold" ){
+    if(isReserved?.Availability === "Sold" ){
         return Response.json({
-            message:"This Car is already reserved"
+            message:"This Car is already Sold"
         },{
             status:400
         })
@@ -25,7 +25,7 @@ export async function POST(req:Request){
             id:id 
         },
         data:{
-            Availability:"Reserved" 
+            Availability:"Sold" 
         }
     })
     await prisma.reserveTable.create({
@@ -39,10 +39,14 @@ export async function POST(req:Request){
 
     return Response.json({
         success:true
+    },{
+        status:200
     })
  } catch (error) {
     return Response.json({
         error:error
+    },{
+        status:400
     })
  }
 

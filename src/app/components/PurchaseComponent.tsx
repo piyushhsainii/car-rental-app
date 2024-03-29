@@ -26,10 +26,22 @@ interface carData {
   KmsDone: string
 }
 
-const ReserveComponent = ({ data }: { data: carData }) => {
+const PurchaseComponent = ({ data }: { data: carData }) => {
 
   const session = useSession()
+
+  const sendToast = () => {
+    session && session.status === 'unauthenticated' &&
+      toast("Log In to Reserve your car")
+      // @ts-ignore
+    data.Availability === 'Reserved' && Data?.userID !== session?.data?.user?.id && session && session.status === 'authenticated' &&
+      toast("This car is already reserved")
+    data.Availability === 'Sold'  && session && session.status === 'authenticated' &&
+      toast("This Car is sold out")
+
+  }
   const [Data, setData] = useState(null)
+
 
     useEffect(()=>{
       fetch(`${url}/api/getReservedCars`,{
@@ -40,41 +52,35 @@ const ReserveComponent = ({ data }: { data: carData }) => {
       .then((data)=>setData(data.reserved))
     },[])
 
-    console.log(Data)
-
-  const sendToast = () => {
-    session && session.status === 'unauthenticated' &&
-      toast("Log In to Reserve your car")
-    data.Availability === 'Reserved' && session && session.status === 'authenticated' &&
-      toast("This car is already reserved")
-    data.Availability === 'Sold' && session && session.status === 'authenticated' &&
-      toast("This Car is sold out")
-
-  }
   return (
     <div className=' font-semibold text-lg flex justify-center items-center'>
       {
         session && session.status === 'unauthenticated' ?
           <button onClick={sendToast} className=' border border-slate-400 bg-blue-500 text-white  p-4 px-8 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-            Reserve   </button>
+            Purchase  </button>
           :
-          
-            data.Availability === "Available" ? 
+            data.Availability === "Available" ?
               <Link href={`/Booking/${data.id}`}>
                 <div onClick={sendToast}>
                   <button className=' border border-slate-400 bg-blue-500 text-white  p-4 px-8 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-                    Reserve 
+                    Purchase 
                   </button>
                 </div>
               </Link>
               :
               // @ts-ignore
               Data?.userID === session?.data?.user?.id ?
-             null
-              :
+              <Link href={`/Purchase/${data.id}`}>
               <div onClick={sendToast}>
                 <button className=' border border-slate-400 bg-blue-500 text-white  p-4 px-8 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-                  Reserve 
+                  Purchase 
+                </button>
+              </div>
+             </Link>
+              :
+              <div onClick={sendToast} className=''>
+                <button className='cursor-not-allowed border border-slate-400 bg-blue-500 text-white  p-4 px-8 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
+                  Purchase 
                 </button>
               </div>
           
@@ -83,13 +89,4 @@ const ReserveComponent = ({ data }: { data: carData }) => {
   )
 }
 
-export default ReserveComponent
-
-
-{/* <Link href={`/Booking/${data.id}`}>
-<div onClick={sendToast}>
-  <button className=' border border-slate-400 bg-blue-500 text-white  p-4 px-8 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
-    Purchase 
-  </button>
-</div>
-</Link> */}
+export default PurchaseComponent

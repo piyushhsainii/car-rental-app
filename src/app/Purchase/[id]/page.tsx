@@ -3,7 +3,6 @@ import NavMenu from '../../components/NavMenu'
 import { Elements } from '@stripe/react-stripe-js';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import React, { useEffect, useState } from 'react'
-import CheckoutForm from '../../components/CheckoutForm';
 import Loading from '@/app/loading';
 import { Armchair, Car, Fuel, Gauge, UserRound } from 'lucide-react';
 import {
@@ -16,41 +15,41 @@ import {
 } from "@/components/ui/breadcrumb"
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { url } from '@/lib/url';
+import CheckoutForm2 from '@/app/components/CheckoutForm2';
+import CheckoutForm from '@/app/components/CheckoutForm';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 interface carData {
-  id: String,
-  carName: String,
-  Img: String[],
-  brand: String,
+  id: string,
+  carName: string,
+  Img: string[],
+  brand: string,
   price: number,
-  Fuel: String,
-  Seat: String,
+  Fuel: string,
+  Seat: string,
   Mileage: number,
-  Availability: String,
-  model: String,
-  Plate: String,
-  Year: String,
-  type: String,
-  Transmission: String,
-  Color: String,
-  ownerShip: String,
-  KmsDone: String
+  Availability: string,
+  model: string,
+  Plate: string,
+  Year: string,
+  type: string,
+  Transmission: string,
+  Color: string,
+  ownerShip: string,
+  KmsDone: string
 }
 
-interface localSession {
-  user:String,
-  id:String,
-  email:String,
-  image:String
-}
 
 const page = ({params}:any) => {
 
   const [clientSecret, setClientSecret] = useState(""); 
   const [Data, setData] = useState<carData | null>(null);
+  const [Data2, setData2] = useState(null);
+  // const [ price , setPrice ] = useState(Data?.price)
   const  { data } = useSession()
+
   useEffect(() => {
       // Create PaymentIntent as soon as the page loads
       fetch('/api/getCarInfo',{
@@ -60,17 +59,29 @@ const page = ({params}:any) => {
       }).then((res)=>res.json())
       .then((data)=>setData(data.car))
 
+      fetch(`${url}/api/getReservedCars`,{
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify({carID:params.id})
+      }).then((res)=>res.json())
+      .then((data)=>setData2(data.reserved))
         
     }, []);
 
+
+
     useEffect(()=>{
+      // Data?.Availability === "Reserved" ?
+      // setPrice(((Data.price/5)*4)) :
+      // setPrice(Data?.price)
+
       fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // body: JSON.stringify({ items: [{ id: params.id}] , amount:200 } ),
-        body: JSON.stringify({ items: [{ id: params.id }] ,amount:(Data?.price as number /5).toPrecision(6), carid:params.id } ),
+        body: JSON.stringify({ items: [{ id: params.id }] ,amount:!Data2 ? Data?.price.toPrecision(6) : ((Data?.price as number /5)*4).toPrecision(6) , carid:params.id } ),
       }).then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
+
     },[Data])
 
     interface appearance {
@@ -83,17 +94,22 @@ const page = ({params}:any) => {
       clientSecret,
       appearance,
     };
-  if(Data?.Availability==='Reserved' ||  Data?.Availability === "Sold"){
+  if(Data?.Availability === "Sold"){
     redirect('/cars')
   }
+  // @ts-ignore
+  if(Data?.Availability==='Reserved' && Data2?.userID !== data?.user?.id ){
+    redirect('/cars')
+  }
+
   return (
       Data === null ?
         <Loading/>
         : 
     <div>
         <NavMenu />
-        <div className='max-w-[1400px] m-auto   ' >
-        <div className='flex flex-col lg:flex-row justify-evenly p-4 gap-2 '>
+        <div className='w-[80vw] m-auto   ' >
+        <div className='flex justify-evenly p-4 gap-2 '>
           <div className=' w-[60%] m-auto pb-2 '>
           <Breadcrumb>
                  <BreadcrumbList>
@@ -117,11 +133,11 @@ const page = ({params}:any) => {
             <div className='text-3xl font-semibold text-center my-3' >{Data?.carName}</div>
             <div className='text-xl font-semibold py-2 text-center'> { Data.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' }) }  </div>
             <div className='w-[400px] m-auto'>
-                <img src= { Data?.Img[0] as string }  className=' min-w-[270px] m-auto w-[400px] h-[auto] max-h-[300px] rounded-md ' alt="" />
+                <img src= { Data?.Img[0] as string }  className='w-[400px] h-[auto] max-h-[300px] rounded-md ' alt="" />
             </div>
           </div>
 
-          <div className=' w-[80%]  lg:w-[40%] flex flex-wrap gap-2 justify-center m-auto' >
+          <div className=' w-[40%] flex flex-wrap gap-2 justify-center' >
             <div className='w-[150px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
               <div> <Car strokeWidth={1} /> </div>  <div className='text-muted-foreground text-center'>Model </div> <div className='text-center'>{Data.model}</div>
             </div>
@@ -144,19 +160,17 @@ const page = ({params}:any) => {
         </div>
         {/*  Payment  */}
     <div className='text-4xl font-semibold p-3 text-center'>
-         Your dream car awaits. Reserve it today
+         Your dream car awaits. Purchase it today
     </div>
-      <div className='font-semibold text-center '>
-        PAY 20% OF CAR PRICE TO RESERVE THE CAR EXCLUSIVELY FOR YOURSELF 
-      </div>
+
       <div className='font-semibold text-center text-xl'>
-       PAY ONLY ₹ { (Data?.price as number/5).toFixed(2) } TO RESERVE THE CAR
+       PAY ONLY ₹ { (Data?.price as number).toFixed(2) } TO MAKE THIS YOURS CAR
       </div>
       <div className=" w-[50%] m-auto text-center ">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
               {/* @ts-ignore */}
-              <CheckoutForm carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.email!} />
+              <CheckoutForm2 carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.name!} />
             </Elements>
           )}
     </div>

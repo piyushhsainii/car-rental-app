@@ -11,7 +11,7 @@ async function getData() {
   const session = await getServerSession(authOptions)
   // @ts-ignore
   const userID = session?.user.id
-  const reservations = await prisma.reserveTable.findMany({
+  const reservations = await prisma.soldTable.findMany({
     where: {
       userID: userID
     },
@@ -35,9 +35,9 @@ const page = async () => {
   if (reservations.length === 0 ) {
     return <div>
       <NavMenu />
-      <div className="w-[80vw] m-auto p-4 border border-slate-300 border-opacity-50">
+      <div className="w-[80vw] m-auto p-4 border border-slate-300 border-opacity-40">
         <div className='text-center' >
-          NO RESERVATIONS YET!
+          NO PURCHASE HISTORY AVAILABLE
         </div>
         <div className='w-[200px] m-auto my-5 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-all duration-300 cursor-pointer'>
             <Link href={'/cars'}>BROWSE COLLECTIONS</Link>
@@ -48,15 +48,15 @@ const page = async () => {
 
   return (
     <div>
-      <NavMenu />
-      <div className="max-w-[1200px] m-auto p-4 border border-slate-300 border-opacity-50">
-        <div className='text-center' >
-            YOUR RESERVATIONS
-        </div> 
+      <NavMenu /> 
+      <div className="w-[80vw] m-auto p-4 border border-slate-300 border-opacity-50">
+        <div className='text-center ' >
+          YOUR PURCHASES
+        </div>
           <div>
             {
               reservations.map((res)=>(
-                <div className='my-4' key={res.id}><ReservationCard key={res.id} data={res} /></div>
+                <div className='my-4'><ReservationCard key={res.id} data={res} /></div>
               ))
             }
           </div>
