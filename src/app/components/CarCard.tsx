@@ -1,5 +1,6 @@
 import React from 'react'
 import { DirectionAwareHover } from './DirectionAware'
+import Link from 'next/link'
 
 
 interface carData {
@@ -26,6 +27,7 @@ interface carData {
 const CarCard = (props:carData) => {
     const Image = props.Img[0]
   return ( 
+    <Link target='_blank' href={`/car/${props.id}`} >
       <div className='min-h-[360px] h-[434px] w-[340px] overflow-hidden rounded-md border border-slate-700 border-opacity-50 ' >
         {
             Image &&  
@@ -70,6 +72,8 @@ const CarCard = (props:carData) => {
             </div>
         </div>
     </div>
+    </Link>
+
   )
 }
 
