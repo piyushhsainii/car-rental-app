@@ -15,14 +15,14 @@ export const metadata: Metadata = {
   description: "Experience Luxury,Your Way",
   creator:'Piyush Saini',
   
-  images: [
-    {
-      url: 'https://res.cloudinary.com/dzow59kgu/image/upload/v1711790592/Screenshot_344_y40cim.png' ,
-      width: 1200,
-      height: 630,
-      alt: "Horsepower Cartel Experience Luxury,Your Way",
-    },
-  ],
+  // images: [
+  //   {
+  //     url: 'https://res.cloudinary.com/dzow59kgu/image/upload/v1711790592/Screenshot_344_y40cim.png' ,
+  //     width: 1200,
+  //     height: 630,
+  //     alt: "Horsepower Cartel Experience Luxury,Your Way",
+  //   },
+  // ],
   icons:[
     {
       url:'/homepage.png',

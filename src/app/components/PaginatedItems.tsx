@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import CarCard from './CarCard';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const PaginatedItems = ({ itemsPerPage , data }:{ itemsPerPage:any , data:any}) => {
         const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -12,7 +13,7 @@ const PaginatedItems = ({ itemsPerPage , data }:{ itemsPerPage:any , data:any}) 
         <>
         {currentItems &&
             currentItems.map((item:any) => (
-                <CarCard {...item} />
+              <CarCard {...item} />
             ))}
         </>
     );
