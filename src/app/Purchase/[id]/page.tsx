@@ -75,10 +75,11 @@ const page = ({params}:any) => {
       // setPrice(((Data.price/5)*4)) :
       // setPrice(Data?.price)
 
-      fetch(`${url}/api/payment`, {
+      fetch(`/api/payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: [{ id: params.id }] ,amount:!Data2 ? Data?.price.toPrecision(6) : ((Data?.price as number /5)*4).toPrecision(6) , carid:params.id } ),
+        // @ts-ignore
+        body: JSON.stringify({ items: [{ id: params.id }] ,amount:!Data2 ? parseInt(Data?.price.toString().slice(0,4)) : parseInt(((Data?.price as number /5)*4).toString().slice(0,4)) , carid:params.id } ),
       }).then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
 
