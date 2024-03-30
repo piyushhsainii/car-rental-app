@@ -48,8 +48,8 @@ const UpdateCarInfo = (params: any) => {
   const router = useRouter()
   const [loading, setloading] = useState(false)
   const getData = async () => {
-    const { data } = await axios.post(`${url}/api/getCarInfo`, {
-      id: carid,
+    const { data } = await axios.post(`/api/getCarInfo`, {
+      id: carid, 
     });
     setcarData(data.car);
     setFormData(data.car);

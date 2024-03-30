@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import SignOut from "./SignOut";
 import { IconHorse } from "@tabler/icons-react";
 import Link from "next/link";
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import {
   Sheet,
   SheetContent,
@@ -28,7 +28,7 @@ import { useTheme } from "next-themes";
 
 
 const NavMenu = () => {
-  // const session = await getServerSession()
+  const { status , data } = useSession()
   const  { setTheme , theme  } = useTheme()
 
   return (
@@ -90,9 +90,21 @@ const NavMenu = () => {
                       Purchases
                       </Link>
                     </div>
-                    <button onClick={() => signOut()} >
+                    {
+                      status === "authenticated" ?
+                      <button onClick={() => signOut()} >
                       <div> Sign Out</div>
                     </button>
+                      :null }
+                      {
+                    status === "unauthenticated" ?
+                    <div>
+                      <Link href={'/login'}>
+                      Log In
+                      </Link>
+                    </div>
+                    : null
+                    }
                   </div>
                 </div>
               </SheetDescription>

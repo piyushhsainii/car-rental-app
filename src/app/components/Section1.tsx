@@ -14,8 +14,8 @@ const Section1 = () => {
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill={`blue`}
                 />
-            <div className=" text-primary p-4 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
-                <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-blue-800 to-blue-300 dark:bg-gradient-to-b dark:from-white dark:to-slate-600 bg-opacity-50">
+            <div className=" text-primary p-4 m-3 py-5 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
+                <h1 className="text-4xl md:text-7xl p-3 font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-blue-800 to-blue-300 dark:bg-gradient-to-b dark:from-white dark:to-slate-600 bg-opacity-50">
                    Experience Luxury, <br></br> Your Way
                 </h1>
                  <div className='m-auto  w-[200px] text-center  rounded-md my-5'>
