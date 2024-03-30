@@ -28,6 +28,8 @@ import {
 import prisma from '@/lib/prismaClient';
 import { Badge } from '@/components/ui/badge'
 import MobileFilterComponent from '../components/MobileFilterComponent';
+import ReactPaginate from 'react-paginate';
+import PaginatedItems from '../components/PaginatedItems';
 
 
 
@@ -101,8 +103,8 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in:seat || [1, 2, 3, 4, 5, 6]
             }
           },
-          take:6,
-          skip: skip
+          // take:6,
+          // skip: skip
         }
       )
       const totalCount = await prisma.cAR.count()
@@ -135,8 +137,8 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in: seat || [1, 2, 3, 4, 5, 6]
             }
           },
-          take:6,
-          skip: skip
+          // take:6,
+          // skip: skip
         }
       )
       const totalCount = await prisma.cAR.count()
@@ -207,20 +209,21 @@ const page = async (props: any) => {
              error && !Cars ? 
               <div>Could Not Fetch Data</div>
               :
-            <div className='flex gap-3 flex-wrap justify-evenly'>
-              {
+            <div className='flex  gap-3 flex-wrap justify-evenly'>
+             <PaginatedItems itemsPerPage={6} data={Cars} />
+              {/* {
                 Cars && Cars.map((car: carData) => (
                   <Link target='_blank' href={`/car/${car.id}`} key={car.id}>
                     <CarCard {...car} />
                   </Link>
                 ))
-              }
+              } */}
             </div>
                 }
           </ScrollArea>
 
           <div className='flex justify-center p-4'>
-            <Link href={`/cars?page=${1}`}>
+            {/* <Link href={`/cars?page=${1}`}>
               <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
                 &#x276E; 
               </div>
@@ -232,7 +235,7 @@ const page = async (props: any) => {
               <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
                   &#x276F; 
               </div>
-            </Link>
+            </Link> */}
           </div>
 
         </div>
