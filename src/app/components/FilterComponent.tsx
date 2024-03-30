@@ -54,7 +54,7 @@ const Filter = () => {
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("BMW")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "BMW"]) : setBrand((c)=>[...c.filter(car=>car!=="BMW")]) } /></div> BMW</div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Mercedes")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Mercedes"]) : setBrand((c)=>[...c.filter(car=>car!=="Mercedes")]) } /></div> Mercedes </div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Porsche")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Porsche"]) : setBrand((c)=>[...c.filter(car=>car!=="Porsche")]) } /></div> Porsche </div>
-        <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Bently")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Bentley"]) : setBrand((c)=>[...c.filter(car=>car!=="Bentley")]) } /></div> Bentley </div>
+        <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Bentley")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Bentley"]) : setBrand((c)=>[...c.filter(car=>car!=="Bentley")]) } /></div> Bentley </div>
         <div className='font-semibold flex items-center gap-2' > <div><Checkbox  checked={brand.includes("Skoda")} onCheckedChange={(isChecked)=> isChecked ? setBrand((c)=> [...c , "Skoda"]) : setBrand((c)=>[...c.filter(car=>car!=="Skoda")]) } /></div> Skoda</div>
       </div>
     </ScrollArea>

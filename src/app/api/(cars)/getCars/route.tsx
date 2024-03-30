@@ -24,7 +24,7 @@ export async function POST(req:NextRequest){
 
     let skip 
     if(page){ 
-        skip = ((page - 1)* 2 )
+        skip = ((page - 1)* 6 )
     }
     try { 
     if(!params) {

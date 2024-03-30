@@ -5,7 +5,7 @@ export async function GET(){
     
     try {
     const count = await prisma.cAR.count()
-    const randomCars = await prisma.$queryRaw(Prisma.sql`SELECT * FROM "CAR" ORDER BY RANDOM()  LIMIT 3 `);
+    const randomCars = await prisma.$queryRaw(Prisma.sql`SELECT * FROM "CAR" ORDER BY RANDOM()  LIMIT 5 `);
     return Response.json({
         randomCars
     })

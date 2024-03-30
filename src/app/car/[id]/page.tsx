@@ -117,14 +117,15 @@ const page = async({params}:{params:{id:string}}) => {
             <div className=' m-auto h-[300px]'>
             <Carousel className=' m-auto h-[300px] '>
                 <CarouselContent>
-                {
-                    randomCars && randomCars.randomCars.map((car:any) => (
-                        <CarouselItem className='basis-1/3 pl-4 pt-4 m-auto min-w-[370px]' key={car.id}>
-                        <Link href={`/car/${car.id}`}>
-                            <CarCard {...car} />
-                        </Link>
-                        </CarouselItem>
-                    ))
+                    {
+                        randomCars && randomCars.randomCars.filter((car:any)=>car.id !== params.id)
+                        .map((car:any)=>(
+                            <CarouselItem className='basis-1/3 pl-4 pt-4 m-auto min-w-[370px]' key={car.id}>
+                            <Link href={`/car/${car.id}`}>
+                                <CarCard {...car} />
+                            </Link>
+                            </CarouselItem>
+                        ))
                     }
                 </CarouselContent>
                 <CarouselPrevious />

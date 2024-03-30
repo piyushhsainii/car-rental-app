@@ -107,7 +107,7 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
       )
       const totalCount = await prisma.cAR.count()
       const totalPages = Math.ceil(totalCount / 6)
-      return { Cars, page, totalPages, error:"Could not fetch data" }
+      return { Cars, page, totalPages,  error:"Could not fetch data" }
 
     }
 
