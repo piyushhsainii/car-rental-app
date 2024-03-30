@@ -60,7 +60,7 @@ const PurchaseComponent = ({ data }: { data: carData }) => {
             Purchase  </button>
           :
             data.Availability === "Available" ?
-              <Link href={`/Booking/${data.id}`}>
+              <Link href={`/Purchase/${data.id}`}>
                 <div onClick={sendToast}>
                   <button className=' border border-slate-400 bg-blue-500 text-white  p-4 px-8 rounded-md border-opacity-55 duration-300 transition-all hover:border-opacity-100'>
                     Purchase 

@@ -92,9 +92,9 @@ const page = ({params}:any) => {
         : 
     <div>
         <NavMenu />
-        <div className='max-w-[1400px] m-auto   ' >
+        <div className='max-w-[1200px] m-auto   ' >
         <div className='flex flex-col lg:flex-row justify-evenly p-4 gap-2 '>
-          <div className=' w-[60%] m-auto pb-2 '>
+          <div className=' w-[50%] m-auto pb-2 '>
           <Breadcrumb>
                  <BreadcrumbList>
                     <BreadcrumbItem>
@@ -116,12 +116,12 @@ const page = ({params}:any) => {
                 </Breadcrumb>
             <div className='text-3xl font-semibold text-center my-3' >{Data?.carName}</div>
             <div className='text-xl font-semibold py-2 text-center'> { Data.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' }) }  </div>
-            <div className='w-[400px] m-auto'>
-                <img src= { Data?.Img[0] as string }  className=' min-w-[270px] m-auto w-[400px] h-[auto] max-h-[300px] rounded-md ' alt="" />
+            <div className=' max-w-[400px] m-auto'>
+                <img src= { Data?.Img[0] as string }  className=' min-w-[230px] m-auto w-[400px] h-[auto] max-h-[300px] rounded-md ' alt="" />
             </div>
           </div>
 
-          <div className=' w-[80%]  lg:w-[40%] flex flex-wrap gap-2 justify-center m-auto' >
+          <div className=' w-[80%] lg:w-[50%] flex flex-wrap gap-2 justify-center m-auto' >
             <div className='w-[150px] p-2 h-[100px] flex flex-col justify-center items-center border border-slate-500 border-opacity-50 rounded-md font-semibold'>
               <div> <Car strokeWidth={1} /> </div>  <div className='text-muted-foreground text-center'>Model </div> <div className='text-center'>{Data.model}</div>
             </div>
@@ -146,17 +146,17 @@ const page = ({params}:any) => {
     <div className='text-4xl font-semibold p-3 text-center'>
          Your dream car awaits. Reserve it today
     </div>
-      <div className='font-semibold text-center '>
+      <div className='font-semibold text-center my-6'>
         PAY 20% OF CAR PRICE TO RESERVE THE CAR EXCLUSIVELY FOR YOURSELF 
       </div>
-      <div className='font-semibold text-center text-xl'>
+      <div className='font-semibold text-center text-xl py-4'>
        PAY ONLY ₹ { (Data?.price as number/5).toFixed(2) } TO RESERVE THE CAR
       </div>
-      <div className=" w-[50%] m-auto text-center ">
+      <div className=" w-[50%] m-auto text-center  my-5">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
               {/* @ts-ignore */}
-              <CheckoutForm carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.email!} />
+              <CheckoutForm carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.name!} />
             </Elements>
           )}
     </div>

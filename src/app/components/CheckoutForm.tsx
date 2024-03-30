@@ -79,13 +79,12 @@ export default  function CheckoutForm({email,carid , userID}:{email:string,carid
   }
   return (
     <form id="payment-form" className="" onSubmit={handleSubmit}>
-      <label>EMAIL</label>
       <input 
             type="email"
             required 
             value={emailValue}
             onChange={(e)=>setemail(e.target.value)}
-            placeholder={email}
+            placeholder={"Card Holder Name"}
             className="my-2 p-2 w-full border rounded bg-[#424353] text-slate-200"
           /> 
       <PaymentElement className=" text-white" id="payment-element" options={paymentElementOptions} />
