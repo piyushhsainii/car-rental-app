@@ -103,8 +103,6 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in:seat || [1, 2, 3, 4, 5, 6]
             }
           },
-          // take:6,
-          // skip: skip
         }
       )
       const totalCount = await prisma.cAR.count()
@@ -137,8 +135,6 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
               in: seat || [1, 2, 3, 4, 5, 6]
             }
           },
-          // take:6,
-          // skip: skip
         }
       )
       const totalCount = await prisma.cAR.count()
@@ -211,33 +207,9 @@ const page = async (props: any) => {
               :
             <div className='flex  gap-3 flex-wrap justify-evenly'>
              <PaginatedItems itemsPerPage={6} data={Cars} />
-              {/* {
-                Cars && Cars.map((car: carData) => (
-                  <Link target='_blank' href={`/car/${car.id}`} key={car.id}>
-                    <CarCard {...car} />
-                  </Link>
-                ))
-              } */}
             </div>
                 }
           </ScrollArea>
-
-          <div className='flex justify-center p-4'>
-            {/* <Link href={`/cars?page=${1}`}>
-              <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
-                &#x276E; 
-              </div>
-            </Link>
-            <Badge className='text-md' variant="outline">
-              <span className='px-4'>{page ?? "1"} </span>  / <span className='px-4'> {totalPages} </span>
-            </Badge>
-            <Link href={`/cars?page=${2}`} >
-              <div className='p-2 mx-3 cursor-pointer px-2 py-1 border border-slate-300 font-semibold'>
-                  &#x276F; 
-              </div>
-            </Link> */}
-          </div>
-
         </div>
       </div>
       <div className='mt-12'>

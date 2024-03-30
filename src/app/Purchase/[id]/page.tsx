@@ -169,7 +169,7 @@ const page = ({params}:any) => {
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
               {/* @ts-ignore */}
-              <CheckoutForm2 carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.name!} />
+              <CheckoutForm carid={params.id} userID={data?.user?.id! as string}  email={data?.user?.name!} />
             </Elements>
           )}
     </div>
