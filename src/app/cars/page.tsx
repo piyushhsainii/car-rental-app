@@ -1,5 +1,5 @@
 import React from 'react'
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 import NavMenu from '../components/NavMenu'
 import { ScrollArea } from "@/components/ui/scroll-area"
 import CarCard from '../components/CarCard'
@@ -153,7 +153,7 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
 export const dynamic = 'force-dynamic'
 
 const page = async (props: any) => {
-  noStore();
+  // noStore();
   const { Cars, page, totalPages , error } = (await getData(
     props.searchParams.sortBy,
     props.searchParams.Fuel,
