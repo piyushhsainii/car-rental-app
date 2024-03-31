@@ -11,9 +11,9 @@ const Footer = () => {
             <div className='font-mono text-sm text-muted-foreground pl-4 pt-14 max-w-[450px]' >Copyright © 2024 Horsepower Cartel All rights reserved. </div>
         </div>
         <div className='flex flex-col gap-6 p-8'>
-            <div> <Link href={'/https://github.com/piyushhsainii'} > <Github /></Link>  </div>
-            <div> <Link href={'/https://twitter.com/piyushsainii'} > <Twitter  /></Link> </div>
-            <div> <Link href={'/https://www.linkedin.com/in/piyush-saini-b860ab1bb/'}><Linkedin /> </Link></div>
+            <div> <Link href={'https://github.com/piyushhsainii'} > <Github /></Link>  </div>
+            <div> <Link href={'https://twitter.com/piyushsainii'} > <Twitter  /></Link> </div>
+            <div> <Link href={'https://www.linkedin.com/in/piyush-saini-b860ab1bb/'}><Linkedin /> </Link></div>
         </div>
     </div>
   )
