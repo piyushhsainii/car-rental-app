@@ -205,7 +205,7 @@ const page = async (props: any) => {
              error && !Cars ? 
               <div>Could Not Fetch Data</div>
               :
-            <div className='flex  gap-3 flex-wrap justify-evenly'>
+            <div >
              <PaginatedItems itemsPerPage={6} data={Cars} />
             </div>
                 }

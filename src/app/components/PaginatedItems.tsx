@@ -36,10 +36,13 @@ const PaginatedItems = ({ itemsPerPage , data }:{ itemsPerPage:any , data:any}) 
 
   return (
     < >
+    <div className='flex  gap-3 flex-wrap justify-evenly' >
     <Items currentItems={currentItems} />
-    <div className='flex'>
+    </div>
+    <br></br>
+    <div className='flex justify-center'>
     <ReactPaginate
-     className='font-semibold flex gap-5  '
+     className='font-semibold flex gap-5'
      breakLabel="..."
      nextLabel={<ArrowRight width={17}/>}
      onPageChange={handlePageClick}
