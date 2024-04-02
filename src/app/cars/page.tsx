@@ -150,7 +150,6 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
 }
 
 
-export const dynamic = 'force-dynamic'
 
 const page = async (props: any) => {
   // noStore();
