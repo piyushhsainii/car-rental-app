@@ -1,8 +1,6 @@
 import React from 'react'
 import NavMenu from '../components/NavMenu'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import axios from 'axios'
-import { url } from '@/lib/url'
 import UserDashboard from '../components/UserDashboard'
 import CarDashboard from '../components/CarDashboard'
 import { getServerSession } from 'next-auth'
@@ -53,10 +51,9 @@ interface userData {
   })
   const AdminUsers = await prisma.user.count({
     where:{
-      isAdmin:false
+      isAdmin:true
     }
   })
-  console.log(UserData)
   return {UserData,userCount,generalUsers,AdminUsers, cars, carCount , availableCaras , ReservedCaras ,soldCars}
 }
 

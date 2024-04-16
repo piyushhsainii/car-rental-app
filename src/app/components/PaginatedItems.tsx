@@ -41,6 +41,8 @@ const PaginatedItems = ({ itemsPerPage , data }:{ itemsPerPage:any , data:any}) 
     </div>
     <br></br>
     <div className='flex justify-center'>
+      {
+          currentItems && currentItems?.length > 6 ?
     <ReactPaginate
      className='font-semibold flex gap-5'
      breakLabel="..."
@@ -50,7 +52,8 @@ const PaginatedItems = ({ itemsPerPage , data }:{ itemsPerPage:any , data:any}) 
      pageCount={pageCount}
      previousLabel={<ArrowLeft width={17}/>}
      renderOnZeroPageCount={null}
-     />
+     /> : null
+    }
     </div>
     </>
   )

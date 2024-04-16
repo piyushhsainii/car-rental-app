@@ -24,7 +24,7 @@ export default function DonutChartUsageExample({userCount,generalUsers,AdminUser
       <div className="flex flex-col justify-center items-center gap-4 my-5 ">
         <DonutChart
          colors={[
-             "yellow",
+             "blue",
              "green",
           ]}
           className='w-[300px]'

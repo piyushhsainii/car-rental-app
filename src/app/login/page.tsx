@@ -7,7 +7,6 @@ import ProvidersComponents from '../components/ProvidersComponents';
 
 const auth = async() => {
     const  session = await getServerSession(authOptions)
-    console.log(session)
     if(session && session !== null){
         redirect('/')
         return

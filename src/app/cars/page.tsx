@@ -30,6 +30,7 @@ import { Badge } from '@/components/ui/badge'
 import MobileFilterComponent from '../components/MobileFilterComponent';
 import ReactPaginate from 'react-paginate';
 import PaginatedItems from '../components/PaginatedItems';
+import { redis } from '@/lib/getRedisUrl'
 
 
 
@@ -62,8 +63,10 @@ interface Data {
   page?: string;
   totalPages?: number;
   error?:string
+  CachedData?:string | null
+
 }
-async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, seat: number[], page: string):Promise<Data | undefined> {
+async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, seat: number[], page: string ):Promise<Data | undefined>  {
 
   const params: SortOrder = sortBy
   const fuel = Fuel
@@ -81,7 +84,12 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
   if(paged){ 
     skip = ((paged - 1)* 3 )
   }
+
   try {
+    // const CachedData = await redis.get("carsData")
+    // if(CachedData !== undefined || CachedData !== null){
+    //   return { CachedData } 
+    // }
     if (!params) {
       const Cars = await prisma.cAR.findMany(
         {
@@ -107,7 +115,17 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
       )
       const totalCount = await prisma.cAR.count()
       const totalPages = Math.ceil(totalCount / 6)
-      return { Cars, page, totalPages,  error:"Could not fetch data" }
+
+      // const data =  JSON.stringify({
+      //   Cars: Cars,
+      //   page: page.toString(),
+      //   totalPages: totalPages.toString(),
+      //   error: "Could not fetch data"
+      //  })
+      // Cars.forEach(async(car)=>(
+      //   await redis.rpush("carsData", JSON.stringify(car) )
+      // ))
+      return { Cars, page, totalPages ,  error:"Could not fetch data"  }
 
     }
 
@@ -139,7 +157,6 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
       )
       const totalCount = await prisma.cAR.count()
       const totalPages = Math.ceil(totalCount / 6)
-
       return { Cars, page, totalPages , error:"Could not fetch data" }
     }
 
@@ -153,7 +170,7 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
 
 const page = async (props: any) => {
   // noStore();
-  const { Cars, page, totalPages , error } = (await getData(
+  const { Cars, page, totalPages , error  } = (await getData(
     props.searchParams.sortBy,
     props.searchParams.Fuel,
     props.searchParams.type,
@@ -162,6 +179,7 @@ const page = async (props: any) => {
     props.searchParams.seats,
     props.searchParams.page
   ))!
+
   return (
     <div>
       <NavMenu />
@@ -204,8 +222,8 @@ const page = async (props: any) => {
              error && !Cars ? 
               <div>Could Not Fetch Data</div>
               :
-            <div >
-             <PaginatedItems itemsPerPage={6} data={Cars} />
+            <div >        
+                <PaginatedItems itemsPerPage={6} data={Cars} />
             </div>
                 }
           </ScrollArea>

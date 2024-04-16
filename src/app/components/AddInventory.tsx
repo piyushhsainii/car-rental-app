@@ -118,7 +118,7 @@ const isValid = carSchema.safeParse(carData)
       toast(error.path + " " + error.message.slice(6))
     ))
   }
-  if(carData.type === "null" || carData.Transmission === "null" || carData.brand === "" || carData.brand === "null" || carData.Plate === "null" || carData.brand === "" || carData.Plate === "" || carData.Fuel === "null" || carData.Fuel === ""  ){
+  if(carData.type === "null" || carData.Transmission === "null" || carData.Transmission === "" || carData.brand === "" || carData.brand === "null" || carData.Plate === "null" || carData.brand === "" || carData.Plate === "" || carData.Fuel === "null" || carData.Fuel === "" || carData.Plate==="" ){
     setLoading(false)
     return toast("Please Fill all details")
   } 

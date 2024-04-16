@@ -28,16 +28,15 @@ export async function POST(req:Request){
         secure: true 
       });
 
-    //   console.log(Img, "i am image")
     try {
         const FilteredArray = Img.filter((img:string[])=>!img.includes("http://"))
-
+        const UploadedArray = Img.filter((img:string[])=>img.includes("http://"))
         const UploadImage = FilteredArray.map(async(img:string)=>(
             (await cloudinary.v2.uploader.upload(img)).url
         ))
 
         const ImagesArray = await Promise.all(UploadImage)
-        const FinalArray = [...FilteredArray, ...ImagesArray]
+        const FinalArray = [...UploadedArray, ...ImagesArray]
         console.log(ImagesArray)
         const car = await prisma.cAR.create({
             data:{
@@ -59,7 +58,6 @@ export async function POST(req:Request){
                 KmsDone
             }
         })
-        console.log(car)
     return Response.json({
         car
     },{
