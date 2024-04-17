@@ -13,7 +13,7 @@ const PaginatedItems = ({ itemsPerPage , data }:{ itemsPerPage:any , data:any}) 
         <>
         {currentItems &&
             currentItems.map((item:any) => (
-              <CarCard {...item} />
+              <CarCard key={item.id} {...item} />
             ))}
         </>
     );

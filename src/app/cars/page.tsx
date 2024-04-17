@@ -84,11 +84,23 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
   if(paged){ 
     skip = ((paged - 1)* 3 )
   }
+try {
+  const CachedCars = await redis.get("cars")
+  if( CachedCars !== null ){
+    const Cars = JSON.parse(CachedCars!)
+    return {Cars,  error:"Could not fetch data"} 
+  }
 
+} catch (error) {
+  return  {error:"Could not fetch data"}
+}
+console.log("code checkpoint")
   try {
-    // const CachedData = await redis.get("carsData")
-    // if(CachedData !== undefined || CachedData !== null){
-    //   return { CachedData } 
+    // if( CachedCars !== null && CachedtotalPages !== null && CachedtotalCount !== null  ){
+    //   const Cars = JSON.parse(CachedCars!)
+    //   const totalPages = JSON.parse(CachedtotalPages!)
+    //   const totalCount = JSON.parse(CachedtotalCount!)
+    //   return {Cars  ,totalPages  } 
     // }
     if (!params) {
       const Cars = await prisma.cAR.findMany(
@@ -116,15 +128,8 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
       const totalCount = await prisma.cAR.count()
       const totalPages = Math.ceil(totalCount / 6)
 
-      // const data =  JSON.stringify({
-      //   Cars: Cars,
-      //   page: page.toString(),
-      //   totalPages: totalPages.toString(),
-      //   error: "Could not fetch data"
-      //  })
-      // Cars.forEach(async(car)=>(
-      //   await redis.rpush("carsData", JSON.stringify(car) )
-      // ))
+        await redis.set("cars", JSON.stringify(Cars) )
+
       return { Cars, page, totalPages ,  error:"Could not fetch data"  }
 
     }
@@ -220,7 +225,7 @@ const page = async (props: any) => {
             </div>
             {
              error && !Cars ? 
-              <div>Could Not Fetch Data</div>
+              <div>Could Not Fetch Data </div>
               :
             <div >        
                 <PaginatedItems itemsPerPage={6} data={Cars} />

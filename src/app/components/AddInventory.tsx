@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { url } from '@/lib/url';
 import Loading from '../loading';
+import { redis } from '@/lib/getRedisUrl';
 
 
 
@@ -149,6 +150,7 @@ const isValid = carSchema.safeParse(carData)
      setLoading(false)
      if(data){
       toast("Added successfully")
+      redis.del("cars")
        }
     } catch (error) {
       setLoading(false)
@@ -156,7 +158,6 @@ const isValid = carSchema.safeParse(carData)
     }
 }
 
-console.log(carData)
   return (
     <div className=" flex justify-evenly m-2">
           {/* CAR DETAIL CONTAINER */}
