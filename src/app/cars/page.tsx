@@ -46,7 +46,6 @@ interface carData {
   brand: String,
   price: Number,
   Fuel: string,
-  Seat: number,
   Mileage: number,
   Availability: string,
   model: string,
@@ -66,7 +65,7 @@ interface Data {
   CachedData?:string | null
 
 }
-async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, seat: number[], page: string ):Promise<Data | undefined>  {
+async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, page: string ):Promise<Data | undefined>  {
 
   const params: SortOrder = sortBy
   const fuel = Fuel
@@ -77,31 +76,21 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
   const gearSplit = gear === undefined || gear === "" ? null : gear.split(',')
   const branded = brand
   const brandSplit = branded === undefined || branded === "" ? null : branded.split(',')
-  const seated = seat
-  const paged:number = parseFloat(page)
-
-  let skip
-  if(paged){ 
-    skip = ((paged - 1)* 3 )
-  }
-try {
-  const CachedCars = await redis.get("cars")
-  if( CachedCars !== null ){
-    const Cars = JSON.parse(CachedCars!)
-    return {Cars,  error:"Could not fetch data"} 
-  }
-
-} catch (error) {
-  return  {error:"Could not fetch data"}
-}
-console.log("code checkpoint")
+  console.log(type)
+if(Fuel === undefined && type === undefined && gear === undefined && brand === undefined){
   try {
-    // if( CachedCars !== null && CachedtotalPages !== null && CachedtotalCount !== null  ){
-    //   const Cars = JSON.parse(CachedCars!)
-    //   const totalPages = JSON.parse(CachedtotalPages!)
-    //   const totalCount = JSON.parse(CachedtotalCount!)
-    //   return {Cars  ,totalPages  } 
-    // }
+    const CachedCars = await redis.get("cars")
+    if( CachedCars !== null ){
+      const Cars = JSON.parse(CachedCars!)
+      return {Cars,  error:"Could not fetch data"} 
+    }
+  
+  } catch (error) {
+    return  {error:"Could not fetch data"}
+  }
+}
+  try {
+ 
     if (!params) {
       const Cars = await prisma.cAR.findMany(
         {
@@ -118,17 +107,15 @@ console.log("code checkpoint")
             },
             brand: {
               in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
-            },
-            Seat: {
-              in:seat || [1, 2, 3, 4, 5, 6]
             }
           },
         }
       )
       const totalCount = await prisma.cAR.count()
       const totalPages = Math.ceil(totalCount / 6)
-
+      if(Fuel === undefined && type === undefined && gear === undefined && brand === undefined){
         await redis.set("cars", JSON.stringify(Cars) )
+      }
 
       return { Cars, page, totalPages ,  error:"Could not fetch data"  }
 
@@ -153,9 +140,6 @@ console.log("code checkpoint")
             },
             brand: {
               in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
-            },
-            Seat: {
-              in: seat || [1, 2, 3, 4, 5, 6]
             }
           },
         }
@@ -181,7 +165,6 @@ const page = async (props: any) => {
     props.searchParams.type,
     props.searchParams.Gear,
     props.searchParams.brand,
-    props.searchParams.seats,
     props.searchParams.page
   ))!
 
