@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth'
 import prisma from '@/lib/prismaClient'
 import { Download } from 'lucide-react'
 import Link from 'next/link'
+import { redis } from '@/lib/getRedisUrl'
 
 async function getData({ id }: { id: string }) {
     const data = await prisma.reserveTable.findFirst({
@@ -31,7 +32,7 @@ const page = async ({ params }: { params: any }) => {
         toast("Please Login to access this resource")
         return redirect('/')
     }
-
+    redis.del("cars")
     return (
         <div>
             <NavMenu />

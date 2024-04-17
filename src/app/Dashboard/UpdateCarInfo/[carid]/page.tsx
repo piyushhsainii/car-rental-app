@@ -134,7 +134,6 @@ const UpdateCarInfo = (params: any) => {
         KmsDone:carData?.KmsDone
       })
       data && toast("Updated Successfully")
-      // redis.del("cars")
       setloading(false)
       data && router.refresh()
 

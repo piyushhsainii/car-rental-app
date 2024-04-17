@@ -150,7 +150,6 @@ const isValid = carSchema.safeParse(carData)
      setLoading(false)
      if(data){
       toast("Added successfully")
-      redis.del("cars")
        }
     } catch (error) {
       setLoading(false)

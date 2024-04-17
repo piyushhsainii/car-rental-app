@@ -11,6 +11,7 @@ import AddInventory from '../components/AddInventory'
 import DonutChartUsageExample from '../components/UserDonutChart'
 import CarDonutChartUsageExample from '../components/CarDonutChart'
 import prisma from '@/lib/prismaClient'
+import { redis } from '@/lib/getRedisUrl'
 
 interface userData {
       id: string,
@@ -24,7 +25,7 @@ interface userData {
 }
 
  async function getData(){
-  
+  redis.del('cars')
   const cars = await  prisma.cAR.findMany()
   const carCount = await prisma.cAR.count() 
   const availableCaras = await prisma.cAR.count({
