@@ -192,7 +192,7 @@ const page = async (props: any) => {
 
                {/*  */}
                <MobileFilterComponent />
-
+{/* 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline">Sort By -</Button>
@@ -202,7 +202,7 @@ const page = async (props: any) => {
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel className='cursor-pointer '><Link href={'/cars?sortBy=desc'}> Price- High to Low</Link></DropdownMenuLabel>
                   </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
 
               </div>
             </div>

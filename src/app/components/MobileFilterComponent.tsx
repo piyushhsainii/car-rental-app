@@ -37,7 +37,7 @@ const MobileFilterComponent = () => {
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
+            <SheetTitle></SheetTitle>
             <SheetDescription>
             <ScrollArea className="w-[100%] rounded-md border-slate-700 border-opacity-15 border-r p-4">
                 <div className='flex gap-3 justify-center'>
