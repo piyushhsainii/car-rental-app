@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import zod from 'zod'
 import { Country, State, City }  from 'country-state-city';
 import Link from "next/link";
+import { redis } from "@/lib/getRedisUrl";
 interface CarData {
   id: string;
   carName: string;

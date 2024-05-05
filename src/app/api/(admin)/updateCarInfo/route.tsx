@@ -26,6 +26,7 @@ export async function POST(req:Request){
             secure: true 
           });
 
+        const UploadedArray = Img.filter((img:string[])=>img.includes("http://"))
         const FilteredArray = Img.filter((img:string[])=>!img.includes("http://")) 
 
         const transfrom  = FilteredArray.map(async(img:string)=>(
@@ -33,7 +34,7 @@ export async function POST(req:Request){
         ))
 
         const newImageUrls = await Promise.all(transfrom);
-        const updatedImageUrls = [...Img, ...newImageUrls];
+        const updatedImageUrls = [...UploadedArray, ...newImageUrls];
 
        if(FilteredArray.length === 0 || !FilteredArray){
         const car = await prisma.cAR.update({
@@ -42,7 +43,6 @@ export async function POST(req:Request){
             },
             data:{
                 carName,
-                Img:Img,
                 brand,
                 price, 
                 Fuel,
@@ -57,7 +57,7 @@ export async function POST(req:Request){
                 ownerShip,
                 KmsDone
             }
-        })
+        }) 
         return Response.json({
             car
         },{status:200})

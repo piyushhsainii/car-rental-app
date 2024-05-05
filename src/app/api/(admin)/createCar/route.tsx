@@ -51,7 +51,7 @@ export async function POST(req:Request){
                 model,
                 Plate,
                 Year,
-                type,
+                type, 
                 Transmission,
                 Color,
                 ownerShip,

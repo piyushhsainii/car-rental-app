@@ -7,7 +7,6 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { url } from '@/lib/url';
 import Loading from '../loading';
-import { redis } from '@/lib/getRedisUrl';
 
 
 

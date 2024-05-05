@@ -11,6 +11,7 @@ import AddInventory from '../components/AddInventory'
 import DonutChartUsageExample from '../components/UserDonutChart'
 import CarDonutChartUsageExample from '../components/CarDonutChart'
 import prisma from '@/lib/prismaClient'
+import { redis } from '@/lib/getRedisUrl'
 
 interface userData {
       id: string,
@@ -53,6 +54,7 @@ interface userData {
       isAdmin:true
     }
   })
+
   return {UserData,userCount,generalUsers,AdminUsers, cars, carCount , availableCaras , ReservedCaras ,soldCars}
 }
 
@@ -60,7 +62,7 @@ const page = async() => {
 
   const  { UserData,userCount,generalUsers,AdminUsers, cars, carCount , availableCaras , ReservedCaras ,soldCars} = await getData()
   const session = await getServerSession(authOptions)
-
+  redis.flushall()
   if(session === null){
     redirect('/')
     return
