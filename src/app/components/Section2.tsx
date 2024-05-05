@@ -5,8 +5,8 @@ const Section2 = () => {
   return (
     <div className='flex flex-col start w-[100%] min-h-[50vh] gap-10 ' >
         <div className='text-center'>
-            <div className='p-3 font-sans text-3xl font-semibold'>How Horsepower Cartel Works </div>
-            <div  className='p-1 font-normal text-2xl' > Experience Luxury, Your Way</div>
+            <div className='p-3 font-sans text-3xl font-bold'>How Horsepower Cartel Works </div>
+            <div  className='p-1 font-semibold text-2xl' > Experience Luxury, Your Way</div>
         </div>
         <div className='flex flex-col sm:flex-row justify-evenly flex-wrap gap-5  text-center items-center  '>
             <div className='flex flex-col w-[300px] items-center gap-2 h-[350px] justify-center p-8 border border-slate-400 hover:border-opacity-80 transition-all duration-300 border-opacity-30 rounded-md' >

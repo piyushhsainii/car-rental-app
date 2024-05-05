@@ -1,21 +1,7 @@
 import React from 'react'
-// import { unstable_noStore as noStore } from "next/cache";
 import NavMenu from '../components/NavMenu'
 import { ScrollArea } from "@/components/ui/scroll-area"
-import CarCard from '../components/CarCard'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from '@/components/ui/button'
-import axios from 'axios'
-import Link from 'next/link'
-import { url } from '@/lib/url'
 import Filter from '../components/FilterComponent'
-import PaginationComponent from '../components/PaginationComponent'
 import Footer from '../components/Footer'
 import {
   Breadcrumb,
@@ -26,18 +12,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import prisma from '@/lib/prismaClient';
-import { Badge } from '@/components/ui/badge'
 import MobileFilterComponent from '../components/MobileFilterComponent';
-import ReactPaginate from 'react-paginate';
 import PaginatedItems from '../components/PaginatedItems';
 import { redis } from '@/lib/getRedisUrl'
-
-
-
-enum SortOrder {
-  asc = "asc",
-  desc = "desc"
-}
 
 interface carData {
   id: string,
@@ -65,9 +42,8 @@ interface Data {
   CachedData?:string | null
 
 }
-async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: string, brand: string, page: string ):Promise<Data | undefined>  {
+async function getData( Fuel: string, type: string, Gear: string, brand: string, page: string ):Promise<Data | undefined>  {
 
-  const params: SortOrder = sortBy
   const fuel = Fuel
   const fuelSplit = fuel === undefined || fuel === "" ? null : fuel.split(',')
   const typed = type
@@ -76,22 +52,22 @@ async function getData(sortBy: SortOrder, Fuel: string, type: string, Gear: stri
   const gearSplit = gear === undefined || gear === "" ? null : gear.split(',')
   const branded = brand
   const brandSplit = branded === undefined || branded === "" ? null : branded.split(',')
-  console.log(type)
-if(Fuel === undefined && type === undefined && gear === undefined && brand === undefined){
-  try {
-    const CachedCars = await redis.get("cars")
-    if( CachedCars !== null ){
-      const Cars = JSON.parse(CachedCars!)
-      return {Cars,  error:"Could not fetch data"} 
+
+  if(Fuel === undefined && type === undefined && gear === undefined && brand === undefined){
+      try {
+        const CachedCars = await redis.get(`cars?type=${type}&Fuel=${fuel}&Gear=${gear}&brand=${brand}`)
+        console.log(" cached")
+        if( CachedCars !== null ){
+          console.log("Cache hit")
+          const Cars = JSON.parse(CachedCars!)
+          return {Cars,  error:"Could not fetch data"} 
+        }
+    
+      } catch (error) {
+        return  {error:"Could not fetch data"}
     }
-  
-  } catch (error) {
-    return  {error:"Could not fetch data"}
   }
-}
   try {
- 
-    if (!params) {
       const Cars = await prisma.cAR.findMany(
         {
           where: {
@@ -113,54 +89,18 @@ if(Fuel === undefined && type === undefined && gear === undefined && brand === u
       )
       const totalCount = await prisma.cAR.count()
       const totalPages = Math.ceil(totalCount / 6)
-      if(Fuel === undefined && type === undefined && gear === undefined && brand === undefined){
-        await redis.set("cars", JSON.stringify(Cars) )
-      }
+
+      await redis.setex(`cars?type=${type}&Fuel=${fuel}&Gear=${gear}&brand=${brand}`, 3600 , JSON.stringify(Cars) )
 
       return { Cars, page, totalPages ,  error:"Could not fetch data"  }
-
-    }
-
-    if (params) {
-      const Cars = await prisma.cAR.findMany(
-        {
-          orderBy: {
-            price: params
-          },
-          where: {
-            Fuel: {
-              in: fuelSplit || ["Petrol", "Diesel"]
-            },
-            type: {
-              in: typeSplit || ["Sedan", "SUV", "Hatchback"]
-            }
-            ,
-            Transmission: {
-              in: gearSplit || ["Automatic", "Manual"]
-            },
-            brand: {
-              in: brandSplit || ["Mercedes", "Audi", "BMW", "Bentley", "Skoda", "Porsche"]
-            }
-          },
-        }
-      )
-      const totalCount = await prisma.cAR.count()
-      const totalPages = Math.ceil(totalCount / 6)
-      return { Cars, page, totalPages , error:"Could not fetch data" }
-    }
 
   } catch {
     return { error:"Could not fetch data"}
   }
-
 }
 
-
-
 const page = async (props: any) => {
-  // noStore();
-  const { Cars, page, totalPages , error  } = (await getData(
-    props.searchParams.sortBy,
+  const { Cars, error  } = (await getData(
     props.searchParams.Fuel,
     props.searchParams.type,
     props.searchParams.Gear,
@@ -190,19 +130,7 @@ const page = async (props: any) => {
               <div className='font-semibold'> Total {Cars?.length} results found </div>
               <div className='flex items-center'>
 
-               {/*  */}
                <MobileFilterComponent />
-{/* 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline">Sort By -</Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel className='cursor-pointer'> <Link href={'/cars?sortBy=asc'}>Price- Low to High</Link> </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuLabel className='cursor-pointer '><Link href={'/cars?sortBy=desc'}> Price- High to Low</Link></DropdownMenuLabel>
-                  </DropdownMenuContent>
-                </DropdownMenu> */}
 
               </div>
             </div>

@@ -52,7 +52,6 @@ export async function POST(req:NextRequest){
             skip:skip
         }
     )
-    console.log(Cars,"BACKEND DATA")
 
         return Response.json({
             data:Cars
